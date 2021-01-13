@@ -11,8 +11,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
 
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('MongoDB is connected'));
+
 app.get('/', (req, res) => {
-  res.send('Hello from the backend');
+  res.send('Hello from Alex');
 });
 
 app.listen(5000, () => {
