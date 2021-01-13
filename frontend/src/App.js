@@ -6,14 +6,16 @@ import Home from './components/Home'
 import './App.css';
 
 function App() {
+
+  
   return (
     <>
     <BrowserRouter>
     <Nav/>
     <Switch>
         <Route exact path="/" component={Home}/>  
-        <Route exact path="/Login" component={Login} />
-        <Route exact path="/Logout" component={Logout} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/logout" component={Logout} />
     </Switch>
   </BrowserRouter>   
 </>
