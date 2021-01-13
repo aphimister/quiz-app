@@ -12,7 +12,7 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send('Hello from the backend');
+  res.send('Hello from the Jenny');
 });
 
 app.listen(5000, () => {
