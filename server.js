@@ -21,7 +21,7 @@ mongoose
   .then(() => console.log('MongoDB is connected'));
 
 app.get('/', (req, res) => {
-  res.send('Hello from Alex');
+  res.send('Hello from Alex and Jenny');
 });
 
 app.listen(5000, () => {
