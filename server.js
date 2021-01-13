@@ -17,9 +17,17 @@ mongoose.connect( process.env.DB_URL, {
   useUnifiedTopology: true
 }).then( () => console.log("MongoDB is connected"));
 
-app.get('/', (req, res) => {
-  res.send('Hello from tom');
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('MongoDB is connected'));
 
+app.get('/', (req, res) => {
+  res.send('Hello from Alex, Jenny and Tom');
 });
 
 app.listen(5000, () => {
