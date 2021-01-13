@@ -5,11 +5,7 @@ const Logout = () => {
         <div>
             <h1>Login Page</h1>
 
-            <form>
-                <label>Email:</label>
-                <input></input>
-                
-            </form>
+          
         </div>
     )
 }
