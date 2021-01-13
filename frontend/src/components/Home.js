@@ -37,7 +37,7 @@ const Home = () => {
             <h1 className="title">Home Page</h1>
 
             <form onSubmit={formHandler}>
-                <h2 className="subheading">Select your difficulty</h2>
+            <h2 className="subheading">Select your difficulty</h2>
                 <select name="difficulty" className="selectDiff" onChange={(e) => {setDifficulty(e.target.value)}}>
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
