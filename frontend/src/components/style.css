@@ -1,0 +1,66 @@
+/* Global */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: rgb(242, 212, 135);
+}
+
+
+/* List Style rules */
+.un-list {
+  height: 40px;
+  background-color: rgb(242, 212, 135);
+  display: flex;
+  justify-content: space-around;
+  padding: 0 30px;
+  list-style: none;
+ 
+ 
+}
+
+.li-list {
+  display: inline-block;
+  margin-right: 20px;
+  font-size: 25px;
+}
+
+.link{
+    padding: 10px 0 10px 0;
+    text-decoration: none;
+    color: rgb(186, 27, 218);
+}
+
+.link:hover{
+    padding: 10px 0 10px 0;
+    text-decoration: none;
+    color: rgb(27, 145, 218);
+}
+
+/* Form Style Rules */
+.form-container{
+    display: flex;
+   
+    justify-content: center ;
+}
+.label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    color: rgb(186, 27, 218);
+}
+.btn-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+}
+
+
+/* Button Style Rules */
+
+.button{
+    color: rgb(186, 27, 218);
+}
+
