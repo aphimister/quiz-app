@@ -10,23 +10,19 @@ const Nav = () => {
                     <li className="li-list">
                         <Link className='link' to="/">Home</Link>
                     </li >
-                    <li class="li-list" >
+                    <li className="li-list" >
                         <Link className='link'to="/">Profile</Link>
                     </li>
-                    <li class="li-list">
-                        <Link  className='link' to="/Login">Login</Link>
+                    <li className="li-list">
+                        <Link  className='link' to="/login">Login</Link>
                     </li>
-                    <li class="li-list">
+                    <li className="li-list">
                         <Link className='link' to="/">Logout</Link>
                     </li>
-                    <li class="li-list">
+                    <li className="li-list">
                         <Link className='link-register' to="/register">Register</Link>
                     </li>
                     
+)}
 
-                </ul>
-       </nav>
-    )
-}
-
-export default Nav
+export default Nav;
