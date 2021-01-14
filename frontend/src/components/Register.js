@@ -7,6 +7,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [backendMessage, setBackendMessage] = useState("");
 //   const [counter, setCounter] = useState(60);
 
@@ -19,7 +20,8 @@ const Register = () => {
     const body = {
         userName: name,
         userEmail: email,
-        userPassword: password
+        userPassword: password,
+        userPassword2: password2
       };
       const config = {
         headers: {
@@ -66,7 +68,15 @@ const Register = () => {
             className="input"
             type="password"
             name="userPassword"
+            placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
+          ></input>
+           <input
+            className="input"
+            type="password"
+            name="userPassword2"
+            placeholder="confirm password"
+            onChange={(e) => setPassword2(e.target.value)}
           ></input>
           <br />
 
