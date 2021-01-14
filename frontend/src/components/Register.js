@@ -1,25 +1,59 @@
-import React, {useState}from "react";
+import React, {useState, useEffect}from "react";
+import axios from "axios"
 
 
 const Register = () => {
 
-    const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+//   const [counter, setCounter] = useState(60);
 
-  const formHandler = ( ) => {
+  const formHandler = async ( ) => {
+    console.log(name);
+    console.log(email);
+    console.log(password);
 
-
-    // const response = await axios.post("/register")
+    const body = {
+        userName: name,
+        userEmail: email,
+        userPasswor: password,
+      };
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+   
+    await axios.post("/register", body, config)
   }
+
+//   useEffect(() => {
+   
+//     counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+//   }, []);
+
+
+//   let countDownTime = new Date().getMinutes()
+//   console.log(countDownTime)
+//   let timeInterval = () => {
+//         let timeNow = new Date().getMinutes()
+
+//         let diffInTime = countDownTime - timeNow
+
+//         let mins = Math.floor((diffInTime % (1000 * 60 * 60)) / (1000 * 60))
+
+//         console.log(mins)
+
+//   }
 
   return (
     <div>
-      <div class="title-container">
+      <div className="title-container">
         <h1>Register to start playing</h1>
       </div>
       <div className="form-container">
-        <form onSubmit={formHandler} classNmae="form">
+        <form onSubmit={formHandler} className="form">
           <label className="label">User Name:</label>
           <input
             className="input"
@@ -51,8 +85,14 @@ const Register = () => {
             Register
           </button>
         </form>
-      </div>
+
+        <div className="App">
+      {/* <div>Countdown: {counter}</div> */}
     </div>
+      </div>
+     
+    </div>
+
   );
 };
 

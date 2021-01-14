@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect}from 'react';
+
 import axios from 'axios';
 
 const Home = () => {
@@ -36,7 +37,7 @@ const Home = () => {
         <div>
             <h1 className="title">Home Page</h1>
 
-            <form onSubmit={formHandler}>
+             <form className="form" onSubmit={formHandler}>
             <h2 className="subheading">Select your difficulty</h2>
                 <select name="difficulty" className="selectDiff" onChange={(e) => {setDifficulty(e.target.value)}}>
                     <option value="easy">Easy</option>
@@ -50,8 +51,8 @@ const Home = () => {
                 
                 </select><br /><br />
                 <button className="button" type="submit">Start your quiz</button>
-            </form>
-            
+            </form> 
+             
         </div>
     )
 }
