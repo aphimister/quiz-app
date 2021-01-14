@@ -5,16 +5,25 @@ const QuizPage = () => {
   const [quiz, setQuiz] = useState([]);
   const [score, setScores] = useState([]);
 
+ 
+
   const apiURL =
-    'https://opentdb.com/api.php?amount=10&category=22&difficulty=hard&type=multiple';
+    `https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple`
+
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
     setQuiz(call.data.results);
   };
+  // const {category} = this.props.location.state.category
+  // const {difficulty} = this.props.location.state.difficulty
+  // console.log(category)
+  // console.log(difficulty)
+
 
   useEffect(() => {
     //calls the API on page load
+
     apiCall(apiURL);
   }, []);
 
