@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect}from 'react';
+
 import axios from 'axios';
 import QuizPage from './QuizPage';
 import {Link} from "react-router-dom";
@@ -36,7 +37,7 @@ const Home = () => {
         <div>
             <h1 className="title">Home Page</h1>
 
-            <form onSubmit={formHandler}>
+             <form className="form" onSubmit={formHandler}>
             <h2 className="subheading">Select your difficulty</h2>
                 <select className="selectDiff">
                     <option name="difficulty" value={"easy"}>Easy</option>
