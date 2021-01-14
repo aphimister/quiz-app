@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const QuizPage = () => {
-  const [quiz, setQuiz] = useState(['']);
+  const [quiz, setQuiz] = useState([]);
+  const [score, setScores] = useState([]);
 
   const apiURL =
-    'https://opentdb.com/api.php?amount=10&category=22&difficulty=easy&type=multiple';
+    'https://opentdb.com/api.php?amount=10&category=22&difficulty=hard&type=multiple';
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
@@ -17,64 +18,82 @@ const QuizPage = () => {
     apiCall(apiURL);
   }, []);
 
-  console.log(quiz);
-  console.log(quiz[0].question);
-
   return (
     // quiz display
-    <div>
-      <QuizCard
-        question={quiz[0].question}
-        correct_answer={quiz[0].correct_answer}
-        incorrect_answers={quiz[0].incorrect_answers}
-        number={1}
-      />
-    </div>
+    <Questions quiz={quiz} />
   );
 };
 
-const QuizCard = (props) => {
-  const question = props.question;
-  const correctAns = props.correct_answer;
-  const incorrectAns = props.incorrect_answers;
-  const number = props.number;
+const Questions = (props) => {
+  if (props.quiz[1]) {
+    let i = -1;
+    const questions = props.quiz.map((q) => {
+      i++;
+      return (
+        // <div>Found something{i}</div>
+        <QuizCard
+          question={q.question}
+          correct_answer={q.correct_answer}
+          incorrect_answers={q.incorrect_answers}
+          number={i}
+        />
+      );
+    });
+    return <div className="quizContainer">{questions}</div>;
+  } else {
+    return <div className="loadingMessage">Loading questions</div>;
+  }
+};
 
+const QuizCard = (props) => {
   if (props.question) {
+    // checks there is an array
+    let qArray = [props.correct_answer, ...props.incorrect_answers]; //new array of all the answers
+    shuffleArray(qArray); //shuffles the questions
     return (
-      <div className="quizCard">
-        <div className="questionHeading">{question}</div>
-        <input
-          type="radio"
-          className="radioButton"
-          name={number}
-          id={incorrectAns}
-        />
-        <label htmlFor={correctAns}>{correctAns}</label>
-        <input
-          type="radio"
-          className="radioButton"
-          name={number}
-          id={incorrectAns[0]}
-        />
-        <label htmlFor={incorrectAns[0]}>{incorrectAns[0]}</label>
-        <input
-          type="radio"
-          className="radioButton"
-          name={number}
-          id={incorrectAns[1]}
-        />
-        <label htmlFor={incorrectAns[1]}>{incorrectAns[1]}</label>
-        <input
-          type="radio"
-          className="radioButton"
-          name={number}
-          id={incorrectAns[2]}
-        />
-        <label htmlFor={incorrectAns[2]}>{incorrectAns[2]}</label>
+      <div className="questionCard" name={props.number}>
+        <div className="question" name={props.number}>
+          {props.question}
+        </div>
+        <AnswerList qNumber={props.number} answers={qArray} />
       </div>
     );
   } else {
     return <div>Loading questions</div>;
+  }
+};
+
+const AnswerList = (props) => {
+  //format for questions for the answer
+  let i = 0;
+  const answers = props.answers.map((answer) => {
+    i++;
+    return <Answer number={props.qNumber} answer={answer} key={i} />;
+  });
+  return answers;
+};
+
+const Answer = (props) => {
+  // format for each radio button
+  return (
+    // returns laid out button
+    <div>
+      <input
+        type="radio"
+        className="radioButton answer"
+        name={props.number}
+        id={props.answer}
+      />
+      <label htmlFor={props.answer}>{props.answer}</label>
+    </div>
+  );
+};
+
+const shuffleArray = (array) => {
+  //Durstenfeld shuffle algorithm, credit https://stackoverflow.com/users/310500/laurens-holst
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
 };
 
