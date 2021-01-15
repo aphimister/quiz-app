@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const QuizPage = (props) => {
   const [quiz, setQuiz] = useState([]);
-  const [score, setScores] = useState([]);
   const [category, setCategory] = useState("");
   const [difficulty, setDifficulty] = useState("");
  
@@ -11,6 +10,12 @@ const QuizPage = (props) => {
   const apiURL =
   `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`
   
+  let answers = [];
+  for (let i = 0; i < 10; i++) {
+    answers.push(false);
+  }
+  const [score, setScore] = useState(answers);
+ 
   const apiCall = async (url) => {
     const call = await axios.get(url);
     setQuiz(call.data.results);
@@ -29,6 +34,19 @@ const QuizPage = (props) => {
     let value = event.target.value;
     setCategory(value);
     
+  const answerHandler = (event, answer, ref) => {
+    let newScore = score;
+    if (quiz[ref].correct_answer == answer) {
+      console.log('correct');
+      newScore[ref] = true;
+    }
+    // console.log(newScores[ref].correct);
+    else {
+      console.log('Wrong!');
+      newScore[ref] = false;
+    }
+    setScore(newScore);
+    console.log(score);
   };
 
   useEffect(() => {
@@ -42,7 +60,6 @@ const QuizPage = (props) => {
 
     <div>
     <h1 className="title">Home Page</h1>
-​
     <form>
     <h2 className="subheading">Select your difficulty</h2>
         {/* The hander is passed to here and triggered "onChange" */}
@@ -85,16 +102,18 @@ const QuizPage = (props) => {
             <button className="button" type="submit">Start your quiz</button>
        
     </form>
-    <Questions quiz={quiz} />
+    <div>
+      <Questions quiz={quiz} answerHandler={answerHandler} />
+      <button id="submit" className="button">
+        Submit
+      </button>
     </div>
   );
 };
 
 const Questions = (props) => {
   if (props.quiz[1]) {
-    let i = -1;
-    const questions = props.quiz.map((q) => {
-      i++;
+    const questions = props.quiz.map((q, i) => {
       return (
         // <div>Found something{i}</div>
         <QuizCard
@@ -102,6 +121,8 @@ const Questions = (props) => {
           correct_answer={q.correct_answer}
           incorrect_answers={q.incorrect_answers}
           number={i}
+          key={i}
+          answerHandler={props.answerHandler}
         />
       );
     });
@@ -121,7 +142,11 @@ const QuizCard = (props) => {
         <div className="question" name={props.number}>
           {props.question}
         </div>
-        <AnswerList qNumber={props.number} answers={qArray} />
+        <AnswerList
+          qNumber={props.number}
+          answers={qArray}
+          answerHandler={props.answerHandler}
+        />
       </div>
     );
   } else {
@@ -134,7 +159,14 @@ const AnswerList = (props) => {
   let i = 0;
   const answers = props.answers.map((answer) => {
     i++;
-    return <Answer number={props.qNumber} answer={answer} key={i} />;
+    return (
+      <Answer
+        number={props.qNumber}
+        answer={answer}
+        key={i}
+        answerHandler={props.answerHandler}
+      />
+    );
   });
   return answers;
 };
@@ -149,6 +181,7 @@ const Answer = (props) => {
         className="radioButton answer"
         name={props.number}
         id={props.answer}
+        onClick={(e) => props.answerHandler(e, props.answer, props.number)}
       />
       <label htmlFor={props.answer}>{props.answer}</label>
     </div>

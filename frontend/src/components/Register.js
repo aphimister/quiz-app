@@ -1,4 +1,4 @@
-import React, {useState, useEffect}from "react";
+import React, { useState } from "react";
 import axios from "axios"
 
 
@@ -7,17 +7,21 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [backendMessage, setBackendMessage] = useState("");
 //   const [counter, setCounter] = useState(60);
 
-  const formHandler = async ( ) => {
-    console.log(name);
-    console.log(email);
-    console.log(password);
+  const formHandler = async (event) => {
+   event.preventDefault()
+   console.log(name)
+   console.log(email)
+   console.log(password)
 
     const body = {
         userName: name,
         userEmail: email,
-        userPasswor: password,
+        userPassword: password,
+        userPassword2: password2
       };
       const config = {
         headers: {
@@ -25,27 +29,10 @@ const Register = () => {
         },
       };
    
-    await axios.post("/register", body, config)
+      const backend = await axios.post("/register", body, config)
+      setBackendMessage(backend.data.message)
+      console.log(backend)
   }
-
-//   useEffect(() => {
-   
-//     counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-//   }, []);
-
-
-//   let countDownTime = new Date().getMinutes()
-//   console.log(countDownTime)
-//   let timeInterval = () => {
-//         let timeNow = new Date().getMinutes()
-
-//         let diffInTime = countDownTime - timeNow
-
-//         let mins = Math.floor((diffInTime % (1000 * 60 * 60)) / (1000 * 60))
-
-//         console.log(mins)
-
-//   }
 
   return (
     <div>
@@ -53,21 +40,25 @@ const Register = () => {
         <h1>Register to start playing</h1>
       </div>
       <div className="form-container">
+        
+        {backendMessage}
+
         <form onSubmit={formHandler} className="form">
+
           <label className="label">User Name:</label>
           <input
             className="input"
             type="text"
-            name="useName"
-              onChange={(e) => setName(e.target.value)}
+            name="userName"
+            onChange={(e)=>setName(e.target.value)}
           ></input>
           <br />
 
           <label className="label">Email:</label>
           <input
             className="input"
-            type="text"
-            name="useEmail"
+            type="email"
+            name="userEmail"
               onChange={(e) => setEmail(e.target.value)}
           ></input>
           <br />
@@ -76,18 +67,26 @@ const Register = () => {
           <input
             className="input"
             type="password"
-            name="usePassword"
-              onChange={(e) => setPassword(e.target.value)}
+            name="userPassword"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          ></input>
+           <input
+            className="input"
+            type="password"
+            name="userPassword2"
+            placeholder="confirm password"
+            onChange={(e) => setPassword2(e.target.value)}
           ></input>
           <br />
 
-          <button className="button btn-login" type="submit">
+          <button type="submit" className="button btn-login">
             Register
           </button>
         </form>
 
         <div className="App">
-      {/* <div>Countdown: {counter}</div> */}
+     
     </div>
       </div>
      
