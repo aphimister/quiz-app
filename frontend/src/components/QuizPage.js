@@ -10,10 +10,10 @@ const QuizPage = (props) => {
 
   let answers = [];
   for (let i = 0; i < 10; i++) {
-    answers.push(false);
+    answers.push(0);
   }
-  const [score, setScore] = useState(answers);
 
+  const [score, setScore] = useState(answers);
   const apiCall = async (url) => {
     const call = await axios.get(url);
     setQuiz(call.data.results);
@@ -35,15 +35,31 @@ const QuizPage = (props) => {
     let newScore = score;
     if (quiz[ref].correct_answer == answer) {
       console.log('correct');
-      newScore[ref] = true;
-    }
-    // console.log(newScores[ref].correct);
-    else {
+      newScore[ref] = 1;
+    } else {
       console.log('Wrong!');
-      newScore[ref] = false;
+      newScore[ref] = 0;
     }
     setScore(newScore);
-    console.log(score);
+  };
+
+  const scoreHandler = async (event) => {
+    const reducer = (accumulator, item) => {
+      return accumulator + item;
+    };
+    let scoreTotal = score.reduce(reducer, 0);
+    const body = {
+      score: scoreTotal,
+      difficulty: difficulty,
+      category: category,
+    };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    console.log(scoreTotal);
+    const response = await axios.post('/api/score', body, config);
   };
 
   useEffect(() => {
@@ -156,7 +172,7 @@ const QuizPage = (props) => {
       </form>
       <div>
         <Questions quiz={quiz} answerHandler={answerHandler} />
-        <button id="submit" className="button">
+        <button id="submitAnswers" className="button" onClick={scoreHandler}>
           Submit
         </button>
       </div>

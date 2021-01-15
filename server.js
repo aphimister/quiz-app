@@ -79,6 +79,11 @@ app.get('/login', (req, res) => {
 //Results section
 //<--------------------------Results----------------------------------------------->>
 
+app.post('/api/score', (req, res) => {
+  console.log(req.body);
+  res.send('nice one');
+});
+
 app.get('/results', async (req, res) => {
   await Score.create({
     points: 10,
@@ -90,7 +95,7 @@ app.get('/results', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const player = await Quizuser.findOne({ emai: req.body.userEmail });
+  const player = await Quizuser.findOne({ email: req.body.userEmail });
   console.log(player);
   const compare = await bcrypt.compare(req.body.userPassword, player.password);
   if (compare) {
