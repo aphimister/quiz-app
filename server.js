@@ -58,6 +58,10 @@ app.post("/register", async (req, res) => {
   }
 });
 
+//<--------------------- USER PROFILE ------------------------------->
+
+
+
 //ADMIN BASED SERVER
 //<----------------------- ADMIN SECTION --------------------------->
 
@@ -72,7 +76,16 @@ app.get("/login", (req, res) => {
   }); // message display at fron end
 });
 
-app.post("/login", (req, res) => {});
+
+
+app.post("/login", async (req, res) => {
+  const player = await Quizuser.findOne({emai: req.body.userEmail})
+  console.log(player)
+  const compare = await bcrypt.compare(req.body.userPassword, player.password);
+  if(compare) {
+    const quiztoken = 
+  }
+});
 
 app.listen(5001, () => {
   console.log("Server is online");
