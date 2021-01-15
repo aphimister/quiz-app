@@ -3,13 +3,13 @@ import axios from 'axios';
 
 const QuizPage = () => {
   const [quiz, setQuiz] = useState([]);
-  const [score, setScores] = useState([]);
-
- 
-
-  const apiURL =
-    `https://opentdb.com/api.php?amount=10&category=10&difficulty=easy&type=multiple`
-
+  const [state, setstate] = useState('');
+  let answers = [];
+  for (let i = 0; i < 10; i++) {
+    answers.push(false);
+  }
+  const [score, setScore] = useState(answers);
+  const apiURL = `https://opentdb.com/api.php?amount=10&category=20&difficulty=easy&type=multiple`;
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
@@ -20,6 +20,20 @@ const QuizPage = () => {
   // console.log(category)
   // console.log(difficulty)
 
+  const answerHandler = (event, answer, ref) => {
+    let newScore = score;
+    if (quiz[ref].correct_answer == answer) {
+      console.log('correct');
+      newScore[ref] = true;
+    }
+    // console.log(newScores[ref].correct);
+    else {
+      console.log('Wrong!');
+      newScore[ref] = false;
+    }
+    setScore(newScore);
+    console.log(score);
+  };
 
   useEffect(() => {
     //calls the API on page load
@@ -29,15 +43,18 @@ const QuizPage = () => {
 
   return (
     // quiz display
-    <Questions quiz={quiz} />
+    <div>
+      <Questions quiz={quiz} answerHandler={answerHandler} />
+      <button id="submit" className="button">
+        Submit
+      </button>
+    </div>
   );
 };
 
 const Questions = (props) => {
   if (props.quiz[1]) {
-    let i = -1;
-    const questions = props.quiz.map((q) => {
-      i++;
+    const questions = props.quiz.map((q, i) => {
       return (
         // <div>Found something{i}</div>
         <QuizCard
@@ -45,6 +62,8 @@ const Questions = (props) => {
           correct_answer={q.correct_answer}
           incorrect_answers={q.incorrect_answers}
           number={i}
+          key={i}
+          answerHandler={props.answerHandler}
         />
       );
     });
@@ -64,7 +83,11 @@ const QuizCard = (props) => {
         <div className="question" name={props.number}>
           {props.question}
         </div>
-        <AnswerList qNumber={props.number} answers={qArray} />
+        <AnswerList
+          qNumber={props.number}
+          answers={qArray}
+          answerHandler={props.answerHandler}
+        />
       </div>
     );
   } else {
@@ -77,7 +100,14 @@ const AnswerList = (props) => {
   let i = 0;
   const answers = props.answers.map((answer) => {
     i++;
-    return <Answer number={props.qNumber} answer={answer} key={i} />;
+    return (
+      <Answer
+        number={props.qNumber}
+        answer={answer}
+        key={i}
+        answerHandler={props.answerHandler}
+      />
+    );
   });
   return answers;
 };
@@ -92,6 +122,7 @@ const Answer = (props) => {
         className="radioButton answer"
         name={props.number}
         id={props.answer}
+        onClick={(e) => props.answerHandler(e, props.answer, props.number)}
       />
       <label htmlFor={props.answer}>{props.answer}</label>
     </div>
