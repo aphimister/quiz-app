@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const QuizPage = (props) => {
   const [quiz, setQuiz] = useState([]);
-  const [category, setCategory] = useState('');
-  const [difficulty, setDifficulty] = useState('');
+  const [category, setCategory] = useState('9');
+  const [difficulty, setDifficulty] = useState('easy');
 
   const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
 
@@ -28,8 +28,7 @@ const QuizPage = (props) => {
   const quizHandler = (event) => {
     event.preventDefault();
     apiCall(apiURL);
-    
-  }
+  };
 
   // This is the category tracker / state handler
   const catHandler = (event) => {
@@ -76,21 +75,30 @@ const QuizPage = (props) => {
 
   return (
     // quiz display
-    
-    <div >
-      {quiz[1] ? <Questions quiz={quiz} answerHandler={answerHandler} scoreHandler={scoreHandler}/> : 
-      <Selection category={category} difficulty={difficulty} answers={answers} diffHandler={diffHandler} catHandler={catHandler} quizHandler={quizHandler}/>}
 
+    <div>
+      {quiz[1] ? (
+        <Questions
+          quiz={quiz}
+          answerHandler={answerHandler}
+          scoreHandler={scoreHandler}
+        />
+      ) : (
+        <Selection
+          category={category}
+          difficulty={difficulty}
+          answers={answers}
+          diffHandler={diffHandler}
+          catHandler={catHandler}
+          quizHandler={quizHandler}
+        />
+      )}
     </div>
   );
 };
 
-
 const Selection = (props) => {
- 
-
-  return(
-
+  return (
     <div>
       <h1 className="title">Home Page</h1>
       <form>
@@ -186,18 +194,16 @@ const Selection = (props) => {
         <br />
         <br />
         <div>
-        
-        <button id="submit" className="button" onClick={props.quizHandler}>
-          Submit
-        </button>
-      </div>
+          <button id="submit" className="button" onClick={props.quizHandler}>
+            Submit
+          </button>
+        </div>
       </form>
-  </div>
-  )}
-
+    </div>
+  );
+};
 
 const Questions = (props) => {
-   
   if (props.quiz[1]) {
     const questions = props.quiz.map((q, i) => {
       return (
@@ -212,8 +218,18 @@ const Questions = (props) => {
         />
       );
     });
-    return <div className="quizContainer">{questions}
-    <button id="submitAnswers" className="button" onClick={props.scoreHandler}></div>;
+    return (
+      <div className="quizContainer">
+        {questions}
+        <button
+          id="submitAnswers"
+          className="button"
+          onClick={props.scoreHandler}
+        >
+          Submit
+        </button>
+      </div>
+    );
   } else {
     return <div className="loadingMessage">Loading questions</div>;
   }
