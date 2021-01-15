@@ -6,8 +6,10 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
+
 const quiztoken = require('jsonwebtoken');
 const Quizuser = require('./models/quizUser');
+const Score = require('./models/scoreModel');
 const check = require('./middlewares/check');
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
@@ -72,6 +74,19 @@ app.get('/login', (req, res) => {
   res.json({
     message: 'logged in ',
   }); // message display at fron end
+});
+
+//Results section
+//<--------------------------Results----------------------------------------------->>
+
+app.get('/results', async (req, res) => {
+  await Score.create({
+    points: 10,
+    time: 230,
+    difficulty: 'easy',
+    category: 'Animals',
+  });
+  res.send('user registered');
 });
 
 app.post('/login', async (req, res) => {
