@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Login =  () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginBackendVerified, setloginBackendVerified] = useState("");
@@ -14,7 +15,7 @@ const Login = () => {
 
     const body = {
       userEmail: email,
-      userPasswor: password,
+      userPassword: password,
     };
 
     const config = {
@@ -41,9 +42,9 @@ const Login = () => {
           <label className="label">Email:</label>
           <input 
           className="input"
-          type="password"
+          type="email"
           name="userEmail"
-          placeholder="password"
+          placeholder="email"
           onChange={(e) => setEmail(e.target.value)}></input>
 
           <label className="label">Password:</label>
