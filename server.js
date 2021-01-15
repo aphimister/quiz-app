@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -7,9 +8,9 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const jwt = require("jsonwebtoken");
 const Quizuser = require("./models/quizUser");
+const Score = require('./models/scoreModel');
 const check = require("./middlewares/check");
 dotenv.config({ path: "./.env" });
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
@@ -22,30 +23,30 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("MongoDB is connected"));
+  .then(() => console.log('MongoDB is connected'));
 
-app.get("/", (req, res) => {
-  res.send("Hello from Alex, Jenny and Tom");
+app.get('/', (req, res) => {
+  res.send('Hello from Alex, Jenny and Tom');
 });
 
 //USER BASED SERVER
 //<----------------------- USER SECTION --------------------------->
 
 //<----------------------- USER REGISTER --------------------------->
-app.post("/register", async (req, res) => {
-  console.log("at the back end ");
-  console.log(req.body)
+app.post('/register', async (req, res) => {
+  console.log('at the back end ');
+  console.log(req.body);
   const hashedPassword = await bcrypt.hash(req.body.userPassword, 10);
   const player = await Quizuser.find({ email: req.body.userEmail });
   const password1 = req.body.userPassword;
   const password2 = req.body.userPassword2;
   if (password1 !== password2) {
     res.json({
-      errorPasswords: "Passwords Do Not Match",
+      errorPasswords: 'Passwords Do Not Match',
     });
   } else if (player.length > 0) {
     res.json({
-      errorPasswords: "Sorry Email Or Password Is Incorect ",
+      errorPasswords: 'Sorry Email Or Password Is Incorect ',
     });
   } else {
     await Quizuser.create({
@@ -54,14 +55,12 @@ app.post("/register", async (req, res) => {
       password: hashedPassword,
     });
     res.json({
-      message: "user was registered",
+      message: 'user was registered',
     });
   }
 });
 
 //<--------------------- USER PROFILE ------------------------------->
-
-
 
 //ADMIN BASED SERVER
 //<----------------------- ADMIN SECTION --------------------------->
@@ -69,15 +68,31 @@ app.post("/register", async (req, res) => {
 //LOGIN & LOGOUT SECTIONS
 //<--------------------------Login ----------------------------------------------->>
 
-app.get("/login", (req, res) => {
-  console.log("at the back end "); // lets us know its working
+app.get('/login', (req, res) => {
+  console.log('at the back end '); // lets us know its working
   console.log(req.body); // front end input field to loggin
   res.json({
-    message: "logged in ",
+    message: 'logged in ',
   }); // message display at fron end
 });
 
+//Results section
+//<--------------------------Results----------------------------------------------->>
 
+app.post('/api/score', (req, res) => {
+  console.log(req.body);
+  res.send('nice one');
+});
+
+app.get('/results', async (req, res) => {
+  await Score.create({
+    points: 10,
+    time: 230,
+    difficulty: 'easy',
+    category: 'Animals',
+  });
+  res.send('user registered');
+});
 
 app.post("/login", async (req, res) => {
   const player = await Quizuser.findOne({email: req.body.userEmail})
@@ -100,5 +115,4 @@ app.post("/login", async (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("Server is online");
-});
+console.log("Server is online");
