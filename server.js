@@ -5,7 +5,9 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const Quizuser = require('./models/quizUser')
+const Quizuser = require('./models/quizUser');
+const Score = require('./models/scoreModel');
+
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
@@ -54,7 +56,19 @@ app.get("/login", (req, res) => {
 });
 
 
+//Results section
+//<--------------------------Results----------------------------------------------->>
 
+app.get('/results', async (req, res) => {
+
+  await Score.create({
+    points: 10,
+    time: 230,
+    difficulty: "easy",
+    category: "Animals"
+  })
+  res.send("user registered")
+});
 
 app.listen(5000, () => {
   console.log('Server is online');
