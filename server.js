@@ -3,19 +3,20 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
-const path = require("path");
 const cookieParser = require("cookie-parser");
 const app = express();
-const quiztoken = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const Quizuser = require("./models/quizUser");
 const check = require("./middlewares/check");
 dotenv.config({ path: "./.env" });
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
+app.use(cookieParser() );
 
 mongoose
-  .connect(process.env.DB_URL, {
+.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -79,14 +80,25 @@ app.get("/login", (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-  const player = await Quizuser.findOne({emai: req.body.userEmail})
+  const player = await Quizuser.findOne({email: req.body.userEmail})
   console.log(player)
   const compare = await bcrypt.compare(req.body.userPassword, player.password);
   if(compare) {
-    const quiztoken = 
+    const quizToken = jwt.sign({id: player._id}, process.env.PLAYER_SECRET, {
+      expiresIn: process.env.PLAYER_SECRET_IN
+    })
+    console.log(quizToken)//Does the token exist??// 
+    const cookieOptions = {
+      expires: new Date(
+        Date.now() + process.env.PLAYER_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true
+    }
+    res.cookie("playerCookie", quizToken, cookieOptions);
   }
+  
 });
 
-app.listen(5001, () => {
+app.listen(5000, () => {
   console.log("Server is online");
 });

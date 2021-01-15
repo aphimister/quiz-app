@@ -32,6 +32,7 @@ const Register = () => {
       const backend = await axios.post("/register", body, config)
       setBackendMessage(backend.data.message)
       console.log(backend)
+      
   }
 
   return (
