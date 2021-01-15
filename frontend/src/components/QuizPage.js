@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const QuizPage = () => {
   const [quiz, setQuiz] = useState([]);
-  const [state, setstate] = useState('');
+  // const [state, setstate] = useState('');
   let answers = [];
   for (let i = 0; i < 10; i++) {
     answers.push(false);
