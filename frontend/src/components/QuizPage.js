@@ -25,7 +25,13 @@ const QuizPage = (props) => {
     setDifficulty(value);
   };
 
-  //This is the category tracker / state handler
+  const quizHandler = (event) => {
+    event.preventDefault();
+    apiCall(apiURL);
+    
+  }
+
+  // This is the category tracker / state handler
   const catHandler = (event) => {
     event.preventDefault();
     let value = event.target.value;
@@ -46,21 +52,35 @@ const QuizPage = (props) => {
     console.log(score);
   };
 
-  useEffect(() => {
-    //calls the API on page load
+  // useEffect(() => {
+  //   //calls the API on page load
 
-    apiCall(apiURL);
-  }, []);
+  //   apiCall(apiURL);
+  // }, []);
 
   return (
     // quiz display
+    
+    <div >
+      {quiz[1] ? <Questions quiz={quiz} answerHandler={answerHandler}/> : 
+      <Selection category={category} difficulty={difficulty} answers={answers} diffHandler={diffHandler} catHandler={catHandler} quizHandler={quizHandler}/>}
+
+    </div>
+  );
+};
+
+
+const Selection = (props) => {
+ 
+
+  return(
 
     <div>
       <h1 className="title">Home Page</h1>
       <form>
         <h2 className="subheading">Select your difficulty</h2>
         {/* The hander is passed to here and triggered "onChange" */}
-        <select onChange={diffHandler} className="selectDiff">
+        <select onChange={props.diffHandler} className="selectDiff">
           <option name="difficulty" value={'easy'}>
             Easy
           </option>
@@ -73,7 +93,7 @@ const QuizPage = (props) => {
         </select>
         <h2 className="subheading">Select your category</h2>
         {/* As above, the handler is passed to here and triggered "onChange" */}
-        <select onChange={catHandler} className="selectCat">
+        <select onChange={props.catHandler} className="selectCat">
           <option value={'9'} name="category">
             General Knowledge
           </option>
@@ -149,22 +169,19 @@ const QuizPage = (props) => {
         </select>
         <br />
         <br />
-
-        <button className="button" type="submit">
-          Start your quiz
-        </button>
-      </form>
-      <div>
-        <Questions quiz={quiz} answerHandler={answerHandler} />
-        <button id="submit" className="button">
+        <div>
+        
+        <button id="submit" className="button" onClick={props.quizHandler}>
           Submit
         </button>
       </div>
-    </div>
-  );
-};
+      </form>
+  </div>
+  )}
+
 
 const Questions = (props) => {
+   
   if (props.quiz[1]) {
     const questions = props.quiz.map((q, i) => {
       return (
