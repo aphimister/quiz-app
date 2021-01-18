@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const Quizuser = require('./models/quizUser');
 const Score = require('./models/scoreModel');
 const check = require('./middlewares/check');
+
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
@@ -192,17 +193,13 @@ app.post('/api/score', async (req, res) => {
   res.send('nice one');
 });
 
-app.get("/topscores", (req, res) => {
-    const scoreDB = Score.find();
+app.get("/topscores", async (req, res) => {
+    const scoreDB = await Score.find();
+    console.log(scoreDB)
       res.json({
         scores: scoreDB
     })
 });
-
-
-
-
-
 
 
 app.listen(5000, () => {

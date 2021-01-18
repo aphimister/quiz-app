@@ -16,13 +16,13 @@ class App extends Component {
   state = {
     difficulty: '',
     category: '',
-    data: [],
+    data: {},
   };
 
   componentDidMount() {
     //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
     this.setState({ difficulty: 'easy', category: '9' });
-    axios.get("http://localhost:5000/topscores").then(res => {
+    axios.get("/topscores").then( res =>{
       this.setState({
       data: res.data
   });
