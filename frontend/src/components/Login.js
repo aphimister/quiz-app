@@ -33,7 +33,7 @@ const Login =  () => {
       <div className="title-container">
         <h1>Login</h1>
 
-        {loginBackendVerified}
+       
 
       </div>
       <div className="form-container">
@@ -58,6 +58,7 @@ const Login =  () => {
           <br />
           <button className="button btn-login">Register</button>
         </form>
+        
       </div>
     </div>
   );
