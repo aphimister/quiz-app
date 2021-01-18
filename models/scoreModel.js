@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const score = new mongoose.Schema({
-    points: {
+    score: {
         type: Number,
         reguired: true
     },
@@ -17,6 +17,11 @@ const score = new mongoose.Schema({
     category: {
         type: String,
         required: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     }
 
 });

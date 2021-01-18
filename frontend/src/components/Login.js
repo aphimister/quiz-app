@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import { BrowserRouter } from "react-router-dom";
+
 const Login =  () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +47,7 @@ const Login =  () => {
           type="email"
           name="userEmail"
           placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}></input>
+          onChange={(e) => setEmail(e.target.value)}></input><br />
 
           <label className="label">Password:</label>
           <input
@@ -55,8 +57,9 @@ const Login =  () => {
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           ></input>
-          <br />
-          <button className="button btn-login">Register</button>
+          <br /><br />
+            <button className="button btn-login">Register</button>
+
         </form>
       </div>
     </div>

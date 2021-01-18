@@ -4,9 +4,11 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
+import Topscores from'./components/TopScores';
 import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
+import axios from 'axios';
 
 //I changed this to a class component. It is just makes more sense to my brain
 class App extends Component {
@@ -14,12 +16,17 @@ class App extends Component {
   state = {
     difficulty: '',
     category: '',
-    // api: "",
+    data: [],
   };
 
   componentDidMount() {
     //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
     this.setState({ difficulty: 'easy', category: '9' });
+    axios.get("http://localhost:5000/topscores").then(res => {
+      this.setState({
+      data: res.data
+  });
+});
   }
 
   //This is the difficulty tracker / state handler
@@ -47,7 +54,7 @@ class App extends Component {
           <Nav />
           <Switch>
             {/* In this setup you have to use this render property to pass props because it is a Route */}
-            {/* <Route
+            <Route
               exact
               path="/"
               render={(props) => (
@@ -57,21 +64,29 @@ class App extends Component {
                   state={this.state}
                   category={this.state.category}
                   difficulty={this.state.difficulty}
+                  data={this.state.data}
                 />
               )}
-            /> */}
+            />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/register" component={Register} />
             <Route
               exact
-              path="/"
+              path="/quiz"
               component={QuizPage}
               render={(props) => (
                 <QuizPage
                   category={this.state.category}
                   difficulty={this.state.difficulty}
                 />
+              )}
+            />
+            <Route exact path="/topscores" 
+              component={Topscores} 
+              render={(props) => (
+                <Topscores 
+                data={this.state.data}/>
               )}
             />
           </Switch>
