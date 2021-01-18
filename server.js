@@ -1,27 +1,30 @@
-
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const bcrypt = require("bcryptjs");
-const cookieParser = require("cookie-parser");
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
 const app = express();
-const jwt = require("jsonwebtoken");
-const Quizuser = require("./models/quizUser");
+const jwt = require('jsonwebtoken');
+const Quizuser = require('./models/quizUser');
 const Score = require('./models/scoreModel');
-const check = require("./middlewares/check");
-dotenv.config({ path: "./.env" });
+const check = require('./middlewares/check');
+dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
-app.use(cookieParser() );
+app.use(cookieParser());
 
-mongoose.connect( process.env.DB_URL, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-}).then( () => console.log("MongoDB is connected"));
+
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('MongoDB is connected'));
+
 
 app.get('/', (req, res) => {
   res.send('Hello from Alex, Jenny and Tom');
@@ -125,9 +128,9 @@ app.get('/login', (req, res) => {
 });
 
 
-app.post("/login", async (req, res) => {
-  const player = await Quizuser.findOne({email: req.body.userEmail})
-  console.log(player)
+app.post('/login', async (req, res) => {
+  const player = await Quizuser.findOne({ email: req.body.userEmail });
+  console.log(player);
   const compare = await bcrypt.compare(req.body.userPassword, player.password);
 
   if(compare) {
@@ -143,7 +146,6 @@ app.post("/login", async (req, res) => {
     res.cookie("playerCookie", quizToken, cookieOptions);
     
   }
-  
 });
 
 // app.post("/login", async (req, res) => {
@@ -194,4 +196,5 @@ app.get('/results', async (req, res) => {
 
 
 app.listen(5000, () => {
-console.log("Server is online")});
+  console.log('Server is online');
+});
