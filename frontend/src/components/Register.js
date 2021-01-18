@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios"
 
 
@@ -9,7 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [backendMessage, setBackendMessage] = useState("");
-//   const [counter, setCounter] = useState(60);
+
 
   const formHandler = async (event) => {
    event.preventDefault()
@@ -32,9 +33,16 @@ const Register = () => {
       const backend = await axios.post("/register", body, config)
       setBackendMessage(backend.data.message)
       console.log(backend)
-      
-  }
+    
+      setName("");
+      setEmail("");
+      setPassword("");
+      setPassword2("");
 
+      
+
+  }
+ 
   return (
     <div>
       <div className="title-container">
@@ -51,7 +59,8 @@ const Register = () => {
             className="input"
             type="text"
             name="userName"
-            onChange={(e)=>setName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           ></input>
           <br />
 
@@ -60,7 +69,8 @@ const Register = () => {
             className="input"
             type="email"
             name="userEmail"
-              onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           ></input>
           <br />
 
@@ -70,6 +80,7 @@ const Register = () => {
             type="password"
             name="userPassword"
             placeholder="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
            <input
@@ -77,11 +88,12 @@ const Register = () => {
             type="password"
             name="userPassword2"
             placeholder="confirm password"
+            value={password2}
             onChange={(e) => setPassword2(e.target.value)}
           ></input>
           <br />
 
-          <button type="submit" className="button btn-login">
+          <button type="submit" className="button btn-login" >
             Register
           </button>
         </form>
