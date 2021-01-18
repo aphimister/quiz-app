@@ -5,15 +5,18 @@ const QuizPage = (props) => {
   const [quiz, setQuiz] = useState([]);
   const [category, setCategory] = useState('9');
   const [difficulty, setDifficulty] = useState('easy');
+  const [message, setMessage] = useState('');
 
   const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
 
-  let answers = [];
+  let zeroes = [];
   for (let i = 0; i < 10; i++) {
-    answers.push(0);
+    zeroes.push(0);
   }
 
-  const [score, setScore] = useState(answers);
+  const [score, setScore] = useState(zeroes);
+  const [isAnswered, setIsAnswered] = useState([...zeroes]);
+
   const apiCall = async (url) => {
     const call = await axios.get(url);
     setQuiz(call.data.results);
@@ -38,6 +41,8 @@ const QuizPage = (props) => {
   };
   const answerHandler = (event, answer, ref) => {
     let newScore = score;
+    let answered = isAnswered;
+    isAnswered[ref] = 1;
     if (quiz[ref].correct_answer == answer) {
       console.log('correct');
       newScore[ref] = 1;
@@ -46,25 +51,34 @@ const QuizPage = (props) => {
       newScore[ref] = 0;
     }
     setScore(newScore);
+    setIsAnswered(answered);
   };
 
   const scoreHandler = async (event) => {
     const reducer = (accumulator, item) => {
       return accumulator + item;
     };
-    let scoreTotal = score.reduce(reducer, 0);
-    const body = {
-      score: scoreTotal,
-      difficulty: difficulty,
-      category: category,
-    };
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    console.log(scoreTotal);
-    const response = await axios.post('/api/score', body, config);
+    let answered = isAnswered.reduce(reducer, 0);
+    if (answered != 10) {
+      event.preventDefault();
+      setMessage('Please answer all questions');
+    } else {
+      let scoreTotal = score.reduce(reducer, 0);
+      const body = {
+        score: scoreTotal,
+        difficulty: difficulty,
+        category: category,
+        answered: answered,
+      };
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const response = await axios.post('/api/score', body, config);
+      console.log(response);
+      setMessage('Score submitted');
+    }
   };
 
   // useEffect(() => {
@@ -85,14 +99,12 @@ const QuizPage = (props) => {
         />
       ) : (
         <Selection
-          category={category}
-          difficulty={difficulty}
-          answers={answers}
           diffHandler={diffHandler}
           catHandler={catHandler}
           quizHandler={quizHandler}
         />
       )}
+      {}
     </div>
   );
 };
