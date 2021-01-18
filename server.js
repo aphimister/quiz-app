@@ -91,7 +91,7 @@ app.get('/results', async (req, res) => {
     difficulty: 'easy',
     category: 'Animals',
   });
-  res.send('user registered');
+  res.send('score registered');
 });
 
 app.post("/login", async (req, res) => {
