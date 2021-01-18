@@ -5,7 +5,6 @@ const QuizPage = (props) => {
   const [quiz, setQuiz] = useState([]);
   const [category, setCategory] = useState('9');
   const [difficulty, setDifficulty] = useState('easy');
-  const [message, setMessage] = useState('');
 
   const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
 
@@ -14,12 +13,28 @@ const QuizPage = (props) => {
     zeroes.push(0);
   }
 
-  const [score, setScore] = useState(zeroes);
+  const [score, setScore] = useState([...zeroes]);
   const [isAnswered, setIsAnswered] = useState([...zeroes]);
+  const [totalAnswered, setTotalAnswered] = useState(0);
+
+  const shuffleArray = (array) => {
+    //Durstenfeld shuffle algorithm, credit https://stackoverflow.com/users/310500/laurens-holst
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  };
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
-    setQuiz(call.data.results);
+    const unshuffled = call.data.results;
+    const shuffled = unshuffled.map((q) => {
+      let qArray = [q.correct_answer, ...q.incorrect_answers];
+      shuffleArray(qArray);
+      q.answers = qArray;
+      return q;
+    });
+    setQuiz(shuffled);
   };
 
   const diffHandler = (event) => {
@@ -43,49 +58,34 @@ const QuizPage = (props) => {
     let newScore = score;
     let answered = isAnswered;
     isAnswered[ref] = 1;
-    if (quiz[ref].correct_answer == answer) {
-      console.log('correct');
-      newScore[ref] = 1;
-    } else {
-      console.log('Wrong!');
-      newScore[ref] = 0;
-    }
-    setScore(newScore);
     setIsAnswered(answered);
-  };
-
-  const scoreHandler = async (event) => {
     const reducer = (accumulator, item) => {
       return accumulator + item;
     };
-    let answered = isAnswered.reduce(reducer, 0);
-    if (answered != 10) {
-      event.preventDefault();
-      setMessage('Please answer all questions');
+    setTotalAnswered(score.reduce(reducer, 0));
+    console.log(totalAnswered);
+    if (quiz[ref].correct_answer == answer) {
+      newScore[ref] = 1;
     } else {
-      let scoreTotal = score.reduce(reducer, 0);
-      const body = {
-        score: scoreTotal,
-        difficulty: difficulty,
-        category: category,
-        answered: answered,
-      };
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const response = await axios.post('/api/score', body, config);
-      console.log(response);
-      setMessage('Score submitted');
+      newScore[ref] = 0;
     }
+    setScore(newScore);
   };
 
-  // useEffect(() => {
-  //   //calls the API on page load
-
-  //   apiCall(apiURL);
-  // }, []);
+  const scoreHandler = async (event) => {
+    const body = {
+      score: score,
+      difficulty: difficulty,
+      category: category,
+    };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await axios.post('/api/score', body, config);
+    console.log(response);
+  };
 
   return (
     // quiz display
@@ -104,7 +104,15 @@ const QuizPage = (props) => {
           quizHandler={quizHandler}
         />
       )}
-   
+      {totalAnswered === 10 ? (
+        <button
+          id="submitAnswers"
+          className="button"
+          onClick={props.scoreHandler}
+        >
+          Submit
+        </button>
+      ) : null}
     </div>
   );
 };
@@ -223,25 +231,14 @@ const Questions = (props) => {
         <QuizCard
           question={q.question}
           correct_answer={q.correct_answer}
-          incorrect_answers={q.incorrect_answers}
+          answers={q.answers}
           number={i}
           key={i}
           answerHandler={props.answerHandler}
         />
       );
     });
-    return (
-      <div className="quizContainer">
-        {questions}
-        <button
-          id="submitAnswers"
-          className="button"
-          onClick={props.scoreHandler}
-        >
-          Submit
-        </button>
-      </div>
-    );
+    return <div className="quizContainer">{questions}</div>;
   } else {
     return <div className="loadingMessage">Loading questions</div>;
   }
@@ -250,8 +247,6 @@ const Questions = (props) => {
 const QuizCard = (props) => {
   if (props.question) {
     // checks there is an array
-    let qArray = [props.correct_answer, ...props.incorrect_answers]; //new array of all the answers
-    shuffleArray(qArray); //shuffles the questions
     return (
       <div className="questionCard" name={props.number}>
         <div className="question" name={props.number}>
@@ -259,7 +254,7 @@ const QuizCard = (props) => {
         </div>
         <AnswerList
           qNumber={props.number}
-          answers={qArray}
+          answers={props.answers}
           answerHandler={props.answerHandler}
         />
       </div>
@@ -301,14 +296,6 @@ const Answer = (props) => {
       <label htmlFor={props.answer}>{props.answer}</label>
     </div>
   );
-};
-
-const shuffleArray = (array) => {
-  //Durstenfeld shuffle algorithm, credit https://stackoverflow.com/users/310500/laurens-holst
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
 };
 
 export default QuizPage;
