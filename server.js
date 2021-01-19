@@ -181,21 +181,21 @@ app.post('/login', async (req, res) => {
 //<--------------------------Results----------------------------------------------->>
 
 app.post('/api/score', async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   await Score.create({
     score: req.body.score,
     time: req.body.time,
     difficulty: req.body.difficulty,
     category: req.body.category,
-    user: '60057f7fc60ef51a93ea758f'
+    user: '6006b4af3bd6c64d37206fa2'
   })
 
   res.send('nice one');
 });
 
 app.get("/topscores", async (req, res) => {
-    const scoreDB = await Score.find();
-    console.log(scoreDB)
+    const scoreDB = await Score.find()
+    // console.log(scoreDB)
       res.json({
         scores: scoreDB
     })
