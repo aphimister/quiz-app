@@ -1,3 +1,5 @@
+
+//<----------Import dependencies -------------------->
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -8,16 +10,14 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const Quizuser = require('./models/quizUser');
 const Score = require('./models/scoreModel');
-const check = require('./middlewares/check');
-
+const check = require('./middlewares/check');// check.isLoggedIn
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 
-
-
+//<----------------Database connection ---------------->
 mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
@@ -27,7 +27,7 @@ mongoose
   })
   .then(() => console.log('MongoDB is connected'));
 
-
+//<
 app.get('/', (req, res) => {
   res.send('Hello from Alex, Jenny and Tom');
 });
@@ -49,6 +49,7 @@ app.post('/register', async (req, res) => {
     });
   } else if (player.length > 0) {
     res.json({
+      registration: false,
       errorPasswords: 'Sorry Email Or Password Is Incorect ',
     });
   } else {
@@ -58,56 +59,20 @@ app.post('/register', async (req, res) => {
       password: hashedPassword,
     });
     res.json({
+      registration: true,
       message: 'user was registered',
     });
   }
 });
-// app.post('/register', async(req, res) => {
-//   console.log("reaching register on backend")
-//   console.log(req.body)
-//   let error = false
-  
-//   const UserDB = await User.find()
-//   for (let x=0; x<UserDB.length; x++){
-//   if (req.body.userEmail == UserDB[x].email){
-//   error = true
-//   }
-//   }
-//   if (error == false){
-//   const hashedPassword = await bcrypt.hash(req.body.userPassword, 8)
-  
-//   await User.create({
-//   name: req.body.userName,
-//   email: req.body.userEmail,
-//   password: hashedPassword,
-//   })
-//   const user = await User.findOne({email: req.body.userEmail})
-//   const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
-//   expiresIn: process.env.JWT_EXPIRES_IN
-//   })
-//   console.log(token)
-  
-//   const cookieOptions = {
-//   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPRESS * 24 * 60 * 60 * 1000), httpOnly: true
-//   }
-//   res.cookie('jwt', token, cookieOptions)
-//   loggedIn = true
-//   res.json({
-//   message: "user was registered"
-//   })
-//   }
-//   else{
-//   res.json({
-//   message: "email alreay exists on system"
-//   })
-//   }
-//   })
+
   
   
 
 //<--------------------- USER PROFILE ------------------------------->
-app.get("/profile", (req,res) =>{
-  const playerDB = Quizuser.findById();
+app.get("/profile", check.isLoggedIn, async (req,res) =>{
+  const playerId = req.userFound._id
+  const playerDB = await Quizuser.findById(playerId);
+  console.log(playerDB)
   res.json({
     user: playerDB
   })
@@ -144,38 +109,14 @@ app.post('/login', async (req, res) => {
       expires: new Date(Date.now() + process.env.PLAYER_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
       httpOnly: true
     }
-
+   
     res.cookie("playerCookie", quizToken, cookieOptions);
+    res.json({ token: quizToken })
     res.send("logged in")
-    
   }
 });
 
-// app.post("/login", async (req, res) => {
-//   const user = await User.findOne({email: req.body.userEmail})
-//   const isMatch = await bcrypt.compare(req.body.userPassword,user.password)
-  
-//   if (isMatch){
-//   const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
-//   expiresIn: process.env.JWT_EXPIRES_IN
-//   })
-//   console.log(token)
-  
-//   const cookieOptions = {
-//   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPRESS * 24 * 60 * 60 * 1000), httpOnly: true
-//   }
-//   res.cookie('jwt', token, cookieOptions)
-//   loggedIn = true
-//   res.json({
-//   message: "user logged in"
-//   })
-//   }
-//   else{
-//   res.json({
-//   message: "incorrect login details"
-//   })
-//   }
-//   })
+
 
 //Results section
 //<--------------------------Results----------------------------------------------->>
