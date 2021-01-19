@@ -14,19 +14,20 @@ import axios from 'axios';
 class App extends Component {
   //state lives here as blank strings
   state = {
-    difficulty: '',
-    category: '',
+    difficulty: 'easy',
+    category: '9',
     data: {},
   };
 
   componentDidMount() {
     //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
-    this.setState({ difficulty: 'easy', category: '9' });
+    // this.setState({ difficulty: 'easy', category: '9' });
     axios.get("/topscores").then( res =>{
       this.setState({
       data: res.data
   });
-});
+  console.log(res.data)
+  });
   }
 
   //This is the difficulty tracker / state handler
@@ -74,7 +75,6 @@ class App extends Component {
             <Route
               exact
               path="/quiz"
-              component={QuizPage}
               render={(props) => (
                 <QuizPage
                   category={this.state.category}
@@ -83,10 +83,9 @@ class App extends Component {
               )}
             />
             <Route exact path="/topscores" 
-              component={Topscores} 
               render={(props) => (
                 <Topscores 
-                data={this.state.data}/>
+                data={this.state.data.scores}/>
               )}
             />
           </Switch>
