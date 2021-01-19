@@ -8,6 +8,7 @@ import Topscores from'./components/TopScores';
 import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
+import Profile from './components/Profile';
 import axios from 'axios';
 
 //I changed this to a class component. It is just makes more sense to my brain
@@ -76,10 +77,11 @@ class App extends Component {
                   data={this.state.data}
                 />
               )}
-            />
-            <Route exact path="/login" component={Login} />
+            /> */}
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/login" component={Register} />
             <Route exact path="/logout" component={Logout} />
-            <Route exact path="/register" component={Register} />
+            {/* <Route exact path="/register" component={Register} /> */}
             <Route
               exact
               path="/quiz"

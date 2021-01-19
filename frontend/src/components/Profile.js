@@ -1,19 +1,26 @@
 import axios from 'axios'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 const Profile = () => {
- const fetchData = async () => {
+    const [user, setUser] = useState([ ])
+    
+
+let fetchData = async () => {
      const response = await axios.get("/profile")
-    console.log(response.data)
+    console.log(response.data.user.name)
+    setUser(response.data.user.name)
  }
  useEffect(() => {
     fetchData()
- }, [])
+ }, [] )
 
          
     return (
+
         <div>
+            <h1>Profile page</h1>
             
+            <h4>{user}</h4>
         </div>
     )
 }
