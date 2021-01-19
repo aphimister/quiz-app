@@ -59,6 +59,7 @@ const Register = () => {
             className="input"
             type="text"
             name="userName"
+            placeholder="Joe Bloggs"
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></input>
@@ -69,6 +70,7 @@ const Register = () => {
             className="input"
             type="email"
             name="userEmail"
+            placeholder="e.g email@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
@@ -82,8 +84,10 @@ const Register = () => {
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></input>
-           <input
+          ></input><br />
+
+          <label className="label">Confirm Pasword:</label>
+          <input
             className="input"
             type="password"
             name="userPassword2"
@@ -91,7 +95,7 @@ const Register = () => {
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
           ></input>
-          <br />
+          <br /><br />
 
           <button type="submit" className="button btn-login" >
             Register

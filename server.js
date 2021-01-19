@@ -9,11 +9,13 @@ const jwt = require('jsonwebtoken');
 const Quizuser = require('./models/quizUser');
 const Score = require('./models/scoreModel');
 const check = require('./middlewares/check');
+
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
+
 
 
 mongoose
@@ -144,6 +146,7 @@ app.post('/login', async (req, res) => {
     }
 
     res.cookie("playerCookie", quizToken, cookieOptions);
+    res.send("logged in")
     
   }
 });
@@ -177,22 +180,26 @@ app.post('/login', async (req, res) => {
 //Results section
 //<--------------------------Results----------------------------------------------->>
 
-app.post('/api/score', (req, res) => {
+app.post('/api/score', async (req, res) => {
   console.log(req.body);
+  await Score.create({
+    score: req.body.score,
+    time: 230,
+    difficulty: req.body.difficulty,
+    category: req.body.category,
+    user: '60057f7fc60ef51a93ea758f'
+  })
+
   res.send('nice one');
 });
 
-app.get('/results', async (req, res) => {
-  await Score.create({
-    points: 10,
-    time: 230,
-    difficulty: 'easy',
-    category: 'Animals',
-  });
-  res.send('score registered');
+app.get("/topscores", async (req, res) => {
+    const scoreDB = await Score.find();
+    console.log(scoreDB)
+      res.json({
+        scores: scoreDB
+    })
 });
-
-
 
 
 app.listen(5000, () => {
