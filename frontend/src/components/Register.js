@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+
+
 
 // const Register1 = (props) => {
 
@@ -21,13 +23,15 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [backendMessage, setBackendMessage] = useState("");
+  const [backendReg, setBackendReg] = useState("");
+  let history = useHistory();
 
   const formHandler = async (event) => {
     event.preventDefault();
     console.log(name);
     console.log(email);
     console.log(password);
-    buttonClicked();
+   
 
     const body = {
       userName: name,
@@ -42,29 +46,40 @@ const Register = () => {
     };
 
     const backend = await axios.post("/register", body, config);
+    setBackendReg(backend.data.registration)
     setBackendMessage(backend.data.message);
     console.log(backend);
+    
+    if(backendReg) {
+      history.push("/login");
+   }else{
+       history.push("/register")
+    }
+ 
 
     setName("");
     setEmail("");
     setPassword("");
     setPassword2("");
+    setBackendMessage("")
    
   };
-  let history = useHistory();
 
-  const buttonClicked = () => {
-    console.log(backendMessage)
-
-  //   if (backendMessage.data.registration === true) {
-  //     history.push("/login");
-    
-  // }else{
-  //   history.push("/register")
-  // }
+     
+ const clickHandler = () => {
+  //  console.log(backendReg)
+  history.push("/login");
 }
+  
+
+  
+
+
+ 
+
 
   return (
+    
     <div>
       <div className="title-container">
         <h1>Register to start playing</h1>
@@ -115,18 +130,21 @@ const Register = () => {
           <button
             type="submit"
             className="button btn-login"
-            // onClick={buttonClicked}
-
-          >
-            {" "}
+            // onClick={clickHandler}
+            >
             Register
           </button>
-        </form>
-
+          <button type="button" 
+          onClick={clickHandler}
+          >
+           Go To Login 
+          </button>
         <div className="App"></div>
+        </form>
+         
       </div>
     </div>
   );
-};
+  };
 
 export default Register;

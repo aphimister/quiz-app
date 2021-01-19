@@ -1,11 +1,13 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Login =  () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginBackendVerified, setloginBackendVerified] = useState("");
+  let history = useHistory();
 
   const formLoginHandler = async (event) => {
     event.preventDefault();
@@ -25,9 +27,19 @@ const Login =  () => {
     };
 
     const loginSuccess = await axios.post("/login", body, config);
+
     setloginBackendVerified(loginSuccess.data.message);
     console.log(loginSuccess);
+
+    
+    
+  
   };
+
+  const clickHandler = () => {
+    //  console.log(backendReg)
+    history.push("/Register");
+  }
   return (
     <div>
       <div className="title-container">
@@ -56,7 +68,12 @@ const Login =  () => {
             onChange={(e) => setPassword(e.target.value)}
           ></input>
           <br />
-          <button className="button btn-login">Register</button>
+          <button className="button btn-login">Login</button>
+          <button type="button" 
+          onClick={clickHandler}
+          >
+           Register
+          </button>
         </form>
         
       </div>
