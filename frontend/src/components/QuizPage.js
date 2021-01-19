@@ -6,6 +6,9 @@ const QuizPage = (props) => {
   const [category, setCategory] = useState('9');
   const [difficulty, setDifficulty] = useState('easy');
   const [message, setMessage] = useState('');
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [display, setDisplay] = useState(0);
 
   let zeroes = [];
   for (let i = 0; i < 10; i++) {
@@ -38,6 +41,8 @@ const QuizPage = (props) => {
   const quizHandler = (event) => {
     event.preventDefault();
     apiCall(apiURL);
+    setIsActive(true);
+    setDisplay(1);
   };
 
   // This is the category tracker / state handler
@@ -61,16 +66,18 @@ const QuizPage = (props) => {
     }
     setScore(newScore);
   };
+  const reducer = (accumulator, item) => {
+    return accumulator + item;
+  };
 
   const scoreHandler = async (event) => {
-    const reducer = (accumulator, item) => {
-      return accumulator + item;
-    };
     let totalAnswered = isAnswered.reduce(reducer, 0);
     if (totalAnswered === 10) {
+      setIsActive(false);
       let totalScore = score.reduce(reducer, 0);
       const body = {
         score: totalScore,
+        time: seconds,
         difficulty: difficulty,
         category: category,
       };
@@ -81,6 +88,7 @@ const QuizPage = (props) => {
       };
       const response = await axios.post('/api/score', body, config);
       console.log(response);
+      setDisplay(2);
     } else
       setMessage(
         `Please answer all questions before submitting. You have ${
@@ -89,15 +97,38 @@ const QuizPage = (props) => {
       );
   };
 
+  let displays = [
+    <Selection
+      diffHandler={diffHandler}
+      catHandler={catHandler}
+      quizHandler={quizHandler}
+    />,
+    <Questions
+      quiz={quiz}
+      answerHandler={answerHandler}
+      scoreHandler={scoreHandler}
+      seconds={seconds}
+      setSeconds={setSeconds}
+      isActive={isActive}
+      setIsActive={setIsActive}
+    />,
+    <Score time={seconds} score={score.reduce(reducer, 0)} />,
+  ];
+
   return (
     // quiz display
 
     <div>
-      {quiz[1] ? (
+      {displays[display]}
+      {/* {quiz[1] ? (
         <Questions
           quiz={quiz}
           answerHandler={answerHandler}
           scoreHandler={scoreHandler}
+          seconds={seconds}
+          setSeconds={setSeconds}
+          isActive={isActive}
+          setIsActive={setIsActive}
         />
       ) : (
         <Selection
@@ -105,7 +136,7 @@ const QuizPage = (props) => {
           catHandler={catHandler}
           quizHandler={quizHandler}
         />
-      )}
+      )} */}
 
       <div className="message">{message}</div>
     </div>
@@ -243,6 +274,12 @@ const Questions = (props) => {
         >
           Submit
         </button>
+        <Timer
+          seconds={props.seconds}
+          setSeconds={props.setSeconds}
+          isActive={props.isActive}
+          setIsActive={props.setIsActive}
+        />
       </div>
     );
   } else {
@@ -300,6 +337,49 @@ const Answer = (props) => {
         onClick={(e) => props.answerHandler(e, props.answer, props.number)}
       />
       <label htmlFor={props.answer}>{props.answer}</label>
+    </div>
+  );
+};
+
+const Timer = (props) => {
+  const isActive = props.isActive;
+  const setIsActive = props.setIsActive;
+  const seconds = props.seconds;
+  const setSeconds = props.setSeconds;
+
+  const toggle = () => {
+    setIsActive(!isActive);
+  };
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isActive, seconds]);
+
+  if (props.isActive) {
+    return (
+      <div className="timer">
+        <div className="time">{props.seconds}s</div>
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
+
+const Score = (props) => {
+  return (
+    <div className="gzMessage">
+      Nice one! You got {props.score} correct out of 10, in {props.time}s!
     </div>
   );
 };
