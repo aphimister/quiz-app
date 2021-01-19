@@ -184,7 +184,7 @@ app.post('/api/score', async (req, res) => {
   console.log(req.body);
   await Score.create({
     score: req.body.score,
-    time: 230,
+    time: req.body.time,
     difficulty: req.body.difficulty,
     category: req.body.category,
     user: '60057f7fc60ef51a93ea758f'
