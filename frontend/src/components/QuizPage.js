@@ -6,20 +6,30 @@ const QuizPage = (props) => {
   const [category, setCategory] = useState('9');
   const [difficulty, setDifficulty] = useState('easy');
   const [message, setMessage] = useState('');
-
-  const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [display, setDisplay] = useState(0);
 
   let zeroes = [];
   for (let i = 0; i < 10; i++) {
     zeroes.push(0);
   }
 
-  const [score, setScore] = useState(zeroes);
+  const [score, setScore] = useState([...zeroes]);
   const [isAnswered, setIsAnswered] = useState([...zeroes]);
+
+  const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
-    setQuiz(call.data.results);
+    const unshuffled = call.data.results;
+    const shuffled = unshuffled.map((q) => {
+      let qArray = [q.correct_answer, ...q.incorrect_answers];
+      shuffleArray(qArray);
+      q.answers = qArray;
+      return q;
+    });
+    setQuiz(shuffled);
   };
 
   const diffHandler = (event) => {
@@ -31,6 +41,8 @@ const QuizPage = (props) => {
   const quizHandler = (event) => {
     event.preventDefault();
     apiCall(apiURL);
+    setIsActive(true);
+    setDisplay(1);
   };
 
   // This is the category tracker / state handler
@@ -39,36 +51,35 @@ const QuizPage = (props) => {
     let value = event.target.value;
     setCategory(value);
   };
+
   const answerHandler = (event, answer, ref) => {
     let newScore = score;
     let answered = isAnswered;
-    isAnswered[ref] = 1;
+    console.log(isAnswered);
+    answered[ref] = 1;
+    setIsAnswered(answered);
+    console.log(isAnswered);
     if (quiz[ref].correct_answer == answer) {
-      console.log('correct');
       newScore[ref] = 1;
     } else {
-      console.log('Wrong!');
       newScore[ref] = 0;
     }
     setScore(newScore);
-    setIsAnswered(answered);
+  };
+  const reducer = (accumulator, item) => {
+    return accumulator + item;
   };
 
   const scoreHandler = async (event) => {
-    const reducer = (accumulator, item) => {
-      return accumulator + item;
-    };
-    let answered = isAnswered.reduce(reducer, 0);
-    if (answered != 10) {
-      event.preventDefault();
-      setMessage('Please answer all questions');
-    } else {
-      let scoreTotal = score.reduce(reducer, 0);
+    let totalAnswered = isAnswered.reduce(reducer, 0);
+    if (totalAnswered === 10) {
+      setIsActive(false);
+      let totalScore = score.reduce(reducer, 0);
       const body = {
-        score: scoreTotal,
+        score: totalScore,
+        time: seconds,
         difficulty: difficulty,
         category: category,
-        answered: answered,
       };
       const config = {
         headers: {
@@ -77,25 +88,47 @@ const QuizPage = (props) => {
       };
       const response = await axios.post('/api/score', body, config);
       console.log(response);
-      setMessage('Score submitted');
-    }
+      setDisplay(2);
+    } else
+      setMessage(
+        `Please answer all questions before submitting. You have ${
+          10 - totalAnswered
+        } questions unanswered`
+      );
   };
 
-  // useEffect(() => {
-  //   //calls the API on page load
-
-  //   apiCall(apiURL);
-  // }, []);
+  let displays = [
+    <Selection
+      diffHandler={diffHandler}
+      catHandler={catHandler}
+      quizHandler={quizHandler}
+    />,
+    <Questions
+      quiz={quiz}
+      answerHandler={answerHandler}
+      scoreHandler={scoreHandler}
+      seconds={seconds}
+      setSeconds={setSeconds}
+      isActive={isActive}
+      setIsActive={setIsActive}
+    />,
+    <Score time={seconds} score={score.reduce(reducer, 0)} />,
+  ];
 
   return (
     // quiz display
 
     <div>
-      {quiz[1] ? (
+      {displays[display]}
+      {/* {quiz[1] ? (
         <Questions
           quiz={quiz}
           answerHandler={answerHandler}
           scoreHandler={scoreHandler}
+          seconds={seconds}
+          setSeconds={setSeconds}
+          isActive={isActive}
+          setIsActive={setIsActive}
         />
       ) : (
         <Selection
@@ -103,8 +136,9 @@ const QuizPage = (props) => {
           catHandler={catHandler}
           quizHandler={quizHandler}
         />
-      )}
-   
+      )} */}
+
+      <div className="message">{message}</div>
     </div>
   );
 };
@@ -223,7 +257,7 @@ const Questions = (props) => {
         <QuizCard
           question={q.question}
           correct_answer={q.correct_answer}
-          incorrect_answers={q.incorrect_answers}
+          answers={q.answers}
           number={i}
           key={i}
           answerHandler={props.answerHandler}
@@ -240,6 +274,12 @@ const Questions = (props) => {
         >
           Submit
         </button>
+        <Timer
+          seconds={props.seconds}
+          setSeconds={props.setSeconds}
+          isActive={props.isActive}
+          setIsActive={props.setIsActive}
+        />
       </div>
     );
   } else {
@@ -250,8 +290,6 @@ const Questions = (props) => {
 const QuizCard = (props) => {
   if (props.question) {
     // checks there is an array
-    let qArray = [props.correct_answer, ...props.incorrect_answers]; //new array of all the answers
-    shuffleArray(qArray); //shuffles the questions
     return (
       <div className="questionCard" name={props.number}>
         <div className="question" name={props.number}>
@@ -259,7 +297,7 @@ const QuizCard = (props) => {
         </div>
         <AnswerList
           qNumber={props.number}
-          answers={qArray}
+          answers={props.answers}
           answerHandler={props.answerHandler}
         />
       </div>
@@ -299,6 +337,49 @@ const Answer = (props) => {
         onClick={(e) => props.answerHandler(e, props.answer, props.number)}
       />
       <label htmlFor={props.answer}>{props.answer}</label>
+    </div>
+  );
+};
+
+const Timer = (props) => {
+  const isActive = props.isActive;
+  const setIsActive = props.setIsActive;
+  const seconds = props.seconds;
+  const setSeconds = props.setSeconds;
+
+  const toggle = () => {
+    setIsActive(!isActive);
+  };
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isActive, seconds]);
+
+  if (props.isActive) {
+    return (
+      <div className="timer">
+        <div className="time">{props.seconds}s</div>
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
+
+const Score = (props) => {
+  return (
+    <div className="gzMessage">
+      Nice one! You got {props.score} correct out of 10, in {props.time}s!
     </div>
   );
 };
