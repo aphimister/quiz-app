@@ -3,13 +3,15 @@ import React, {useState, useEffect} from 'react';
 
 const TopScores = (props) => {
     const [sortedArray, setSortedArray] = useState([]);
-    // array destructing
-    
+
+
     useEffect(() => {
         let temp = props.data;
-        temp.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )
-        setSortedArray(temp)
-    }, [])
+
+        if(props.data){temp.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )
+        temp.slice(0,10)
+        setSortedArray(temp)}
+    }, [props.data])
 
 
     return (

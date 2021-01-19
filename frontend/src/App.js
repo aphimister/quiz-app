@@ -44,6 +44,14 @@ class App extends Component {
     this.setState({ category: value });
   };
 
+  dataHandler = (scoredata)=> {
+    let dataObj = this.state.data
+    let temp= [...this.state.data.scores]
+    temp.push(scoredata)
+    dataObj.scores = temp
+    this.setState({data: dataObj})
+  }
+
   //Have to use render as it is now a class component
   render() {
     console.log(this.state.difficulty);
@@ -79,6 +87,7 @@ class App extends Component {
                 <QuizPage
                   category={this.state.category}
                   difficulty={this.state.difficulty}
+                  dataHandler={this.dataHandler}
                 />
               )}
             />
