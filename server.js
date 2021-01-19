@@ -1,3 +1,5 @@
+
+//<----------Import dependencies -------------------->
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -8,14 +10,14 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const Quizuser = require('./models/quizUser');
 const Score = require('./models/scoreModel');
-const check = require('./middlewares/check');
+const check = require('./middlewares/check');// check.isLoggedIn
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 
-
+//<----------------Database connection ---------------->
 mongoose
   .connect(process.env.DB_URL, {
     useNewUrlParser: true,
@@ -25,7 +27,7 @@ mongoose
   })
   .then(() => console.log('MongoDB is connected'));
 
-
+//<
 app.get('/', (req, res) => {
   res.send('Hello from Alex, Jenny and Tom');
 });
@@ -67,8 +69,10 @@ app.post('/register', async (req, res) => {
   
 
 //<--------------------- USER PROFILE ------------------------------->
-app.get("/profile", (req,res) =>{
-  const playerDB = Quizuser.findById();
+app.get("/profile", check.isLoggedIn, async (req,res) =>{
+  const playerId = req.userFound._id
+  const playerDB = await Quizuser.findById(playerId);
+  console.log(playerDB)
   res.json({
     user: playerDB
   })
