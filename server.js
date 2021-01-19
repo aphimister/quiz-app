@@ -47,7 +47,7 @@ app.post('/register', async (req, res) => {
     });
   } else if (player.length > 0) {
     res.json({
-      registration: 0,
+      registration: false,
       errorPasswords: 'Sorry Email Or Password Is Incorect ',
     });
   } else {
@@ -57,7 +57,7 @@ app.post('/register', async (req, res) => {
       password: hashedPassword,
     });
     res.json({
-      registration: 1,
+      registration: true,
       message: 'user was registered',
     });
   }

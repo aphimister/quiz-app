@@ -60,9 +60,9 @@ class App extends Component {
                 />
               )}
             /> */}
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" component={Register} />
             <Route exact path="/logout" component={Logout} />
-            <Route exact path="/register" component={Register} />
+            {/* <Route exact path="/register" component={Register} /> */}
             <Route
               exact
               path="/"
