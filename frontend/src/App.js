@@ -4,23 +4,31 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
+import Topscores from'./components/TopScores';
 import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
 import Profile from './components/Profile';
+import axios from 'axios';
 
 //I changed this to a class component. It is just makes more sense to my brain
 class App extends Component {
   //state lives here as blank strings
   state = {
-    difficulty: '',
-    category: '',
-    // api: "",
+    difficulty: 'easy',
+    category: '9',
+    data: {},
   };
 
   componentDidMount() {
     //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
-    this.setState({ difficulty: 'easy', category: '9' });
+    // this.setState({ difficulty: 'easy', category: '9' });
+    axios.get("/topscores").then( res =>{
+      this.setState({
+      data: res.data
+  });
+  console.log(res.data)
+  });
   }
 
   //This is the difficulty tracker / state handler
@@ -48,7 +56,7 @@ class App extends Component {
           <Nav />
           <Switch>
             {/* In this setup you have to use this render property to pass props because it is a Route */}
-            {/* <Route
+            <Route
               exact
               path="/"
               render={(props) => (
@@ -58,6 +66,7 @@ class App extends Component {
                   state={this.state}
                   category={this.state.category}
                   difficulty={this.state.difficulty}
+                  data={this.state.data}
                 />
               )}
             /> */}
@@ -67,13 +76,18 @@ class App extends Component {
             {/* <Route exact path="/register" component={Register} /> */}
             <Route
               exact
-              path="/"
-              component={QuizPage}
+              path="/quiz"
               render={(props) => (
                 <QuizPage
                   category={this.state.category}
                   difficulty={this.state.difficulty}
                 />
+              )}
+            />
+            <Route exact path="/topscores" 
+              render={(props) => (
+                <Topscores 
+                data={this.state.data.scores}/>
               )}
             />
           </Switch>

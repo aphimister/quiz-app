@@ -1,16 +1,41 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 
-const TopScores = () => {
+
+const TopScores = (props) => {
+    const [sortedArray, setSortedArray] = useState([]);
+    // array destructing
+    
+    useEffect(() => {
+        let temp = props.data;
+        temp.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )
+        setSortedArray(temp)
+    }, [])
+
+
     return (
         <div>
             <div className="title-container">
             <h1 className="title">Top Scores</h1>
             </div>
             <div className="top-score-list">
-            {/* <h4>{props.name}</h4> */}
-            {/* <h4>{props.score}</h4> */}
-             {/* <h4>{props.time}</h4> */}
-        </div>
+                <table>
+                    <tr>
+                        <th>Score</th>
+                        <th>Name</th>
+                        <th>Time</th>
+                    </tr>
+                        {sortedArray.slice(0,10).map((item, index)=>{
+                            return(
+                                <tr>
+                                <td>{item.score}</td> 
+                                <td>{item.user}</td> 
+                                <td>{item.time}</td>
+                                </tr>
+                            )
+                        })}
+                </table>
+
+            </div>
         </div>
     )
 }

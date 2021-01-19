@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
+import { BrowserRouter } from "react-router-dom";
+
 const Login =  () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,7 +59,7 @@ const Login =  () => {
           type="email"
           name="userEmail"
           placeholder="email"
-          onChange={(e) => setEmail(e.target.value)}></input>
+          onChange={(e) => setEmail(e.target.value)}></input><br />
 
           <label className="label">Password:</label>
           <input
@@ -74,6 +76,7 @@ const Login =  () => {
           >
            Register
           </button>
+
         </form>
         
       </div>
