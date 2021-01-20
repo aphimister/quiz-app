@@ -69,16 +69,23 @@ app.post('/register', async (req, res) => {
   
 
 //<--------------------- USER PROFILE ------------------------------->
-app.get("/profile", check.isLoggedIn, async (req,res) =>{
+app.get("/api/user", check.isLoggedIn, async (req,res) =>{
+  const user = req.userFound._id
   try {
-    const playerId = req.userFound._id
-    const playerDB = await Quizuser.findById(playerId);
-    console.log(playerDB)
+   
+    const userDB = await Quizuser.findById(user);
+    console.log(user)
     res.json({
-      user: playerDB
+      name: userDB.name,
+      email: userDB.email,
+      id: userDB._id
     })
   } catch (error) {
-    res.send("there was an error")
+   res.json({
+    name: "Guest",
+    email: false,
+    id: false
+   })
   }
  
   
@@ -119,8 +126,8 @@ try {
     }
    
     res.cookie("playerCookie", quizToken, cookieOptions);
-    res.json({ player:player.name,token: quizToken })
-    res.send("logged in")
+   
+   
   }
 } catch (error) {
   res.send("error at loggin")
