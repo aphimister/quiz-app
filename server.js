@@ -111,7 +111,7 @@ app.post('/login', async (req, res) => {
     }
    
     res.cookie("playerCookie", quizToken, cookieOptions);
-    res.json({ token: quizToken })
+    res.json({ player:player.name, token: quizToken })
     res.send("logged in")
   }
 });
@@ -135,7 +135,7 @@ app.post('/api/score', async (req, res) => {
 });
 
 app.get("/topscores", async (req, res) => {
-    const scoreDB = await Score.find()
+    const scoreDB = await Score.find().populate('user', 'name');
     // console.log(scoreDB)
       res.json({
         scores: scoreDB
