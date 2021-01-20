@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/Nav';
-import Login from './components/Login';
+
 import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
@@ -18,6 +18,7 @@ class App extends Component {
     difficulty: 'easy',
     category: '9',
     data: {},
+    name: "Guest",
   };
 
   componentDidMount() {
@@ -53,6 +54,16 @@ class App extends Component {
     this.setState({data: dataObj})
   }
 
+  nameHandler= (namedata) => {
+    
+    
+    this.setState({name: namedata})
+
+    console.log(this.state.name)
+  }
+
+
+
   //Have to use render as it is now a class component
   render() {
     console.log(this.state.difficulty);
@@ -77,9 +88,11 @@ class App extends Component {
                   data={this.state.data}
                 />
               )}
-            /> */}
+            /> 
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/login" component={Register} />
+            <Route exact path="/login" render = {(props) => (
+            <Register nameHandler={this.nameHandler}/>
+            )} />
             <Route exact path="/logout" component={Logout} />
             {/* <Route exact path="/register" component={Register} /> */}
             <Route

@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 //    )
 // };
 
-const Register = () => {
+const Register = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,7 +81,7 @@ const Register = () => {
       userEmail: email,
       userPassword: password,
     };
-
+     
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -89,6 +89,7 @@ const Register = () => {
     };
 
     const loginSuccess = await axios.post("/login", body, config);
+    props.nameHandler(loginSuccess.data.player)
 
     setloginBackendVerified(loginSuccess.data.message);
     console.log(loginSuccess);
