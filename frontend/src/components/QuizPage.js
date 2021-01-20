@@ -9,6 +9,18 @@ const QuizPage = (props) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [display, setDisplay] = useState(0);
+  const [user, setUser] = useState([]);
+  const [id, setId] = useState([]);
+
+  let fetchData = async () => {
+    const response = await axios.get('/api/user');
+    setUser(response.data.name);
+    setId(response.data.id);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   let zeroes = [];
   for (let i = 0; i < 10; i++) {
@@ -55,10 +67,8 @@ const QuizPage = (props) => {
   const answerHandler = (event, answer, ref) => {
     let newScore = score;
     let answered = isAnswered;
-    console.log(isAnswered);
     answered[ref] = 1;
     setIsAnswered(answered);
-    console.log(isAnswered);
     if (quiz[ref].correct_answer == answer) {
       newScore[ref] = 1;
     } else {
@@ -79,16 +89,16 @@ const QuizPage = (props) => {
         score: totalScore,
         time: seconds,
         difficulty: difficulty,
-        category: category
+        category: category,
+        id: id,
       };
-      props.dataHandler(body)
+      props.dataHandler(body);
       const config = {
         headers: {
           'Content-Type': 'application/json',
         },
       };
       const response = await axios.post('/api/score', body, config);
-      console.log(response);
       setDisplay(2);
     } else
       setMessage(
@@ -113,7 +123,7 @@ const QuizPage = (props) => {
       isActive={isActive}
       setIsActive={setIsActive}
     />,
-    <Score time={seconds} score={score.reduce(reducer, 0)} />,
+    <Score time={seconds} score={score.reduce(reducer, 0)} user={user} />,
   ];
 
   return (
