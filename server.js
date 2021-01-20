@@ -70,12 +70,18 @@ app.post('/register', async (req, res) => {
 
 //<--------------------- USER PROFILE ------------------------------->
 app.get("/profile", check.isLoggedIn, async (req,res) =>{
-  const playerId = req.userFound._id
-  const playerDB = await Quizuser.findById(playerId);
-  console.log(playerDB)
-  res.json({
-    user: playerDB
-  })
+  try {
+    const playerId = req.userFound._id
+    const playerDB = await Quizuser.findById(playerId);
+    console.log(playerDB)
+    res.json({
+      user: playerDB
+    })
+  } catch (error) {
+    res.send("there was an error")
+  }
+ 
+  
 } )
 
 
@@ -84,7 +90,7 @@ app.get("/profile", check.isLoggedIn, async (req,res) =>{
 //<----------------------- ADMIN SECTION --------------------------->
 
 //LOGIN & LOGOUT SECTIONS
-//<--------------------------Login ----------------------------------------------->>
+//<--------------------------------- LOGIN  --------------------------------------------->>
 
 app.get('/login', (req, res) => {
   console.log('at the back end '); // lets us know its working
@@ -98,8 +104,10 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
   const player = await Quizuser.findOne({ email: req.body.userEmail });
   console.log(player);
-  const compare = await bcrypt.compare(req.body.userPassword, player.password);
+  
 
+try {
+  const compare = await bcrypt.compare(req.body.userPassword, player.password);
   if(compare) {
     const quizToken = jwt.sign({id: player._id}, process.env.PLAYER_SECRET, {
       expiresIn: process.env.PLAYER_SECRET_IN
@@ -111,11 +119,19 @@ app.post('/login', async (req, res) => {
     }
    
     res.cookie("playerCookie", quizToken, cookieOptions);
-    res.json({ token: quizToken })
+    res.json({ player:player.name,token: quizToken })
     res.send("logged in")
   }
+} catch (error) {
+  res.send("error at loggin")
+ }
 });
 
+////<--------------------------------- LOGOUT  --------------------------------------------->>
+app.get("/logout", check.logout, (req, res) => {
+
+  res.render("logBackIn");
+});
 
 
 //Results section

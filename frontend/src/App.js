@@ -1,6 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/Nav';
-import Login from './components/Login';
 import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
@@ -16,6 +15,7 @@ class App extends Component {
     difficulty: '',
     category: '',
     // api: "",
+    
   };
 
   componentDidMount() {

@@ -1,19 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
-// const Register1 = (props) => {
-
-//   return (
-
-//     <div>
-//     {backend.data.registration === true ?
-//     (<Login/>)
-//     :(<Register />)}
-//     </div>
-
-//    )
-// };
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -24,7 +11,7 @@ const Register = () => {
   const [backendReg, setBackendReg] = useState("");
   const [loginBackendVerified, setloginBackendVerified] = useState("");
   const [display, setDisplay] = useState(false);
-  let history = useHistory();
+
 
   const formHandler = async (event) => {
     event.preventDefault();
@@ -49,11 +36,7 @@ const Register = () => {
     setBackendMessage(backend.data.message);
     console.log(backend);
 
-    if (backendReg) {
-      history.push("/login");
-    } else {
-      history.push("/register");
-    }
+   
 
     setName("");
     setEmail("");
@@ -73,25 +56,27 @@ const Register = () => {
 
   const formLoginHandler = async (event) => {
     event.preventDefault();
-
     console.log(email);
     console.log(password);
-
     const body = {
       userEmail: email,
       userPassword: password,
     };
-
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-
     const loginSuccess = await axios.post("/login", body, config);
 
     setloginBackendVerified(loginSuccess.data.message);
     console.log(loginSuccess);
+
+    setName("");
+    setEmail("");
+    setPassword("");
+    setPassword2("");
+    setBackendMessage("");
   };
 
   return (
