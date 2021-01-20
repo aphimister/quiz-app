@@ -106,3 +106,16 @@ body {
   right: 0;
   padding: 5px;
 }
+.formContainer {
+}
+.formContainer * {
+  margin: 5px;
+}
+.input {
+  font-family: 'Raleway', sans-serif;
+  border-radius: 4px;
+  border: 1px #454851 solid;
+  padding: 4px;
+}
+.passwords {
+}
