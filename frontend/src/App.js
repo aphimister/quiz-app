@@ -1,10 +1,9 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/Nav';
-import Login from './components/Login';
 import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
-import Topscores from'./components/TopScores';
+import Topscores from './components/TopScores';
 import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
@@ -23,12 +22,12 @@ class App extends Component {
   componentDidMount() {
     //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
     // this.setState({ difficulty: 'easy', category: '9' });
-    axios.get("/topscores").then( res =>{
+    axios.get('/topscores').then((res) => {
       this.setState({
-      data: res.data
-  });
-  console.log(res.data)
-  });
+        data: res.data,
+      });
+      console.log(res.data);
+    });
   }
 
   //This is the difficulty tracker / state handler
@@ -77,7 +76,7 @@ class App extends Component {
                   data={this.state.data}
                 />
               )}
-            /> */}
+            />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/login" component={Register} />
             <Route exact path="/logout" component={Logout} />
@@ -93,11 +92,10 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/topscores" 
-              render={(props) => (
-                <Topscores 
-                data={this.state.data.scores}/>
-              )}
+            <Route
+              exact
+              path="/topscores"
+              render={(props) => <Topscores data={this.state.data.scores} />}
             />
           </Switch>
         </BrowserRouter>
