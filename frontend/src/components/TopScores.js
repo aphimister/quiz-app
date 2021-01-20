@@ -26,11 +26,11 @@ const TopScores = (props) => {
                         <th>Name</th>
                         <th>Time</th>
                     </tr>
-                        {sortedArray.slice(0,10).map((item, index)=>{
+                        {sortedArray.map((item, index)=>{
                             return(
                                 <tr>
                                 <td>{item.score}</td> 
-                                <td>{item.user}</td> 
+                                <td>{item.user.name}</td> 
                                 <td>{item.time}</td>
                                 </tr>
                             )

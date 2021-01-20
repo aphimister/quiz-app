@@ -90,7 +90,7 @@ const QuizPage = (props) => {
         time: seconds,
         difficulty: difficulty,
         category: category,
-        id: id,
+        user: id
       };
       props.dataHandler(body);
       const config = {
