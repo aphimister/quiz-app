@@ -14,6 +14,13 @@ exports.isLoggedIn = async (req, res, next) => {
 
     next()
 }
-// if(req.cookie.quizToken){
-//     console.log("I have the cookie")
-// }
+//<----------------LOG THE CURRENT USER OUT-------------------------->
+
+exports.logout = (req,res,next) =>{
+    res.cookie('playerCookie','logout', {
+        expires: new Date( Date.now() + 2*1000),//
+        httpOnly: true
+        });
+
+    next();
+}
