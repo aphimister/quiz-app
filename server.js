@@ -157,7 +157,7 @@ app.post('/api/score', async (req, res) => {
     time: req.body.time,
     difficulty: req.body.difficulty,
     category: req.body.category,
-    user: '6006b4af3bd6c64d37206fa2',
+    user: req.body.id,
   });
 
   res.send('nice one');
