@@ -118,7 +118,6 @@ const RegisterDisplay = (props) => {
           <input
             className="input"
             type="text"
-            name="userName"
             value={props.name}
             onChange={(e) => props.setName(e.target.value)}
           ></input>
@@ -140,6 +139,7 @@ const RegisterDisplay = (props) => {
             type="password"
             name="userPassword"
             placeholder="password"
+
             value={props.password}
             onChange={(e) => props.setPassword(e.target.value)}
           ></input>
@@ -151,7 +151,7 @@ const RegisterDisplay = (props) => {
             value={props.password2}
             onChange={(e) => props.setPassword2(e.target.value)}
           ></input>
-          <br />
+          <br /><br />
 
           <button
             type="submit"

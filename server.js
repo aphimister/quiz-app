@@ -137,22 +137,26 @@ app.get("/logout", check.logout, (req, res) => {
 //Results section
 //<--------------------------Results----------------------------------------------->>
 
-app.post('/api/score', (req, res) => {
-  console.log(req.body);
+app.post('/api/score', async (req, res) => {
+  // console.log(req.body);
+  await Score.create({
+    score: req.body.score,
+    time: req.body.time,
+    difficulty: req.body.difficulty,
+    category: req.body.category,
+    user: '6006b4af3bd6c64d37206fa2'
+  })
+
   res.send('nice one');
 });
 
-app.get('/results', async (req, res) => {
-  await Score.create({
-    points: 10,
-    time: 230,
-    difficulty: 'easy',
-    category: 'Animals',
-  });
-  res.send('score registered');
+app.get("/topscores", async (req, res) => {
+    const scoreDB = await Score.find()
+    // console.log(scoreDB)
+      res.json({
+        scores: scoreDB
+    })
 });
-
-
 
 
 app.listen(5000, () => {
