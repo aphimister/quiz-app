@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+
 
 const Register = (props) => {
 
@@ -8,9 +8,9 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [backendMessage, setBackendMessage] = useState("");
-  const [backendReg, setBackendReg] = useState("");
-  const [loginBackendVerified, setloginBackendVerified] = useState("");
+  // const [backendMessage, setBackendMessage] = useState("");
+  // const [backendReg, setBackendReg] = useState("");
+  // const [loginBackendVerified, setloginBackendVerified] = useState("");
   const [display, setDisplay] = useState(false);
 
 
@@ -33,8 +33,8 @@ const Register = (props) => {
     };
 
     const backend = await axios.post("/register", body, config);
-    setBackendReg(backend.data.registration);
-    setBackendMessage(backend.data.message);
+    // setBackendReg(backend.data.registration);
+    // setBackendMessage(backend.data.message);
     console.log(backend);
 
    
@@ -43,7 +43,7 @@ const Register = (props) => {
     setEmail("");
     setPassword("");
     setPassword2("");
-    setBackendMessage("");
+    // setBackendMessage("");
   };
 
   const clickHandler = () => {
@@ -51,14 +51,14 @@ const Register = (props) => {
     setEmail("");
     setPassword("");
     setPassword2("");
-    setBackendMessage("");
+    // setBackendMessage("");
     setDisplay(!display);
   };
 
   const formLoginHandler = async (event) => {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
     const body = {
       userEmail: email,
       userPassword: password,
@@ -71,14 +71,14 @@ const Register = (props) => {
     const loginSuccess = await axios.post("/login", body, config);
     props.nameHandler(loginSuccess.data.player)
 
-    setloginBackendVerified(loginSuccess.data.message);
-    console.log(loginSuccess);
+    // setloginBackendVerified(loginSuccess.data.message);
+    // console.log(loginSuccess);
 
     setName("");
     setEmail("");
     setPassword("");
     setPassword2("");
-    setBackendMessage("");
+    // setBackendMessage("");
   };
 
   return (
