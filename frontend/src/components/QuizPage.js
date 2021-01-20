@@ -79,8 +79,9 @@ const QuizPage = (props) => {
         score: totalScore,
         time: seconds,
         difficulty: difficulty,
-        category: category,
+        category: category
       };
+      props.dataHandler(body)
       const config = {
         headers: {
           'Content-Type': 'application/json',
