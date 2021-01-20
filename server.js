@@ -64,12 +64,13 @@ app.post('/register', async (req, res) => {
   }
 });
 
-//<--------------------- USER PROFILE ------------------------------->
+//<--------------------- GENERIC ROUTE FOR AUTH ------------------------------->
+//In react: profile, 
 app.get('/api/user', check.isLoggedIn, async (req, res) => {
   try {
     const user = req.userFound._id;
     const userDB = await Quizuser.findById(user);
-    console.log(user);
+   
     res.json({
       name: userDB.name,
       email: userDB.email,
@@ -84,8 +85,19 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
   }
 });
 
-//ADMIN BASED SERVER
-//<----------------------- ADMIN SECTION --------------------------->
+//<--------------------- USER DELETE within profile ------------------------------->
+app.delete('/delete',check.isLoggedIn, async (req, res) => {
+ try {
+  const user = req.userFound._id;
+  const userDB = await Quizuser.findByIdAndDelete(user);
+ } catch (error) {
+   res.json({
+     Message: "Get the fuck of the app"
+   })
+ }
+})
+
+
 
 //LOGIN & LOGOUT SECTIONS
 //<--------------------------------- LOGIN  --------------------------------------------->>
@@ -131,7 +143,7 @@ app.post('/login', async (req, res) => {
 });
 
 ////<--------------------------------- LOGOUT  --------------------------------------------->>
-app.get('/logout', check.logout, (req, res) => {
+app.get("/logout", check.logout, (req, res) => {
   res.render('logBackIn');
 });
 

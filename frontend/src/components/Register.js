@@ -30,14 +30,13 @@ const Register = (props) => {
     };
 
     const backend = await axios.post('/register', body, config);
-    // setBackendReg(backend.data.registration);
-    // setBackendMessage(backend.data.message);
+    
     console.log(backend);
     setName('');
     setEmail('');
     setPassword('');
     setPassword2('');
-    // setBackendMessage("");
+   
   };
 
   const clickHandler = () => {
@@ -51,8 +50,7 @@ const Register = (props) => {
 
   const formLoginHandler = async (event) => {
     event.preventDefault();
-    // console.log(email);
-    // console.log(password);
+   
     const body = {
       userEmail: email,
       userPassword: password,
@@ -156,7 +154,7 @@ const RegisterDisplay = (props) => {
           >
             Register
           </button>
-          <button type="button" onClick={props.clickHandler}>
+          <button className="button btn-login" type="button" onClick={props.clickHandler}>
             Go To Login
           </button>
           <div className="App"></div>
@@ -194,7 +192,7 @@ const LoginDisplay = (props) => {
           ></input>
           <br />
           <button className="button btn-login">Login</button>
-          <button type="button" onClick={props.clickHandler}>
+          <button className="button btn-login" type="button" onClick={props.clickHandler}>
             Register
           </button>
         </form>

@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+const logOutHandler =  async ( )=> {
+  
+  await axios.get('/logout')
+ 
+}
 const Nav = () => {
+ 
   return (
     <nav className="nav">
       <ul className="un-list">
@@ -21,7 +28,7 @@ const Nav = () => {
           </Link>
         </li>
         <li className="li-list">
-          <Link className="link" to="/logout">
+          <Link to="/logout" className="button"  onClick={logOutHandler}>
             Logout
           </Link>
         </li>
