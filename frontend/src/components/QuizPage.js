@@ -146,11 +146,11 @@ const QuizPage = (props) => {
 const Selection = (props) => {
   return (
     <div>
-      <h1 className="title">Home Page</h1>
+      <div className="subtitle">Select your quiz</div>
       <form>
-        <h2 className="subheading">Select your difficulty</h2>
+        <div className="subheading">Select your difficulty</div>
         {/* The hander is passed to here and triggered "onChange" */}
-        <select onChange={props.diffHandler} className="selectDiff">
+        <select onChange={props.diffHandler} className="selector selectDiff">
           <option name="difficulty" value={'easy'}>
             Easy
           </option>
@@ -161,9 +161,9 @@ const Selection = (props) => {
             Hard
           </option>
         </select>
-        <h2 className="subheading">Select your category</h2>
+        <div className="subheading">Select your category</div>
         {/* As above, the handler is passed to here and triggered "onChange" */}
-        <select onChange={props.catHandler} className="selectCat">
+        <select onChange={props.catHandler} className="selector selectCat">
           <option value={'9'} name="category">
             General Knowledge
           </option>
