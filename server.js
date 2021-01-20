@@ -1,4 +1,3 @@
-
 //<----------Import dependencies -------------------->
 const express = require('express');
 const mongoose = require('mongoose');
@@ -10,7 +9,7 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const Quizuser = require('./models/quizUser');
 const Score = require('./models/scoreModel');
-const check = require('./middlewares/check');// check.isLoggedIn
+const check = require('./middlewares/check'); // check.isLoggedIn
 dotenv.config({ path: './.env' });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
@@ -65,26 +64,25 @@ app.post('/register', async (req, res) => {
   }
 });
 
-  
-  
-
 //<--------------------- USER PROFILE ------------------------------->
-app.get("/profile", check.isLoggedIn, async (req,res) =>{
+app.get('/api/user', check.isLoggedIn, async (req, res) => {
   try {
-    const playerId = req.userFound._id
-    const playerDB = await Quizuser.findById(playerId);
-    console.log(playerDB)
+    const user = req.userFound._id;
+    const userDB = await Quizuser.findById(user);
+    console.log(user);
     res.json({
-      user: playerDB
-    })
+      name: userDB.name,
+      email: userDB.email,
+      id: userDB._id,
+    });
   } catch (error) {
-    res.send("there was an error")
+    res.json({
+      name: 'Guest',
+      email: false,
+      id: false,
+    });
   }
- 
-  
-} )
-
-
+});
 
 //ADMIN BASED SERVER
 //<----------------------- ADMIN SECTION --------------------------->
@@ -100,39 +98,42 @@ app.get('/login', (req, res) => {
   }); // message display at fron end
 });
 
-
 app.post('/login', async (req, res) => {
   const player = await Quizuser.findOne({ email: req.body.userEmail });
   console.log(player);
-  
 
-try {
-  const compare = await bcrypt.compare(req.body.userPassword, player.password);
-  if(compare) {
-    const quizToken = jwt.sign({id: player._id}, process.env.PLAYER_SECRET, {
-      expiresIn: process.env.PLAYER_SECRET_IN
-    })
-    console.log(quizToken)//Does the token exist??// 
-    const cookieOptions = {
-      expires: new Date(Date.now() + process.env.PLAYER_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-      httpOnly: true
+  try {
+    const compare = await bcrypt.compare(
+      req.body.userPassword,
+      player.password
+    );
+    if (compare) {
+      const quizToken = jwt.sign(
+        { id: player._id },
+        process.env.PLAYER_SECRET,
+        {
+          expiresIn: process.env.PLAYER_SECRET_IN,
+        }
+      );
+      console.log(quizToken); //Does the token exist??//
+      const cookieOptions = {
+        expires: new Date(
+          Date.now() + process.env.PLAYER_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true,
+      };
+      res.cookie('playerCookie', quizToken, cookieOptions);
+      res.json({ user: player.name, token: quizToken });
     }
-   
-    res.cookie("playerCookie", quizToken, cookieOptions);
-    res.json({ player:player.name,token: quizToken })
-    res.send("logged in")
+  } catch (error) {
+    res.send('error at login');
   }
-} catch (error) {
-  res.send("error at loggin")
- }
 });
 
 ////<--------------------------------- LOGOUT  --------------------------------------------->>
-app.get("/logout", check.logout, (req, res) => {
-
-  res.render("logBackIn");
+app.get('/logout', check.logout, (req, res) => {
+  res.render('logBackIn');
 });
-
 
 //Results section
 //<--------------------------Results----------------------------------------------->>
@@ -144,20 +145,19 @@ app.post('/api/score', async (req, res) => {
     time: req.body.time,
     difficulty: req.body.difficulty,
     category: req.body.category,
-    user: '6006b4af3bd6c64d37206fa2'
-  })
+    user: '6006b4af3bd6c64d37206fa2',
+  });
 
   res.send('nice one');
 });
 
-app.get("/topscores", async (req, res) => {
-    const scoreDB = await Score.find().populate('user', 'name');
-    // console.log(scoreDB)
-      res.json({
-        scores: scoreDB
-    })
+app.get('/topscores', async (req, res) => {
+  const scoreDB = await Score.find().populate('user', 'name');
+  // console.log(scoreDB)
+  res.json({
+    scores: scoreDB,
+  });
 });
-
 
 app.listen(5000, () => {
   console.log('Server is online');

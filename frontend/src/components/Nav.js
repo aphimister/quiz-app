@@ -21,7 +21,7 @@ const Nav = () => {
           </Link>
         </li>
         <li className="li-list">
-          <Link className="link" to="/">
+          <Link className="link" to="/logout">
             Logout
           </Link>
         </li>
