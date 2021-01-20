@@ -1,9 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Nav from './components/Nav';
-<<<<<<< HEAD
-
-=======
->>>>>>> 427cb0119e90f90cc7bcfffccb6f1989bc90913f
 import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
@@ -91,11 +87,7 @@ class App extends Component {
                   data={this.state.data}
                 />
               )}
-<<<<<<< HEAD
-            /> 
-=======
             />
->>>>>>> 427cb0119e90f90cc7bcfffccb6f1989bc90913f
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/login" render = {(props) => (
             <Register nameHandler={this.nameHandler}/>
