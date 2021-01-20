@@ -67,6 +67,35 @@ body {
 .selector {
   font-family: 'Raleway', sans-serif;
 }
+.quizContainer {
+  width: 60%;
+  margin: auto;
+}
+.quizCard {
+  padding: 10px;
+  border: 3px #454851 solid;
+  margin-bottom: 10px;
+  border-radius: 18px;
+}
+.question {
+  text-align: center;
+  padding-bottom: 10px;
+}
+.answerListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.answerContainer {
+  text-align: left;
+  width: 50%;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 8px;
+}
+.answerContainer:hover {
+  background-color: #8cabbe;
+}
 
 .timer {
   background-color: #a4a8d1;

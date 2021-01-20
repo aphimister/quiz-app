@@ -276,8 +276,8 @@ const Questions = (props) => {
       );
     });
     return (
-      <div className="quizContainer">
-        {questions}
+      <div className="quizPage">
+        <div className="quizContainer">{questions}</div>
         <button
           id="submitAnswers"
           className="button"
@@ -302,15 +302,17 @@ const QuizCard = (props) => {
   if (props.question) {
     // checks there is an array
     return (
-      <div className="questionCard" name={props.number}>
+      <div className="quizCard" name={props.number}>
         <div className="question" name={props.number}>
           {props.question}
         </div>
-        <AnswerList
-          qNumber={props.number}
-          answers={props.answers}
-          answerHandler={props.answerHandler}
-        />
+        <div className="answerListContainer">
+          <AnswerList
+            qNumber={props.number}
+            answers={props.answers}
+            answerHandler={props.answerHandler}
+          />
+        </div>
       </div>
     );
   } else {
@@ -339,7 +341,8 @@ const Answer = (props) => {
   // format for each radio button
   return (
     // returns laid out button
-    <div>
+
+    <label className="answerContainer" htmlFor={props.answer}>
       <input
         type="radio"
         className="radioButton answer"
@@ -347,8 +350,8 @@ const Answer = (props) => {
         id={props.answer}
         onClick={(e) => props.answerHandler(e, props.answer, props.number)}
       />
-      <label htmlFor={props.answer}>{props.answer}</label>
-    </div>
+      {props.answer}
+    </label>
   );
 };
 
