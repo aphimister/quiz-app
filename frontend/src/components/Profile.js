@@ -1,67 +1,32 @@
-import axios from 'axios'
-import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
-    const [user, setUser] = useState([ ])
-    const [email, setEmail] = useState([ ])
-   
+  const [user, setUser] = useState([]);
+  const [email, setEmail] = useState([]);
 
-let fetchData = async () => {
-     const response = await axios.get("/api/user")
-    console.log(response.data.name)
-    setUser(response.data.name)
-    setEmail(response.data.email)
- }
+  let fetchData = async () => {
+    const response = await axios.get('/api/user');
+    console.log(response.data.name);
+    setUser(response.data.name);
+    setEmail(response.data.email);
+  };
 
- useEffect(() => {
-    fetchData()
- }, [] )
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-//  const clickHandler = () => {
-   
-//     setDisplay(!user);
-//   };
-         
-    return (
-
-     
-           <UserProfile 
-            title="Profile Page"
-            user={user}
-            email={email}
-            // clickHandler={clickHandler}
-            />) 
-           
-        
-     
- 
-}
+  return <UserProfile title="Profile Page" user={user} email={email} />;
+};
 
 const UserProfile = (props) => {
-    return(
-        <div>
-        
-        <div className="title">{props.title}</div>
-        <div className="subtitle">{props.user}</div>
-        <div className="subtitle">{props.email}</div>
-        {/* <button onclick={props.clickHandler}>User Profile</button> */}
+  return (
+    <div>
+      <div className="title">{props.title}</div>
+      <div className="subtitle">{props.user}</div>
+      <div className="subtitle">{props.email}</div>
     </div>
-    )
-  
-}
+  );
+};
 
-
-// const UserNotAuth = (props) => {
-//     return(  
-//     <div>
-//         <h1>{props.title}</h1>
-        
-//         <h4>{props.profileMessage}</h4>
-//         {/* <button onclick={props.clickHandler}>User Profile</button> */}
-//     </div>)
-  
-// }
-
-export default Profile
-
+export default Profile;

@@ -17,17 +17,15 @@ class App extends Component {
     difficulty: 'easy',
     category: '9',
     data: {},
-    name: "Guest",
+    name: 'Guest',
   };
 
   componentDidMount() {
     //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
-    // this.setState({ difficulty: 'easy', category: '9' });
     axios.get('/topscores').then((res) => {
       this.setState({
         data: res.data,
       });
-      console.log(res.data);
     });
   }
 
@@ -45,29 +43,20 @@ class App extends Component {
     this.setState({ category: value });
   };
 
-  dataHandler = (scoredata)=> {
-    let dataObj = this.state.data
-    let temp= [...this.state.data.scores]
-    temp.push(scoredata)
-    dataObj.scores = temp
-    this.setState({data: dataObj})
-  }
+  dataHandler = (scoredata) => {
+    let dataObj = this.state.data;
+    let temp = [...this.state.data.scores];
+    temp.push(scoredata);
+    dataObj.scores = temp;
+    this.setState({ data: dataObj });
+  };
 
-  nameHandler= (namedata) => {
-    
-    
-    this.setState({name: namedata})
-
-    console.log(this.state.name)
-  }
-
-
+  nameHandler = (namedata) => {
+    this.setState({ name: namedata });
+  };
 
   //Have to use render as it is now a class component
   render() {
-    console.log(this.state.difficulty);
-    console.log(this.state.category);
-
     return (
       <>
         <BrowserRouter>
@@ -89,9 +78,11 @@ class App extends Component {
               )}
             />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/login" render = {(props) => (
-            <Register nameHandler={this.nameHandler}/>
-            )} />
+            <Route
+              exact
+              path="/login"
+              render={(props) => <Register nameHandler={this.nameHandler} />}
+            />
             <Route exact path="/logout" component={Logout} />
             {/* <Route exact path="/register" component={Register} /> */}
             <Route

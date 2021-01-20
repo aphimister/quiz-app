@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import axios from "axios";
-
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Register = (props) => {
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
   // const [backendMessage, setBackendMessage] = useState("");
   // const [backendReg, setBackendReg] = useState("");
   // const [loginBackendVerified, setloginBackendVerified] = useState("");
   const [display, setDisplay] = useState(false);
-
 
   const formHandler = async (event) => {
     event.preventDefault();
@@ -28,29 +25,26 @@ const Register = (props) => {
     };
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 
-    const backend = await axios.post("/register", body, config);
+    const backend = await axios.post('/register', body, config);
     // setBackendReg(backend.data.registration);
     // setBackendMessage(backend.data.message);
     console.log(backend);
-
-   
-
-    setName("");
-    setEmail("");
-    setPassword("");
-    setPassword2("");
+    setName('');
+    setEmail('');
+    setPassword('');
+    setPassword2('');
     // setBackendMessage("");
   };
 
   const clickHandler = () => {
-    setName("");
-    setEmail("");
-    setPassword("");
-    setPassword2("");
+    setName('');
+    setEmail('');
+    setPassword('');
+    setPassword2('');
     // setBackendMessage("");
     setDisplay(!display);
   };
@@ -65,19 +59,19 @@ const Register = (props) => {
     };
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
-    const loginSuccess = await axios.post("/login", body, config);
-    props.nameHandler(loginSuccess.data.player)
+    const loginSuccess = await axios.post('/login', body, config);
+    props.nameHandler(loginSuccess.data.user);
 
     // setloginBackendVerified(loginSuccess.data.message);
     // console.log(loginSuccess);
 
-    setName("");
-    setEmail("");
-    setPassword("");
-    setPassword2("");
+    setName('');
+    setEmail('');
+    setPassword('');
+    setPassword2('');
     // setBackendMessage("");
   };
 
@@ -141,7 +135,6 @@ const RegisterDisplay = (props) => {
             type="password"
             name="userPassword"
             placeholder="password"
-
             value={props.password}
             onChange={(e) => props.setPassword(e.target.value)}
           ></input>
@@ -153,7 +146,8 @@ const RegisterDisplay = (props) => {
             value={props.password2}
             onChange={(e) => props.setPassword2(e.target.value)}
           ></input>
-          <br /><br />
+          <br />
+          <br />
 
           <button
             type="submit"
