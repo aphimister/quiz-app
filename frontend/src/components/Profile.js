@@ -25,6 +25,9 @@ const Profile = () => {
   const deleteHandler = async () => {
     await axios.delete("/delete");
   };
+  const updateDetailsHandler = async () => {
+    
+  };
 
   return (
     <div>
@@ -34,6 +37,7 @@ const Profile = () => {
           user={user}
           email={email}
           deleteHandler={deleteHandler}
+          updateDetails={updateDetailsHandler}
         />
       ) : (
         <UserNotAuth
@@ -55,6 +59,9 @@ const UserProfile = (props) => {
       <div>
         <button className="button" onClick={props.deleteHandler}>
           Delete account
+        </button>
+        <button className="button" onClick={props.deleteHandler}>
+          Update My Account
         </button>
       </div>
       
