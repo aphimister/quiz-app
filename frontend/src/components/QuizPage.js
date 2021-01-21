@@ -90,7 +90,7 @@ const QuizPage = (props) => {
         time: seconds,
         difficulty: difficulty,
         category: category,
-        user: id,
+        user: id
       };
       props.dataHandler(body);
       const config = {
@@ -131,6 +131,24 @@ const QuizPage = (props) => {
 
     <div>
       {displays[display]}
+      {/* {quiz[1] ? (
+        <Questions
+          quiz={quiz}
+          answerHandler={answerHandler}
+          scoreHandler={scoreHandler}
+          seconds={seconds}
+          setSeconds={setSeconds}
+          isActive={isActive}
+          setIsActive={setIsActive}
+        />
+      ) : (
+        <Selection
+          diffHandler={diffHandler}
+          catHandler={catHandler}
+          quizHandler={quizHandler}
+        />
+      )} */}
+
       <div className="message">{message}</div>
     </div>
   );
@@ -246,6 +264,7 @@ const Questions = (props) => {
   if (props.quiz[1]) {
     const questions = props.quiz.map((q, i) => {
       return (
+        // <div>Found something{i}</div>
         <QuizCard
           question={q.question}
           correct_answer={q.correct_answer}
@@ -341,6 +360,10 @@ const Timer = (props) => {
   const setIsActive = props.setIsActive;
   const seconds = props.seconds;
   const setSeconds = props.setSeconds;
+
+  const toggle = () => {
+    setIsActive(!isActive);
+  };
 
   useEffect(() => {
     let interval = null;
