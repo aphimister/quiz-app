@@ -104,11 +104,17 @@ class App extends Component {
               path="/topscores"
               render={(props) => <Topscores data={this.state.data.scores} />}
             />
-            <Route
+            {/* <Route
               exact
               path="/accountUpdate"
-             />
-             )
+                render={(props) => (
+                  <accountUpdate
+
+                  />
+                )}
+
+             /> */}
+            
           
           </Switch>
         </BrowserRouter>

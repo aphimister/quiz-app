@@ -131,24 +131,6 @@ const QuizPage = (props) => {
 
     <div>
       {displays[display]}
-      {/* {quiz[1] ? (
-        <Questions
-          quiz={quiz}
-          answerHandler={answerHandler}
-          scoreHandler={scoreHandler}
-          seconds={seconds}
-          setSeconds={setSeconds}
-          isActive={isActive}
-          setIsActive={setIsActive}
-        />
-      ) : (
-        <Selection
-          diffHandler={diffHandler}
-          catHandler={catHandler}
-          quizHandler={quizHandler}
-        />
-      )} */}
-
       <div className="message">{message}</div>
     </div>
   );
