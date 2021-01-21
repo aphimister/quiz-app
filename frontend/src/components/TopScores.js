@@ -7,13 +7,12 @@ const TopScores = (props) => {
 
     useEffect(() => {
         let temp = props.data;
-
         if(props.data){temp.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )
-        temp.slice(0,10)
         setSortedArray(temp)}
+        
     }, [props.data])
-
-
+    
+    // console.log(sortedArray[0].user.name)
     return (
         <div>
             <div className="title-container">
@@ -26,11 +25,12 @@ const TopScores = (props) => {
                         <th>Name</th>
                         <th>Time</th>
                     </tr>
-                        {sortedArray.map((item, index)=>{
+                        {sortedArray.slice(0,10).map((item, index)=>{
+                            console.log(item)
                             return(
                                 <tr>
                                 <td>{item.score}</td> 
-                                <td>{item.user.name}</td> 
+                                {/* <td>{item.user.name}</td>  */}
                                 <td>{item.time}</td>
                                 </tr>
                             )
