@@ -1,6 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState([]);
@@ -10,7 +10,7 @@ const Profile = () => {
   let history = useHistory();
 
   let fetchData = async () => {
-    const response = await axios.get("/api/user");
+    const response = await axios.get('/api/user');
     console.log(response.data.name);
     setUser(response.data.name);
     setEmail(response.data.email);
@@ -18,22 +18,20 @@ const Profile = () => {
 
   useEffect(() => {
     fetchData();
+    if (user !== 'Guest') {
+      setDisplay(1);
+    }
   }, []);
 
   const loginHandler = () => {
-    history.push("/login");
+    history.push('/login');
   };
 
   const deleteHandler = async () => {
-    await axios.delete("/delete");
+    await axios.delete('/delete');
   };
-  useEffect(() => {
-    if (user !== "Guest") {
-      setDisplay(1);
-    }
-  }, [user]);
 
-  const updateHandler = async (event)  => {
+  const updateHandler = async (event) => {
     // event.preventDefault();
 
     // const body = {
@@ -47,18 +45,17 @@ const Profile = () => {
         'Content-Type': 'application/json',
       },
     };
-  await axios.post("/update", {hello:"hello"}, config)
-  //   post("/update",
-  //   setName('');
-  //   setEmail('');
-  //   setPassword('');
+    await axios.post('/update', { hello: 'hello' }, config);
+    //   post("/update",
+    //   setName('');
+    //   setEmail('');
+    //   setPassword('');
 
-  setDisplay(1)
-  }
+    setDisplay(1);
+  };
   const viewHandler = () => {
     setDisplay(2);
   };
-
 
   const views = [
     <UserNotAuth
@@ -72,34 +69,17 @@ const Profile = () => {
       email={email}
       deleteHandler={deleteHandler}
       viewHandler={viewHandler}
-    />,<AccountUpdate 
-    updateHandler={updateHandler}
-    setUser={setUser}
-    user={user}
-    email={email}
-    setEmail={setEmail}/>
+    />,
+    <AccountUpdate
+      updateHandler={updateHandler}
+      setUser={setUser}
+      user={user}
+      email={email}
+      setEmail={setEmail}
+    />,
   ];
 
-  return (
-    <div>
-      {views[display]}
-      {/* {user !== 'Guest' ? (
-        <UserProfile
-          title="Profile Page"
-          user={user}
-          email={email}
-          deleteHandler={deleteHandler}
-          updateHandler={updateHandler}
-        />
-      ) : (
-        <UserNotAuth
-          title="Profile Page"
-          guest="You need to login"
-          loginHandler={loginHandler}
-        />
-      )} */}
-    </div>
-  );
+  return <div>{views[display]}</div>;
 };
 
 const UserProfile = (props) => {
@@ -144,13 +124,14 @@ const AccountUpdate = (props) => {
       <form onSubmit={props.updateHandler}>
         <label>Email</label>
         <input
+          type="text"
           value={props.user}
           onChange={(e) => props.setUser(e.target.value)}
-          placeholder="email"
         ></input>
 
         <label>Name</label>
         <input
+          type="email"
           value={props.email}
           onChange={(e) => props.setEmail(e.target.value)}
         ></input>
@@ -166,7 +147,9 @@ const AccountUpdate = (props) => {
           onChange={(e) => props.setName(e.target.value)}
           placeholder="password"
         ></input> */}
-        <button className="button" type="submit">update</button>
+        <button className="button" type="submit">
+          update
+        </button>
       </form>
     </div>
   );
