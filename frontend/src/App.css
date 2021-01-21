@@ -132,6 +132,8 @@ body {
   align-items: center;
   border: 3px #454851 solid;
   border-collapse: collapse;
+  width: 60%;
+  font-size: 20px;
 }
 
 .tableHeader {
@@ -139,6 +141,7 @@ body {
   padding: 5px;
   border-bottom: 3px #454851 solid;
   background-color: #8cabbe ;
+  line-height: 1.8;
 }
 
 .tableRow {
@@ -146,6 +149,7 @@ body {
   padding: 5px;
   background-color: #a4a8d1;
   font-family: 'Raleway', sans-serif;
+  line-height: 1.5;
 }
 
 .tableData {

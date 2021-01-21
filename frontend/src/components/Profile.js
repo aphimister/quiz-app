@@ -34,7 +34,7 @@ const Profile = () => {
   }, [user]);
 
   const updateHandler = async (event)  => {
-    // event.preventDefault();
+    event.preventDefault();
 
     // const body = {
     //   userName: user,
@@ -56,6 +56,7 @@ const Profile = () => {
   setDisplay(1)
   }
   const viewHandler = () => {
+    
     setDisplay(2);
   };
 
@@ -142,15 +143,16 @@ const AccountUpdate = (props) => {
   return (
     <div>
       <form onSubmit={props.updateHandler}>
-        <label>Email</label>
-        <input
-          value={props.user}
-          onChange={(e) => props.setUser(e.target.value)}
-          placeholder="email"
-        ></input>
-
         <label>Name</label>
         <input
+          type="text"
+          value={props.user}
+          onChange={(e) => props.setUser(e.target.value)}
+        ></input>
+
+        <label>Email</label>
+        <input
+          type="email"
           value={props.email}
           onChange={(e) => props.setEmail(e.target.value)}
         ></input>
