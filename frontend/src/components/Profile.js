@@ -30,7 +30,6 @@ const Profile = () => {
   const deleteHandler = async () => {
     await axios.delete('/delete');
   };
-  useEffect(() => {}, [user]);
 
   const updateHandler = async (event) => {
     // event.preventDefault();
