@@ -90,13 +90,7 @@ app.delete('/delete', check.isLoggedIn, async (req, res) => {
   try {
     const user = req.userFound._id;
     const userDB = await Quizuser.findByIdAndDelete(user);
-    res.cookie("playerCookie", "logout", {
-      expires: new Date(Date.now() + 2 * 1000),
-      httpOnly: true
-    });
-  
-  
-  }catch (error) {
+  } catch (error) {
     res.json({
       Message: 'Get the fuck of the app',
     });
@@ -174,6 +168,7 @@ app.get('/topscores', async (req, res) => {
     scores: scoreDB,
   });
 });
+
 app.listen(5000, () => {
   console.log('Server is online');
 });

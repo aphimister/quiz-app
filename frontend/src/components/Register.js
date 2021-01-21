@@ -13,7 +13,9 @@ const Register = (props) => {
 
   const formHandler = async (event) => {
     event.preventDefault();
-   
+    console.log(name);
+    console.log(email);
+    console.log(password);
 
     const body = {
       userName: name,
@@ -58,14 +60,17 @@ const Register = (props) => {
         'Content-Type': 'application/json',
       },
     };
-
     const loginSuccess = await axios.post('/login', body, config);
     props.nameHandler(loginSuccess.data.user);
 
+    // setloginBackendVerified(loginSuccess.data.message);
+    // console.log(loginSuccess);
+
     setName('');
+    setEmail('');
     setPassword('');
-    
-  
+    setPassword2('');
+    // setBackendMessage("");
   };
 
   return (
