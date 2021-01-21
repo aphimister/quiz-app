@@ -4,7 +4,8 @@ body {
   background-color: #a4bfeb;
   text-align: center;
   color: #454851;
-  font-family: 'Raleway', sans-serif;
+  height: 100vh;
+ 
 }
 .nav {
   height: 70px;
@@ -12,7 +13,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #d9dbbc;
+  background-color: #D9DBBC;
 }
 .un-list {
   list-style: none;
@@ -119,3 +120,78 @@ body {
 }
 .passwords {
 }
+
+.top-score-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.table {
+  display: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px #454851 solid;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  margin: 5px;
+  padding: 5px;
+  border-bottom: 3px #454851 solid;
+  background-color: #8cabbe ;
+}
+
+.tableRow {
+  margin: 5px;
+  padding: 5px;
+  background-color: #a4a8d1;
+  font-family: 'Raleway', sans-serif;
+}
+
+.tableData {
+  margin: 5px;
+  padding: 5px;
+}
+
+.appJSMain {
+  display: flex;
+  flex-direction: column;
+}
+
+.holder {
+  flex: 1 0 auto;
+}
+
+.footer {
+  height: 80px;
+  position: fixed;
+  top: 91%;
+  left: 0;
+  right: 0;
+  background-color: #454851;
+  color:#D9DBBC;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+}
+
+.footerText {
+  display: flex;
+  margin: 0;
+  padding:0;
+  justify-content: space-between;
+  align-content: space-between;
+  align-self: flex-end;
+}
+
+.footerLinks {
+  flex-shrink:0;
+  align-content: space-between;
+  align-self: flex-end;
+}
+
+.footerLinks a {
+  color: #D9DBBC;
+}
+
+
