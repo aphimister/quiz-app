@@ -106,6 +106,8 @@ body {
   right: 0;
   padding: 5px;
 }
+.formContainer {
+}
 .formContainer * {
   margin: 5px;
 }
@@ -115,20 +117,5 @@ body {
   border: 1px #454851 solid;
   padding: 4px;
 }
-
-.tableData {
-
+.passwords {
 }
-
-.tableRow {
-
-}
-
-.table {
-
-}
-
-.tableHeader {
-  
-}
-

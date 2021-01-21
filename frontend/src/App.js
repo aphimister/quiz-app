@@ -18,7 +18,7 @@ class App extends Component {
   state = {
     difficulty: 'easy',
     category: '9',
-    data: [],
+    data: {},
     name: 'Guest',
   };
 
@@ -28,7 +28,6 @@ class App extends Component {
       this.setState({
         data: res.data,
       });
-      console.log(res.data)
     });
   }
 
@@ -49,7 +48,6 @@ class App extends Component {
   dataHandler = (scoredata) => {
     let dataObj = this.state.data;
     let temp = [...this.state.data.scores];
-  
     temp.push(scoredata);
     dataObj.scores = temp;
     this.setState({ data: dataObj });

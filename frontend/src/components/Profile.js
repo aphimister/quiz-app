@@ -1,8 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link , useHistory } from "react-router-dom";
-
-
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState([]);
@@ -10,7 +8,7 @@ const Profile = () => {
   let history = useHistory();
 
   let fetchData = async () => {
-    const response = await axios.get("/api/user");
+    const response = await axios.get('/api/user');
     console.log(response.data.name);
     setUser(response.data.name);
     setEmail(response.data.email);
@@ -21,25 +19,21 @@ const Profile = () => {
   }, []);
 
   const loginHandler = () => {
-    history.push("/login");
+    history.push('/login');
   };
 
   const deleteHandler = async () => {
-    await axios.delete("/delete");
+    await axios.delete('/delete');
   };
-  // const updateDetailsHandler =  () => {
-  //  return  <Redirect to="/accountUpdate"/>
-  // };
 
   return (
     <div>
-      {user !== "Guest" ? (
+      {user !== 'Guest' ? (
         <UserProfile
           title="Profile Page"
           user={user}
           email={email}
           deleteHandler={deleteHandler}
-          // updateDetails={updateDetailsHandler}
         />
       ) : (
         <UserNotAuth
@@ -63,15 +57,12 @@ const UserProfile = (props) => {
           Delete account
         </button>
         <Link to="/quiz">
-        <button className="button">Start a quiz</button>
-      </Link>
-      <Link to="/accountUpdate">
-        <button className="button">Update My Account</button>
-      </Link>
-      
-    
+          <button className="button">Start a quiz</button>
+        </Link>
+        <Link to="/accountUpdate">
+          <button className="button">Update My Account</button>
+        </Link>
       </div>
-      
     </div>
   );
 };
