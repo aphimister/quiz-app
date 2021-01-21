@@ -30,15 +30,19 @@ const QuizPage = (props) => {
   const [score, setScore] = useState([...zeroes]);
   const [isAnswered, setIsAnswered] = useState([...zeroes]);
 
-  const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
+  const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple&encode=url3986`;
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
     const unshuffled = call.data.results;
     const shuffled = unshuffled.map((q) => {
       let qArray = [q.correct_answer, ...q.incorrect_answers];
+      qArray = qArray.map((q) => {
+        return decodeURIComponent(q);
+      });
       shuffleArray(qArray);
       q.answers = qArray;
+      q.question = decodeURIComponent(q.question);
       return q;
     });
     setQuiz(shuffled);
