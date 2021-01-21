@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link , useHistory } from "react-router-dom";
+
+
 
 const Profile = () => {
   const [user, setUser] = useState([]);
@@ -25,9 +27,9 @@ const Profile = () => {
   const deleteHandler = async () => {
     await axios.delete("/delete");
   };
-  const updateDetailsHandler = async () => {
-    
-  };
+  // const updateDetailsHandler =  () => {
+  //  return  <Redirect to="/accountUpdate"/>
+  // };
 
   return (
     <div>
@@ -37,7 +39,7 @@ const Profile = () => {
           user={user}
           email={email}
           deleteHandler={deleteHandler}
-          updateDetails={updateDetailsHandler}
+          // updateDetails={updateDetailsHandler}
         />
       ) : (
         <UserNotAuth
@@ -60,9 +62,14 @@ const UserProfile = (props) => {
         <button className="button" onClick={props.deleteHandler}>
           Delete account
         </button>
-        <button className="button" onClick={props.deleteHandler}>
-          Update My Account
-        </button>
+        <Link to="/quiz">
+        <button className="button">Start a quiz</button>
+      </Link>
+      <Link to="/accountUpdate">
+        <button className="button">Update My Account</button>
+      </Link>
+      
+    
       </div>
       
     </div>
