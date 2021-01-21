@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 const Profile = () => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState('');
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
   const [display, setDisplay] = useState(0);
+  const [dataLoaded, setDataLoaded] = useState(false);
   let history = useHistory();
 
   let fetchData = async () => {
@@ -14,14 +15,23 @@ const Profile = () => {
     console.log(response.data.name);
     setUser(response.data.name);
     setEmail(response.data.email);
+    setDataLoaded(true);
   };
 
   useEffect(() => {
     fetchData();
-    if (user !== 'Guest') {
-      setDisplay(1);
-    }
   }, []);
+
+  useEffect(() => {
+    console.log(user);
+    if (user !== 'Guest') {
+      console.log("here's the problem");
+      setDisplay(1);
+    } else {
+      console.log(1);
+      setDisplay(0);
+    }
+  }, [dataLoaded]);
 
   const loginHandler = () => {
     history.push('/login');
@@ -52,8 +62,10 @@ const Profile = () => {
     //   setPassword('');
 
     setDisplay(1);
+    console.log(3);
   };
   const viewHandler = () => {
+    console.log(2);
     setDisplay(2);
   };
 
