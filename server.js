@@ -84,8 +84,33 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
     });
   }
 });
+//<--------------------------- USER UPDaATE DETAILS ------------------------------->
+app.post("/update", check.isLoggedIn, async (req, res) =>{
+  console.log(req.body)
+  const userId = req.userFound._id;
+  const id = await User.findById(userId);
+  const compare = await bcrypt.compare(req.body.updatePassword, id.password);
+ 
+  const hashedPassword = await bcrypt.hash(req.body.confirmPassword, 10);
+  if(compare){
+    try {
+      const user = req.userFound._id
+      await Quizuser.findByIdAndUpdate(user),{ 
+        name: req.body.userName,
+        email: req.body.userEmail,
+        password: hashedPassword 
+      }
+     
+    }catch(error){
+      res.json({
+        mesaage: "There was an error updating you account"
+      })
+    }
+  }
+  
+}) 
 
-//<--------------------- USER DELETE within profile ------------------------------->
+//<------------------------USER DELETE within profile ------------------------------->
 app.delete('/delete', check.isLoggedIn, async (req, res) => {
   try {
     const user = req.userFound._id;
