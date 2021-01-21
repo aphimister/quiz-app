@@ -4,6 +4,7 @@ import Logout from './components/Logout';
 import Home from './components/Home';
 import QuizPage from './components/QuizPage';
 import Topscores from './components/TopScores';
+import Footer from './components/Footer';
 import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
@@ -60,7 +61,7 @@ class App extends Component {
   //Have to use render as it is now a class component
   render() {
     return (
-      <>
+      <div className="appJSMain">
         <BrowserRouter>
           <Nav />
           <Switch>
@@ -111,7 +112,10 @@ class App extends Component {
           
           </Switch>
         </BrowserRouter>
-      </>
+        <div className="holder">
+          <Footer />
+        </div>
+      </div>
     );
   }
 }
