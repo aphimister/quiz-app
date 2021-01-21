@@ -8,7 +8,9 @@ import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
 import Profile from './components/Profile';
+import accountUpdate from './components/accountUpdate';
 import axios from 'axios';
+
 
 //I changed this to a class component. It is just makes more sense to my brain
 class App extends Component {
@@ -101,6 +103,12 @@ class App extends Component {
               path="/topscores"
               render={(props) => <Topscores data={this.state.data.scores} />}
             />
+            <Route
+              exact
+              path="/accountUpdate"
+             />
+             )
+          
           </Switch>
         </BrowserRouter>
       </>

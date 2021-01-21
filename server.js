@@ -89,6 +89,7 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
 app.delete('/delete', check.isLoggedIn, async (req, res) => {
   try {
     const user = req.userFound._id;
+    const deleteScores = await Score.deleteMany({user: user})
     const userDB = await Quizuser.findByIdAndDelete(user);
   } catch (error) {
     res.json({
