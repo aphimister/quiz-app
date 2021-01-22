@@ -30,8 +30,7 @@ const TopScores = (props) => {
                             return(
                                 <tr className="tableRow">
                                     <td className="tableData">{item.score}</td> 
-                                    {/* <td className="tableData">{item.user.name}</td>  */}
-                                    <td className="tableData">Name</td>
+                                    <td className="tableData">{item.user.name}</td>
                                     <td className="tableData">{item.time} secs</td>
                                 </tr>
                             )
