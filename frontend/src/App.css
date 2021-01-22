@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Raleway&family=Shadows+Into+Light&display=swap');
 body {
   padding-top: 120px;
+  padding-bottom: 10%;
   background-color: #a4bfeb;
   text-align: center;
   color: #454851;
+<<<<<<< HEAD
   padding-bottom:10%;
+=======
+  padding-bottom: 10%;
+
+>>>>>>> 109b4ad904afdbf13d5ee948b4afd2e32538d08a
 }
 .nav {
   height: 70px;
@@ -12,7 +18,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #D9DBBC;
+  background-color: #d9dbbc;
 }
 .un-list {
   list-style: none;
@@ -120,7 +126,7 @@ body {
 .passwords {
 }
 
-.top-score-list{
+.top-score-list {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,8 +145,12 @@ body {
   margin: 5px;
   padding: 5px;
   border-bottom: 3px #454851 solid;
+<<<<<<< HEAD
   background-color: #8cabbe ;
   line-height: 1.8;
+=======
+  background-color: #8cabbe;
+>>>>>>> 109b4ad904afdbf13d5ee948b4afd2e32538d08a
 }
 
 .tableRow {
@@ -172,7 +182,7 @@ body {
   left: 0;
   right: 0;
   background-color: #454851;
-  color:#D9DBBC;
+  color: #d9dbbc;
   display: flex;
   flex-direction: column;
   justify-content: right;
@@ -181,20 +191,18 @@ body {
 .footerText {
   display: flex;
   margin: 0;
-  padding:0;
+  padding: 0;
   justify-content: space-between;
   align-content: space-between;
   align-self: flex-end;
 }
 
 .footerLinks {
-  flex-shrink:0;
+  flex-shrink: 0;
   align-content: space-between;
   align-self: flex-end;
 }
 
 .footerLinks a {
-  color: #D9DBBC;
+  color: #d9dbbc;
 }
-
-

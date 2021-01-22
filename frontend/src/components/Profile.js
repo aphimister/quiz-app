@@ -6,6 +6,7 @@ const Profile = (props) => {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
+  const [passwordConfirm, setPasswordConfirm] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
   // const [userArray, setUserArray] = useState([]);
@@ -48,24 +49,25 @@ const Profile = (props) => {
   };
 
   const updateHandler = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
-    // const body = {
-    //   userName: user,
-    //   userEmail: email,
-    //   userPassword: password,
-
-    // };
+    const body = {
+      userName: user,
+      userEmail: email,
+      userPassword: password,
+      userPasswordConfimr: passwordConfirm
+    };
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    await axios.post('/update', { hello: 'hello' }, config);
-    //   post("/update",
-    //   setName('');
-    //   setEmail('');
-    //   setPassword('');
+    await axios.post('/update',body, config);
+   
+      setUser('');
+      setEmail('');
+      setPassword('');
+      setPasswordConfirm('');
 
     setDisplay(1);
     console.log(3);
@@ -173,17 +175,18 @@ const AccountUpdate = (props) => {
           onChange={(e) => props.setEmail(e.target.value)}
         ></input>
 
-        {/* <label>Password</label> */}
-        {/* <input
-          value={props.password}
-          onChange={(e) => props.setName(e.target.value)}
-          placeholder="password"
-        ></input>
+        <label>Password</label>
         <input
           value={props.password}
-          onChange={(e) => props.setName(e.target.value)}
+          onChange={(e) => props.setPassword(e.target.value)}
           placeholder="password"
-        ></input> */}
+        ></input>
+        <label>Confirm Password</label>
+        <input
+          value={props.passwordConfirm}
+          onChange={(e) => props.setPasswordConfirm(e.target.value)}
+          placeholder="confirm password"
+        ></input>
         <button className="button" type="submit">
           update
         </button>

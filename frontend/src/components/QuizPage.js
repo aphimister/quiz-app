@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const QuizPage = (props) => {
@@ -30,15 +31,19 @@ const QuizPage = (props) => {
   const [score, setScore] = useState([...zeroes]);
   const [isAnswered, setIsAnswered] = useState([...zeroes]);
 
-  const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
+  const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple&encode=url3986`;
 
   const apiCall = async (url) => {
     const call = await axios.get(url);
     const unshuffled = call.data.results;
     const shuffled = unshuffled.map((q) => {
       let qArray = [q.correct_answer, ...q.incorrect_answers];
+      qArray = qArray.map((q) => {
+        return decodeURIComponent(q);
+      });
       shuffleArray(qArray);
       q.answers = qArray;
+      q.question = decodeURIComponent(q.question);
       return q;
     });
     setQuiz(shuffled);
@@ -295,6 +300,7 @@ const QuizCard = (props) => {
             answerHandler={props.answerHandler}
           />
         </div>
+        <br />
       </div>
     );
   } else {
@@ -376,6 +382,12 @@ const Score = (props) => {
   return (
     <div className="gzMessage">
       Nice one! You got {props.score} correct out of 10, in {props.time}s!
+      <br />
+      How does your score compare?
+      <br />
+      <Link to="/topscores">
+        <button className="button">See the leaderboards</button>
+      </Link>
     </div>
   );
 };
