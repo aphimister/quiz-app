@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-const Profile = () => {
+const Profile = (props) => {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
   const [passwordConfirm, setPasswordConfirm] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
+  // const [userArray, setUserArray] = useState([]);
   let history = useHistory();
 
   let fetchData = async () => {
@@ -21,7 +22,12 @@ const Profile = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    let temp = props.data;
+    if(props.data){temp.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )
+    // setUserArray(temp)}
+    }
+    console.log(temp)
+  }, [props.data]);
 
   useEffect(() => {
     console.log(user);
@@ -83,6 +89,7 @@ const Profile = () => {
       email={email}
       deleteHandler={deleteHandler}
       viewHandler={viewHandler}
+      data={props.data}
     />,
     <AccountUpdate
       updateHandler={updateHandler}
@@ -113,7 +120,25 @@ const UserProfile = (props) => {
         <button className="button" onClick={props.viewHandler}>
           Update My Account
         </button>
+
       </div>
+      {/* <table className="table">
+                    <tr className="tableRow">
+                        <th className="tableHeader">Score</th>
+                        <th className="tableHeader">Name</th>
+                        <th className="tableHeader">Time</th>
+                    </tr>
+                        {userArray.slice(0,10).map((item, index)=>{
+                            console.log(item)
+                            return(
+                                <tr className="tableRow">
+                                    <td className="tableData">{item.score}</td> 
+                                    <td className="tableData">{item.user.name}</td>
+                                    <td className="tableData">{item.time} secs</td>
+                                </tr>
+                            )
+                        })}
+                </table> */}
     </div>
   );
 };
@@ -136,14 +161,14 @@ const AccountUpdate = (props) => {
   return (
     <div>
       <form onSubmit={props.updateHandler}>
-        <label>Email</label>
+        <label>Name</label>
         <input
           type="text"
           value={props.user}
           onChange={(e) => props.setUser(e.target.value)}
         ></input>
 
-        <label>Name</label>
+        <label>Email</label>
         <input
           type="email"
           value={props.email}

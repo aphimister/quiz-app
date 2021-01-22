@@ -80,7 +80,9 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile" 
+              render={(props)=> (
+              <Profile data={this.state.data.scores}/>)} />
             <Route
               exact
               path="/login"

@@ -5,7 +5,7 @@ import axios from 'axios';
 const logOutHandler = async () => {
   await axios.get('/logout');
 };
-const Nav = () => {
+const Nav = (props) => {
   return (
     <nav className="nav">
       <ul className="un-list">
@@ -15,7 +15,7 @@ const Nav = () => {
           </Link>
         </li>
         <li className="li-list">
-          <Link className="link" to="/profile">
+          <Link className="link" to="/profile" >
             Profile
           </Link>
         </li>
