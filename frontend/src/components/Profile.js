@@ -9,12 +9,9 @@ const Profile = (props) => {
   const [updatePassword, setUpdatePassword] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
-<<<<<<< HEAD
   const [userScoreList, setUserScoreList] = useState([]);
   
-=======
   const [messageUpdate, setMessageUpdate] = useState();
->>>>>>> 67e760f1b0654075947d8b5f4dc94d04ce24c1dc
   let history = useHistory();
 
   let fetchData = async () => {
@@ -104,12 +101,9 @@ const Profile = (props) => {
       email={email}
       deleteHandler={deleteHandler}
       viewHandler={viewHandler}
-<<<<<<< HEAD
       userScoreList={userScoreList}
-=======
       data={props.data}
       messageUpdate={messageUpdate}
->>>>>>> 67e760f1b0654075947d8b5f4dc94d04ce24c1dc
     />,
     <AccountUpdate
       updateHandler={updateHandler}
