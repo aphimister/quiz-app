@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {  useHistory } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom';
 
 const Register = (props) => {
   const [name, setName] = useState('');
@@ -45,10 +44,9 @@ const Register = (props) => {
     setPassword2('');
     setDisplay(!display);
   };
-//  const clickLoginHandler = () => { 
-//   history.push("/profile");
-//  }
-  
+  //  const clickLoginHandler = () => {
+  //   history.push("/profile");
+  //  }
 
   const formLoginHandler = async (event) => {
     event.preventDefault();
@@ -65,16 +63,12 @@ const Register = (props) => {
     const loginSuccess = await axios.post('/login', body, config);
     props.nameHandler(loginSuccess.data.user);
 
-    
-
     setName('');
     setEmail('');
     setPassword('');
     setPassword2('');
 
-    history.push("/profile")
-
-  
+    history.push('/profile');
   };
 
   return (
@@ -98,9 +92,6 @@ const Register = (props) => {
           formLoginHandler={formLoginHandler}
           setEmail={setEmail}
           setPassword={setPassword}
-         
-
-
         />
       )}
     </div>
@@ -174,7 +165,7 @@ const LoginDisplay = (props) => {
   return (
     <div>
       <div className="title-container">
-        <h1>Login</h1>
+        <div className="title">Login</div>
       </div>
       <div className="formContainer">
         <form onSubmit={props.formLoginHandler} className="form">
@@ -196,7 +187,8 @@ const LoginDisplay = (props) => {
             onChange={(e) => props.setPassword(e.target.value)}
           ></input>
           <br />
-          <button className="button btn-login">Login</button><br />
+          <button className="button btn-login">Login</button>
+          <br />
           <button
             className="button btn-login"
             type="button"
