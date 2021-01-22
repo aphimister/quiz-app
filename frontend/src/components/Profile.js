@@ -137,24 +137,26 @@ const UserProfile = (props) => {
         <button className="button" onClick={props.viewHandler}>
           Update My Account
         </button>
+      </div><br />
+      <div className="top-score-list">
+        <table className="table">
+          <tr className="tableRow">
+            <th className="tableHeader">Score</th>
+            <th className="tableHeader">Name</th>
+            <th className="tableHeader">Time</th>
+          </tr>
+          {props.userScoreList.slice(0,10).map((item, index)=>{
+          console.log(item)
+            return(
+              <tr className="tableRow">
+                <td className="tableData">{item.score}</td> 
+                <td className="tableData">{item.user.name}</td>
+                <td className="tableData">{item.time} secs</td>
+              </tr>
+            )
+          })}
+        </table>
       </div>
-      <table className="table">
-        <tr className="tableRow">
-          <th className="tableHeader">Score</th>
-          <th className="tableHeader">Name</th>
-          <th className="tableHeader">Time</th>
-        </tr>
-        {props.userScoreList.slice(0,10).map((item, index)=>{
-        console.log(item)
-          return(
-            <tr className="tableRow">
-              <td className="tableData">{item.score}</td> 
-              <td className="tableData">{item.user.name}</td>
-              <td className="tableData">{item.time} secs</td>
-            </tr>
-          )
-        })}
-      </table>
     </div>
   );
 };
