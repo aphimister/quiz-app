@@ -84,7 +84,7 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
     });
   }
 });
-//<--------------------------- USER UPDaATE DETAILS ------------------------------->
+//<--------------------------- USER UPDATE DETAILS ------------------------------->
 app.post("/update", check.isLoggedIn, async (req, res) =>{
   console.log(req.body)
   const userId = req.userFound._id;
