@@ -41,10 +41,8 @@ const Profile = (props) => {
   useEffect(() => {
     console.log(user);
     if (user !== 'Guest') {
-      console.log("here's the problem");
       setDisplay(1);
     } else {
-      console.log(1);
       setDisplay(0);
     }
   }, [dataLoaded]);
@@ -79,10 +77,8 @@ const Profile = (props) => {
     setPasswordConfirm('');
 
     setDisplay(1);
-    console.log(3);
   };
   const viewHandler = () => {
-    console.log(2);
     setDisplay(2);
   };
 
