@@ -105,7 +105,7 @@ const RegisterDisplay = (props) => {
       <div className="title">Register to start playing</div>
       <div className="formContainer">
         <form onSubmit={props.formHandler} className="form">
-          <label className="label form">User Name:</label>
+          <label className="label">User Name:</label>
           <input
             className="input"
             type="text"
@@ -134,6 +134,7 @@ const RegisterDisplay = (props) => {
             onChange={(e) => props.setPassword(e.target.value)}
           ></input>
           <br />
+          <label className="label">Confirm Password:</label>
           <input
             className="input passwords"
             type="password"
@@ -167,7 +168,7 @@ const LoginDisplay = (props) => {
       <div className="title-container">
         <h1>Login</h1>
       </div>
-      <div className="form-container">
+      <div className="formContainer">
         <form onSubmit={props.formLoginHandler} className="form">
           <label className="label">Email:</label>
           <input
@@ -187,7 +188,7 @@ const LoginDisplay = (props) => {
             onChange={(e) => props.setPassword(e.target.value)}
           ></input>
           <br />
-          <button className="button btn-login">Login</button>
+          <button className="button btn-login">Login</button><br />
           <button
             className="button btn-login"
             type="button"
