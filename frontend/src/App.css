@@ -53,6 +53,7 @@ body {
   box-shadow: 0;
   border: 3px solid #454851;
   cursor: pointer;
+  margin: 10px;
 }
 .button:hover {
   background-color: #8cabbe;
@@ -217,4 +218,27 @@ body {
   color: #d9dbbc;
   align-content: flex-end;
   padding: 2px;
+}
+
+@media only screen and (max-width: 600px){
+ .nav{
+   display: flex;
+   flex-direction: column;
+   height: 190px;
+ }
+ .un-list{
+  display: flex;
+  flex-direction: column;
+ }
+ body{
+   padding-top: 200px;
+ }
+ .link {
+  text-decoration: none;
+  color: #454851;
+  font-family: 'Shadows Into Light', cursive;
+  font-size: 165%;
+ 
+}
+
 }

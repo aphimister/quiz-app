@@ -62,6 +62,7 @@ const Profile = (props) => {
 
   const deleteHandler = async () => {
     await axios.delete('/delete');
+    history.push("/")
   };
 
   const updateHandler = async (event) => {
