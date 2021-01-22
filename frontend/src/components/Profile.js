@@ -6,7 +6,7 @@ const Profile = (props) => {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
-  const [passwordConfirm, setPasswordConfirm] = useState([]);
+  const [updatePassword, setUpdatePassword] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
   // const [userArray, setUserArray] = useState([]);
@@ -64,19 +64,19 @@ const Profile = (props) => {
       userName: user,
       userEmail: email,
       userPassword: password,
-      userPasswordConfimr: passwordConfirm,
+      userUpdatePassword: updatePassword,
     };
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    await axios.post('/update', body, config);
+    await axios.put('/update', body, config);
 
     setUser('');
     setEmail('');
     setPassword('');
-    setPasswordConfirm('');
+    setUpdatePassword('');
 
     setDisplay(1);
     console.log(3);
@@ -107,7 +107,7 @@ const Profile = (props) => {
       email={email}
       setEmail={setEmail}
       setPassword={setPassword}
-      setPasswordConfirm={setPasswordConfirm}
+      setUpdatePassword={setUpdatePassword}
     />,
   ];
 
@@ -187,13 +187,15 @@ const AccountUpdate = (props) => {
 
         <label>Password</label>
         <input
+        type="password"
           onChange={(e) => props.setPassword(e.target.value)}
           placeholder="password"
         ></input>
-        <label>Confirm Password</label>
+        <label>Change Password</label>
         <input
-          onChange={(e) => props.setPasswordConfirm(e.target.value)}
-          placeholder="confirm password"
+         type="password"
+          onChange={(e) => props.setUpdatePassword(e.target.value)}
+          placeholder="Change password"
         ></input>
         <button className="button" type="submit">
           update
