@@ -9,7 +9,7 @@ const Profile = (props) => {
   const [updatePassword, setUpdatePassword] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
-  // const [userArray, setUserArray] = useState([]);
+  const [messageUpdate, setMessageUpdate] = useState()
   let history = useHistory();
 
   let fetchData = async () => {
@@ -69,7 +69,9 @@ const Profile = (props) => {
         'Content-Type': 'application/json',
       },
     };
-    await axios.put('/update', body, config);
+   const response = await axios.put('/update', body, config);
+  setMessageUpdate(response.data.Message)
+
 
     setUser('');
     setEmail('');
@@ -95,6 +97,7 @@ const Profile = (props) => {
       deleteHandler={deleteHandler}
       viewHandler={viewHandler}
       data={props.data}
+      messageUpdate={messageUpdate}
     />,
     <AccountUpdate
       updateHandler={updateHandler}
@@ -104,6 +107,8 @@ const Profile = (props) => {
       setEmail={setEmail}
       setPassword={setPassword}
       setUpdatePassword={setUpdatePassword}
+     
+
     />,
   ];
 
@@ -113,6 +118,7 @@ const Profile = (props) => {
 const UserProfile = (props) => {
   return (
     <div>
+      {props.messageUpdate}
       <div className="title">{props.title}</div>
       <div className="subtitle">{props.user}</div>
       <div className="subtitle">{props.email}</div>
@@ -166,9 +172,11 @@ const UserNotAuth = (props) => {
 const AccountUpdate = (props) => {
   return (
     <div>
-      <form onSubmit={props.updateHandler}>
-        <label>Name</label>
+      
+      <form onSubmit={props.updateHandler}  className="form">
+        <label className="label form">Name</label>
         <input
+         className="input"
           type="text"
           value={props.user}
           onChange={(e) => props.setUser(e.target.value)}
@@ -176,22 +184,26 @@ const AccountUpdate = (props) => {
 
         <label>Email</label>
         <input
+         className="input"
           type="email"
           value={props.email}
           onChange={(e) => props.setEmail(e.target.value)}
         ></input>
 
-        <label>Password</label>
+        
         <input
+         className="input"
         type="password"
           onChange={(e) => props.setPassword(e.target.value)}
           placeholder="password"
         ></input>
-        <label>Change Password</label>
+        
+        <label>Update or confirm password</label>
         <input
+         className="input"
          type="password"
           onChange={(e) => props.setUpdatePassword(e.target.value)}
-          placeholder="Change password"
+          
         ></input>
         <button className="button" type="submit">
           update
