@@ -10,7 +10,7 @@ const Profile = (props) => {
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [userScoreList, setUserScoreList] = useState([]);
-  const [id, setId] =useState('')
+  
   let history = useHistory();
 
   let fetchData = async () => {
@@ -18,29 +18,41 @@ const Profile = (props) => {
     console.log(response.data.name);
     setUser(response.data.name);
     setEmail(response.data.email);
-    setId(response.data.id);
-    console.log(id)
+
     setDataLoaded(true);
   };
 
+  let userScores = async() => {
+    const res = await axios.get('userScores');
+    let temp= res.data;
+    let tempArr = res.data.scores
+    console.log(tempArr)
+   if(temp){tempArr.sort((a, b) => 
+    (a.score < b.score) ? 1 : 
+    (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )}
+    setUserScoreList(tempArr)
+
+  };
+  
   useEffect(() => {
     fetchData();
-    let temp = props.data;
-    // if(props.data.user._id === id)
-  
-    console.log(temp);
-  }, [props.data]);
+    userScores();
+    
+  }, []);
 
   useEffect(() => {
     console.log(user);
     if (user !== 'Guest') {
       console.log("here's the problem");
       setDisplay(1);
+      
+      
     } else {
       console.log(1);
       setDisplay(0);
     }
-  }, [dataLoaded]);
+    
+  }, [dataLoaded, props.data]);
 
   const loginHandler = () => {
     history.push('/login');
@@ -91,7 +103,7 @@ const Profile = (props) => {
       email={email}
       deleteHandler={deleteHandler}
       viewHandler={viewHandler}
-      data={props.data}
+      userScoreList={userScoreList}
     />,
     <AccountUpdate
       updateHandler={updateHandler}
@@ -131,7 +143,7 @@ const UserProfile = (props) => {
           <th className="tableHeader">Name</th>
           <th className="tableHeader">Time</th>
         </tr>
-        {/* {userScoreList.slice(0,10).map((item, index)=>{
+        {props.userScoreList.slice(0,10).map((item, index)=>{
         console.log(item)
           return(
             <tr className="tableRow">
@@ -140,7 +152,7 @@ const UserProfile = (props) => {
               <td className="tableData">{item.time} secs</td>
             </tr>
           )
-        })} */}
+        })}
       </table>
     </div>
   );
