@@ -85,36 +85,34 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
   }
 });
 //<--------------------------- USER UPDATE DETAILS ------------------------------->
-app.put("/update", check.isLoggedIn, async (req, res) =>{
-  console.log(req.body)
+app.put('/update', check.isLoggedIn, async (req, res) => {
+  console.log(req.body);
   const userId = req.userFound._id;
   // console.log(userId)
   const id = await Quizuser.findById(userId);
-  console.log(id)
+  console.log(id);
   const compare = await bcrypt.compare(req.body.userPassword, id.password);
-  console.log(compare)
+  console.log(compare);
   const hashedPassword = await bcrypt.hash(req.body.userUpdatePassword, 10);
-  console.log(hashedPassword)
-  if(compare){
+  console.log(hashedPassword);
+  if (compare) {
     // try {
-      await Quizuser.findByIdAndUpdate(userId,{ 
-        name: req.body.userName,
-        email: req.body.userEmail,
-        password: hashedPassword 
-        });
-     
-  
-  }res.json({
-    Message: "Details updated. Please logout and log back in."
-  })
-  
-}) 
+    await Quizuser.findByIdAndUpdate(userId, {
+      name: req.body.userName,
+      email: req.body.userEmail,
+      password: hashedPassword,
+    });
+  }
+  res.json({
+    Message: 'Details updated. Please logout and log back in.',
+  });
+});
 
 //<------------------------USER DELETE within profile ------------------------------->
 app.delete('/delete', check.isLoggedIn, async (req, res) => {
   try {
     const user = req.userFound._id;
-    const deleteScores = await Score.deleteMany({user: user})
+    const deleteScores = await Score.deleteMany({ user: user });
     const userDB = await Quizuser.findByIdAndDelete(user);
   } catch (error) {
     res.json({
@@ -181,7 +179,7 @@ app.post('/api/score', async (req, res) => {
     time: req.body.time,
     difficulty: req.body.difficulty,
     category: req.body.category,
-    user: req.body.user
+    user: req.body.user,
   });
 
   res.send('nice one');
@@ -196,13 +194,20 @@ app.get('/topscores', async (req, res) => {
 });
 
 app.get('/userscores', check.isLoggedIn, async (req, res) => {
-  
-  const name = await req.userFound.name;
-  const allScores = await Score.find({user: req.userFound._id}).populate('user', 'name'); 
-  res.json({
-    scores: allScores
-  })
-})
+  try {
+    const allScores = await Score.find({ user: req.userFound._id }).populate(
+      'user',
+      'name'
+    );
+    res.json({
+      scores: allScores,
+    });
+  } catch {
+    res.json({
+      scores: null,
+    });
+  }
+});
 
 app.listen(5000, () => {
   console.log('Server is online');

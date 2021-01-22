@@ -1,9 +1,9 @@
-const Quizuser = require("../models/quizUser");
-const { promisify } = require("util");
-const jwt = require("jsonwebtoken");
+const Quizuser = require('../models/quizUser');
+const { promisify } = require('util');
+const jwt = require('jsonwebtoken');
 
 exports.isLoggedIn = async (req, res, next) => {
-  console.log("Do we have playerToken ");
+  console.log('Do we have playerToken ');
   if (req.cookies.playerCookie) {
     const decoded = await promisify(jwt.verify)(
       req.cookies.playerCookie,
@@ -19,9 +19,9 @@ exports.isLoggedIn = async (req, res, next) => {
 //<----------------LOG THE CURRENT USER OUT-------------------------->
 
 exports.logout = (req, res, next) => {
-  res.cookie("playerCookie", "logout", {
-    expires: new Date(Date.now() + 2 * 1000),
-    httpOnly: true
+  res.cookie('playerCookie', 'logout', {
+    expires: new Date(Date.now() + 500),
+    httpOnly: true,
   });
 
   next();
