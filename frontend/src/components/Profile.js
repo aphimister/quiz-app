@@ -9,7 +9,8 @@ const Profile = (props) => {
   const [passwordConfirm, setPasswordConfirm] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
-  // const [userArray, setUserArray] = useState([]);
+  const [userScoreList, setUserScoreList] = useState([]);
+  const [id, setId] =useState('')
   let history = useHistory();
 
   let fetchData = async () => {
@@ -17,24 +18,16 @@ const Profile = (props) => {
     console.log(response.data.name);
     setUser(response.data.name);
     setEmail(response.data.email);
+    setId(response.data.id);
+    console.log(id)
     setDataLoaded(true);
   };
 
   useEffect(() => {
     fetchData();
     let temp = props.data;
-    if (props.data) {
-      temp.sort((a, b) =>
-        a.score < b.score
-          ? 1
-          : a.score === b.score
-          ? a.time > b.time
-            ? 1
-            : -1
-          : -1
-      );
-      // setUserArray(temp)}
-    }
+    // if(props.data.user._id === id)
+  
     console.log(temp);
   }, [props.data]);
 
@@ -132,23 +125,23 @@ const UserProfile = (props) => {
           Update My Account
         </button>
       </div>
-      {/* <table className="table">
-                    <tr className="tableRow">
-                        <th className="tableHeader">Score</th>
-                        <th className="tableHeader">Name</th>
-                        <th className="tableHeader">Time</th>
-                    </tr>
-                        {userArray.slice(0,10).map((item, index)=>{
-                            console.log(item)
-                            return(
-                                <tr className="tableRow">
-                                    <td className="tableData">{item.score}</td> 
-                                    <td className="tableData">{item.user.name}</td>
-                                    <td className="tableData">{item.time} secs</td>
-                                </tr>
-                            )
-                        })}
-                </table> */}
+      <table className="table">
+        <tr className="tableRow">
+          <th className="tableHeader">Score</th>
+          <th className="tableHeader">Name</th>
+          <th className="tableHeader">Time</th>
+        </tr>
+        {/* {userScoreList.slice(0,10).map((item, index)=>{
+        console.log(item)
+          return(
+            <tr className="tableRow">
+              <td className="tableData">{item.score}</td> 
+              <td className="tableData">{item.user.name}</td>
+              <td className="tableData">{item.time} secs</td>
+            </tr>
+          )
+        })} */}
+      </table>
     </div>
   );
 };

@@ -80,27 +80,24 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/profile" 
-              render={(props)=> (
-              <Profile data={this.state.data.scores}/>)} />
+            <Route 
+              exact path="/profile" 
+              render={(props)=> <Profile data={this.state.data.scores}/>} />
             <Route
-              exact
-              path="/login"
+              exact path="/login"
               render={(props) => <Register nameHandler={this.nameHandler} />}
             />
             <Route exact path="/logout" component={Logout} />
             {/* <Route exact path="/register" component={Register} /> */}
             <Route
-              exact
-              path="/quiz"
+              exact path="/quiz"
               render={(props) => (
                 <QuizPage
                   category={this.state.category}
                   difficulty={this.state.difficulty}
                   dataHandler={this.dataHandler}
                 />
-              )}
-            />
+              )}  />
             <Route
               exact
               path="/topscores"
