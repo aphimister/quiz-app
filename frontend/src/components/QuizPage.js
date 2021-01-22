@@ -10,18 +10,26 @@ const QuizPage = (props) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [display, setDisplay] = useState(0);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState('');
   const [id, setId] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   let fetchData = async () => {
     const response = await axios.get('/api/user');
     setUser(response.data.name);
     setId(response.data.id);
+    setDataLoaded(true);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (user === 'Guest') {
+      setDisplay(3);
+    }
+  }, [dataLoaded]);
 
   let zeroes = [];
   for (let i = 0; i < 10; i++) {
@@ -129,6 +137,13 @@ const QuizPage = (props) => {
       setIsActive={setIsActive}
     />,
     <Score time={seconds} score={score.reduce(reducer, 0)} user={user} />,
+    <div className="subtitle">
+      Please login before taking a quiz
+      <br />
+      <Link className="link" to="/login">
+        <button className="button">Login</button>
+      </Link>
+    </div>,
   ];
 
   return (

@@ -85,28 +85,28 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
   }
 });
 //<--------------------------- USER UPDATE DETAILS ------------------------------->
-app.post("/update", check.isLoggedIn, async (req, res) =>{
+app.put("/update", check.isLoggedIn, async (req, res) =>{
   console.log(req.body)
   const userId = req.userFound._id;
-  const id = await User.findById(userId);
-  const compare = await bcrypt.compare(req.body.updatePassword, id.password);
- 
-  const hashedPassword = await bcrypt.hash(req.body.confirmPassword, 10);
+  // console.log(userId)
+  const id = await Quizuser.findById(userId);
+  console.log(id)
+  const compare = await bcrypt.compare(req.body.userPassword, id.password);
+  console.log(compare)
+  const hashedPassword = await bcrypt.hash(req.body.userUpdatePassword, 10);
+  console.log(hashedPassword)
   if(compare){
-    try {
-      const user = req.userFound._id
-      await Quizuser.findByIdAndUpdate(user),{ 
+    // try {
+      await Quizuser.findByIdAndUpdate(userId,{ 
         name: req.body.userName,
         email: req.body.userEmail,
         password: hashedPassword 
-      }
+        });
      
-    }catch(error){
-      res.json({
-        mesaage: "There was an error updating you account"
-      })
-    }
-  }
+  
+  }res.json({
+    Message: "Details updated. Please logout and log back in."
+  })
   
 }) 
 
@@ -118,7 +118,7 @@ app.delete('/delete', check.isLoggedIn, async (req, res) => {
     const userDB = await Quizuser.findByIdAndDelete(user);
   } catch (error) {
     res.json({
-      Message: 'Get the fuck of the app',
+      Message: 'Please contact admin',
     });
   }
 });

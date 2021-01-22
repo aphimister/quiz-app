@@ -6,11 +6,15 @@ const Profile = (props) => {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
-  const [passwordConfirm, setPasswordConfirm] = useState([]);
+  const [updatePassword, setUpdatePassword] = useState([]);
   const [display, setDisplay] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
+<<<<<<< HEAD
   const [userScoreList, setUserScoreList] = useState([]);
   
+=======
+  const [messageUpdate, setMessageUpdate] = useState();
+>>>>>>> 67e760f1b0654075947d8b5f4dc94d04ce24c1dc
   let history = useHistory();
 
   let fetchData = async () => {
@@ -43,12 +47,10 @@ const Profile = (props) => {
   useEffect(() => {
     console.log(user);
     if (user !== 'Guest') {
-      console.log("here's the problem");
       setDisplay(1);
       
       
     } else {
-      console.log(1);
       setDisplay(0);
     }
     
@@ -69,25 +71,24 @@ const Profile = (props) => {
       userName: user,
       userEmail: email,
       userPassword: password,
-      userPasswordConfimr: passwordConfirm,
+      userUpdatePassword: updatePassword,
     };
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    await axios.post('/update', body, config);
+    const response = await axios.put('/update', body, config);
+    setMessageUpdate(response.data.Message);
 
     setUser('');
     setEmail('');
     setPassword('');
-    setPasswordConfirm('');
+    setUpdatePassword('');
 
-    setDisplay(1);
-    console.log(3);
+    window.location.reload(true);
   };
   const viewHandler = () => {
-    console.log(2);
     setDisplay(2);
   };
 
@@ -103,7 +104,12 @@ const Profile = (props) => {
       email={email}
       deleteHandler={deleteHandler}
       viewHandler={viewHandler}
+<<<<<<< HEAD
       userScoreList={userScoreList}
+=======
+      data={props.data}
+      messageUpdate={messageUpdate}
+>>>>>>> 67e760f1b0654075947d8b5f4dc94d04ce24c1dc
     />,
     <AccountUpdate
       updateHandler={updateHandler}
@@ -112,7 +118,7 @@ const Profile = (props) => {
       email={email}
       setEmail={setEmail}
       setPassword={setPassword}
-      setPasswordConfirm={setPasswordConfirm}
+      setUpdatePassword={setUpdatePassword}
     />,
   ];
 
@@ -122,6 +128,7 @@ const Profile = (props) => {
 const UserProfile = (props) => {
   return (
     <div>
+      {props.messageUpdate}
       <div className="title">{props.title}</div>
       <div className="subtitle">{props.user}</div>
       <div className="subtitle">{props.email}</div>
@@ -175,31 +182,37 @@ const UserNotAuth = (props) => {
 const AccountUpdate = (props) => {
   return (
     <div>
-      <form onSubmit={props.updateHandler}>
-        <label>Name</label>
+      <form onSubmit={props.updateHandler} className="form">
+        <label className="label form">Name</label>
         <input
+          className="input"
           type="text"
           value={props.user}
           onChange={(e) => props.setUser(e.target.value)}
         ></input>
-
+        <br />
         <label>Email</label>
         <input
+          className="input"
           type="email"
           value={props.email}
           onChange={(e) => props.setEmail(e.target.value)}
         ></input>
-
-        <label>Password</label>
+        <br />
         <input
+          className="input"
+          type="password"
           onChange={(e) => props.setPassword(e.target.value)}
           placeholder="password"
         ></input>
-        <label>Confirm Password</label>
+        <br />
+        <label>Update or confirm password</label>
         <input
-          onChange={(e) => props.setPasswordConfirm(e.target.value)}
-          placeholder="confirm password"
+          className="input"
+          type="password"
+          onChange={(e) => props.setUpdatePassword(e.target.value)}
         ></input>
+        <br />
         <button className="button" type="submit">
           update
         </button>
