@@ -195,6 +195,15 @@ app.get('/topscores', async (req, res) => {
   });
 });
 
+app.get('/userscores', check.isLoggedIn, async (req, res) => {
+  
+  const name = await req.userFound.name;
+  const allScores = await Score.find({user: req.userFound._id}).populate('user', 'name'); 
+  res.json({
+    scores: allScores
+  })
+})
+
 app.listen(5000, () => {
   console.log('Server is online');
 });
