@@ -23,10 +23,19 @@ const Profile = (props) => {
   useEffect(() => {
     fetchData();
     let temp = props.data;
-    if(props.data){temp.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score) ? ((a.time > b.time) ? 1 : -1) : -1 )
-    // setUserArray(temp)}
+    if (props.data) {
+      temp.sort((a, b) =>
+        a.score < b.score
+          ? 1
+          : a.score === b.score
+          ? a.time > b.time
+            ? 1
+            : -1
+          : -1
+      );
+      // setUserArray(temp)}
     }
-    console.log(temp)
+    console.log(temp);
   }, [props.data]);
 
   useEffect(() => {
@@ -55,19 +64,19 @@ const Profile = (props) => {
       userName: user,
       userEmail: email,
       userPassword: password,
-      userPasswordConfimr: passwordConfirm
+      userPasswordConfimr: passwordConfirm,
     };
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    await axios.post('/update',body, config);
-   
-      setUser('');
-      setEmail('');
-      setPassword('');
-      setPasswordConfirm('');
+    await axios.post('/update', body, config);
+
+    setUser('');
+    setEmail('');
+    setPassword('');
+    setPasswordConfirm('');
 
     setDisplay(1);
     console.log(3);
@@ -97,6 +106,8 @@ const Profile = (props) => {
       user={user}
       email={email}
       setEmail={setEmail}
+      setPassword={setPassword}
+      setPasswordConfirm={setPasswordConfirm}
     />,
   ];
 
@@ -120,7 +131,6 @@ const UserProfile = (props) => {
         <button className="button" onClick={props.viewHandler}>
           Update My Account
         </button>
-
       </div>
       {/* <table className="table">
                     <tr className="tableRow">
@@ -177,13 +187,11 @@ const AccountUpdate = (props) => {
 
         <label>Password</label>
         <input
-          value={props.password}
           onChange={(e) => props.setPassword(e.target.value)}
           placeholder="password"
         ></input>
         <label>Confirm Password</label>
         <input
-          value={props.passwordConfirm}
           onChange={(e) => props.setPasswordConfirm(e.target.value)}
           placeholder="confirm password"
         ></input>
