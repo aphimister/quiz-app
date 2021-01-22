@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const QuizPage = (props) => {
@@ -299,6 +300,7 @@ const QuizCard = (props) => {
             answerHandler={props.answerHandler}
           />
         </div>
+        <br />
       </div>
     );
   } else {
@@ -380,6 +382,12 @@ const Score = (props) => {
   return (
     <div className="gzMessage">
       Nice one! You got {props.score} correct out of 10, in {props.time}s!
+      <br />
+      How does your score compare?
+      <br />
+      <Link to="/topscores">
+        <button className="button">See the leaderboards</button>
+      </Link>
     </div>
   );
 };
