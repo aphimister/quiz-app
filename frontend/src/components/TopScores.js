@@ -37,7 +37,6 @@ const TopScores = (props) => {
     }
   }, [props.data]);
 
-  // console.log(sortedArray[0].user.name)
   return (
     <div>
       <div className="title-container">

@@ -26,7 +26,6 @@ const Profile = (props) => {
 
   let userScores = async () => {
     const res = await axios.get('userScores');
-    let temp = res.data;
     let tempArr = res.data.scores;
     console.log(tempArr);
     if (tempArr) {
@@ -104,14 +103,16 @@ const Profile = (props) => {
         if (score.category === event.target.value) {
           newScore.push(score);
         }
+        return score;
       });
       setSortedArray(newScore);
-    } else if (value == '0') {
+    } else if (value === '0') {
       setSortedArray(originalArray);
     }
   };
 
   const views = [
+    // array of different views depending on authorisation
     <UserNotAuth
       title="Profile Page"
       guest="You need to login"
@@ -143,6 +144,7 @@ const Profile = (props) => {
 };
 
 const UserProfile = (props) => {
+  //user profile func component
   return (
     <div>
       {props.messageUpdate}
@@ -269,6 +271,7 @@ const UserProfile = (props) => {
 };
 
 const UserNotAuth = (props) => {
+  //tells you to naff of if you're not logged in
   return (
     <div>
       <div className="title">{props.title}</div>
@@ -283,6 +286,7 @@ const UserNotAuth = (props) => {
 };
 
 const AccountUpdate = (props) => {
+  //updater functional component
   return (
     <div className="formContainer">
       <form onSubmit={props.updateHandler} className="form">
@@ -325,6 +329,7 @@ const AccountUpdate = (props) => {
 };
 
 const categorySorter = (category) => {
+  //horrible switch/case to translate the category number into the relevant string for score display
   let cat;
   switch (category) {
     case '9':
