@@ -51,6 +51,7 @@ const QuizPage = (props) => {
       });
       shuffleArray(qArray);
       q.answers = qArray;
+      q.correct_answer = decodeURIComponent(q.correct_answer);
       q.question = decodeURIComponent(q.question);
       return q;
     });
@@ -296,7 +297,13 @@ const Questions = (props) => {
       </div>
     );
   } else {
-    return <div className="loadingMessage">Loading questions</div>;
+    return (
+      <div className="loadingMessage">
+        <div className="loading1">.</div>
+        <div className="loading2">.</div>
+        <div className="loading3">.</div>
+      </div>
+    );
   }
 };
 

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Press+Start+2P&display=swap');
 body {
   background-image: url('./images/cloudy_background.png');
-  background-repeat: repeat-x;
+  background-repeat: repeat;
   background-attachment: fixed;
   background-size: 75%;
   padding-top: 120px;
@@ -17,7 +17,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: blue;
+  background-color: black;
 }
 .un-list {
   list-style: none;
@@ -48,7 +48,6 @@ body {
   font-size: 20px;
   padding: 10px;
 }
-
 .button {
   font-family: 'Press Start 2P', cursive;
   color: blue;
@@ -64,7 +63,6 @@ body {
   color: black;
   background-color: blue;
 }
-
 .selector {
   font-family: 'Press Start 2P', sans-serif;
   padding: 5px;
@@ -108,6 +106,34 @@ body {
   left: 0;
   right: 0;
   padding: 5px;
+}
+@keyframes loading {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  50% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.loadingMessage {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+}
+.loading1 {
+  animation: loading 1s linear 0s infinite;
+}
+.loading2 {
+  animation: loading 1s linear 0.33s infinite;
+}
+.loading3 {
+  animation: loading 1s linear 0.67s infinite;
 }
 
 .form {
