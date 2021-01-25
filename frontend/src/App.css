@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Press+Start+2P&display=swap');
 body {
   background-image: url('./images/cloudy_background.png');
-  background-repeat: repeat-x;
+  background-repeat: repeat;
   background-attachment: fixed;
   background-size: 75%;
   padding-top: 120px;
@@ -218,7 +218,7 @@ body {
   padding: 2px;
 }
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   .nav {
     display: flex;
     flex-direction: column;
@@ -237,4 +237,4 @@ body {
     font-family: 'Shadows Into Light', cursive;
     font-size: 165%;
   }
-}
+} */
