@@ -1,11 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Raleway&family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Press+Start+2P&display=swap');
 body {
+  background-image: url('./images/cloudy_background.png');
+  background-repeat: repeat-x;
+  background-attachment: fixed;
+  background-size: 75%;
   padding-top: 120px;
   padding-bottom: 10%;
-  background-color: #a4bfeb;
   text-align: center;
-  color: #454851;
-  padding-bottom:10%;
+  font-family: 'Press Start 2P', sans-serif;
+  color: yellow;
+  padding-bottom: 10%;
 }
 .nav {
   height: 70px;
@@ -13,7 +17,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background-color: #d9dbbc;
+  background-color: blue;
 }
 .un-list {
   list-style: none;
@@ -23,19 +27,19 @@ body {
 }
 .link {
   text-decoration: none;
-  color: #454851;
-  font-family: 'Shadows Into Light', cursive;
+  color: yellow;
+  font-family: 'Press Start 2P', cursive;
   font-size: 150%;
 }
 
 .title {
-  font-family: 'Courgette', cursive;
+  font-family: 'Press Start 2P', cursive;
   font-size: 40px;
   padding: 20px;
 }
 
 .subtitle {
-  font-family: 'Courgette', cursive;
+  font-family: 'Press Start 2P', cursive;
   font-size: 30px;
   padding: 20px;
 }
@@ -46,28 +50,27 @@ body {
 }
 
 .button {
-  font-family: 'Courgette', cursive;
-  background-color: #a4a8d1;
-  border-radius: 8px;
+  font-family: 'Press Start 2P', cursive;
+  color: blue;
+  font-size: 20px;
+  background-color: black;
   padding: 5px;
   box-shadow: 0;
-  border: 3px solid #454851;
+  border: 3px yellow double;
   cursor: pointer;
   margin: 10px;
 }
 .button:hover {
-  background-color: #8cabbe;
+  color: black;
+  background-color: blue;
 }
 
 .selector {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   padding: 5px;
-  border-radius: 8px;
-  background-color: #a4a8d1;
-  border: 3px solid #454851;
-}
-.selector {
-  font-family: 'Raleway', sans-serif;
+  background-color: blue;
+  border: 4px yellow double;
+  color: yellow;
 }
 .quizContainer {
   width: 60%;
@@ -75,9 +78,8 @@ body {
 }
 .quizCard {
   padding: 10px;
-  border: 3px #454851 solid;
+  border: 3px yellow double;
   margin-bottom: 10px;
-  border-radius: 18px;
 }
 .question {
   text-align: center;
@@ -96,11 +98,10 @@ body {
   border-radius: 8px;
 }
 .answerContainer:hover {
-  background-color: #8cabbe;
+  color: #39ff14;
 }
-
 .timer {
-  background-color: #a4a8d1;
+  background-color: red;
   position: fixed;
   top: 70px;
   font-size: 30px;
@@ -128,12 +129,11 @@ body {
   margin: 5px;
 }
 .input {
-  font-family: 'Raleway', sans-serif;
-  border-radius: 4px;
-  border: 1px #454851 solid;
+  font-family: 'Press Start 2P', sans-serif;
+  border: 4px yellow double;
   padding: 4px;
-}
-.passwords {
+  background-color: black;
+  color: yellow;
 }
 
 .top-score-list {
@@ -145,7 +145,7 @@ body {
   display: wrap;
   justify-content: space-between;
   align-items: center;
-  border: 3px #454851 solid;
+  border: 3px yellow double;
   border-collapse: collapse;
   width: 60%;
   font-size: 20px;
@@ -154,16 +154,14 @@ body {
 .tableHeader {
   margin: 5px;
   padding: 5px;
-  border-bottom: 3px #454851 solid;
-  background-color: #8cabbe ;
+  border-bottom: 3px yellow double;
   line-height: 1.8;
 }
 
 .tableRow {
   margin: 5px;
   padding: 5px;
-  background-color: #a4a8d1;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   line-height: 1.5;
 }
 
@@ -183,6 +181,7 @@ body {
 
 .footer {
   height: 5%;
+  padding: 10px;
   position: fixed;
   top: 95%;
   left: 0;
@@ -208,7 +207,6 @@ body {
 }
 
 .footerLinks {
-
   flex-shrink: 0;
   align-items: space-between;
   align-self: flex-end;
@@ -220,25 +218,23 @@ body {
   padding: 2px;
 }
 
-@media only screen and (max-width: 600px){
- .nav{
-   display: flex;
-   flex-direction: column;
-   height: 190px;
- }
- .un-list{
-  display: flex;
-  flex-direction: column;
- }
- body{
-   padding-top: 200px;
- }
- .link {
-  text-decoration: none;
-  color: #454851;
-  font-family: 'Shadows Into Light', cursive;
-  font-size: 165%;
- 
-}
-
+@media only screen and (max-width: 600px) {
+  .nav {
+    display: flex;
+    flex-direction: column;
+    height: 190px;
+  }
+  .un-list {
+    display: flex;
+    flex-direction: column;
+  }
+  body {
+    padding-top: 200px;
+  }
+  .link {
+    text-decoration: none;
+    color: #454851;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 165%;
+  }
 }

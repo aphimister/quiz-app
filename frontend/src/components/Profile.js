@@ -64,7 +64,7 @@ const Profile = (props) => {
 
   const deleteHandler = async () => {
     await axios.delete('/delete');
-    history.push("/")
+    history.push('/');
   };
 
   const updateHandler = async (event) => {
@@ -284,7 +284,7 @@ const UserNotAuth = (props) => {
 
 const AccountUpdate = (props) => {
   return (
-    <div>
+    <div className="formContainer">
       <form onSubmit={props.updateHandler} className="form">
         <label className="label form">Name</label>
         <input
