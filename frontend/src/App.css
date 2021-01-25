@@ -1,13 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron&family=Press+Start+2P&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Press+Start+2P&display=swap');
+* {
+  cursor: default;
+}
 body {
-  background-image: url("./images/cloudy_background.png");
+  background-image: url('./images/cloudy_background.png');
   background-repeat: repeat;
   background-attachment: fixed;
   background-size: 75%;
   margin-top: 120px;
   padding-bottom: 10%;
   text-align: center;
-  font-family: "Press Start 2P", sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   color: yellow;
   padding-bottom: 10%;
 }
@@ -26,17 +29,16 @@ body {
   width: 100%;
   background-color: black;
 }
-.li-item-container{
+.li-item-container {
   height: 100%;
   width: 25%;
 }
 
-.li-item-container:hover{
+.li-item-container:hover {
   background-color: yellow;
   color: black;
 }
-.li-item-container:hover *{
-
+.li-item-container:hover * {
   color: black;
 }
 .un-list {
@@ -48,18 +50,18 @@ body {
 .link {
   text-decoration: none;
   color: yellow;
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
   font-size: 150%;
 }
 
 .title {
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
   font-size: 40px;
   padding: 20px;
 }
 
 .subtitle {
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
   font-size: 30px;
   padding: 20px;
 }
@@ -69,7 +71,7 @@ body {
   padding: 10px;
 }
 .button {
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
   color: blue;
   font-size: 20px;
   background-color: black;
@@ -80,11 +82,12 @@ body {
   margin: 10px;
 }
 .button:hover {
+  cursor: context-menu;
   color: black;
   background-color: blue;
 }
 .selector {
-  font-family: "Press Start 2P", sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   padding: 5px;
   background-color: blue;
   border: 4px yellow double;
@@ -110,7 +113,7 @@ body {
 }
 .answerContainer {
   text-align: left;
-  width: 50%;
+  width: 70%;
   padding: 5px;
   margin: 2px;
   border-radius: 8px;
@@ -128,32 +131,28 @@ body {
   padding: 5px;
 }
 @keyframes loading {
-  0% {
-    visibility: hidden;
-    opacity: 0;
+  0%,
+  20% {
+    color: rgba(0, 0, 0, 0);
+    text-shadow: 10px 0 0 rgba(0, 0, 0, 0), 20px 0 0 rgba(0, 0, 0, 0);
   }
-  50% {
-    visibility: hidden;
-    opacity: 0;
+  40% {
+    color: yellow;
+    text-shadow: 20px 0 0 rgba(0, 0, 0, 0), 40px 0 0 rgba(0, 0, 0, 0);
   }
+  60% {
+    text-shadow: 20px 0 0 yellow, 40px 0 0 rgba(0, 0, 0, 0);
+  }
+  80%,
   100% {
-    visibility: visible;
-    opacity: 1;
+    text-shadow: 20px 0 0 yellow, 40px 0 0 yellow;
   }
 }
 .loadingMessage {
   display: flex;
   justify-content: center;
-  font-size: 30px;
-}
-.loading1 {
-  animation: loading 1s linear 0s infinite;
-}
-.loading2 {
-  animation: loading 1s linear 0.33s infinite;
-}
-.loading3 {
-  animation: loading 1s linear 0.67s infinite;
+  font-size: 50px;
+  animation: loading 0.5s infinite;
 }
 
 .form {
@@ -175,7 +174,7 @@ body {
   margin: 5px;
 }
 .input {
-  font-family: "Press Start 2P", sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   border: 4px yellow double;
   padding: 4px;
   background-color: black;
@@ -207,7 +206,7 @@ body {
 .tableRow {
   margin: 5px;
   padding: 5px;
-  font-family: "Press Start 2P", sans-serif;
+  font-family: 'Press Start 2P', sans-serif;
   line-height: 1.5;
 }
 
@@ -246,7 +245,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 .footerInfo {
   display: flex;
   align-content: flex-end;
@@ -257,13 +255,15 @@ body {
   align-items: space-between;
   align-self: flex-end;
 }
+.footerLinks a:hover {
+  color: blue;
+}
 
 .footerLinks a {
   color: #d9dbbc;
   align-content: flex-end;
   padding: 2px;
 }
-
 
 @media only screen and (max-width: 700px) {
   .nav {
@@ -276,24 +276,22 @@ body {
   }
   .un-list {
     display: flex;
-    
   }
   .li-container {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
   }
-  .link{
+  .link {
     margin: 0 10px;
   }
-  .li-item-container{
+  .li-item-container {
     width: 50%;
   }
-  .li-list{
+  .li-list {
     padding: 10px;
   }
 
-  
   body {
     padding-top: 140px;
   }
@@ -301,10 +299,10 @@ body {
     margin: auto;
     text-decoration: none;
     color: #454851;
-    font-family: "Shadows Into Light", cursive;
+    font-family: 'Shadows Into Light', cursive;
     font-size: 120%;
     color: yellow;
-    font-family: "Press Start 2P", cursive;
+    font-family: 'Press Start 2P', cursive;
   }
   .timer {
     top: 100px;
