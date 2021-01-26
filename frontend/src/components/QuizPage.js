@@ -29,7 +29,7 @@ const QuizPage = (props) => {
     if (user === 'Guest') {
       setDisplay(3);
     }
-  }, [dataLoaded]);
+  }, [dataLoaded]); //authentication useeffect. If you're not logged in, naff off
 
   let zeroes = [];
   for (let i = 0; i < 10; i++) {

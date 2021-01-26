@@ -17,7 +17,6 @@ const Profile = (props) => {
 
   let fetchData = async () => {
     const response = await axios.get('/api/user');
-    console.log(response.data.name);
     setUser(response.data.name);
     setEmail(response.data.email);
 
@@ -27,7 +26,6 @@ const Profile = (props) => {
   let userScores = async () => {
     const res = await axios.get('userScores');
     let tempArr = res.data.scores;
-    console.log(tempArr);
     if (tempArr) {
       tempArr.sort((a, b) =>
         a.score < b.score
@@ -49,7 +47,6 @@ const Profile = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(user);
     if (user !== 'Guest') {
       setDisplay(1);
     } else {
@@ -253,7 +250,6 @@ const UserProfile = (props) => {
             <th className="tableHeader">Time</th>
           </tr>
           {props.sortedArray.slice(0, 10).map((item, index) => {
-            console.log(item);
             return (
               <tr className="tableRow">
                 <td className="tableData">{item.score}</td>

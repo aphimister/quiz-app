@@ -131,7 +131,6 @@ const TopScores = (props) => {
             <th className="tableHeader">Time</th>
           </tr>
           {sortedArray.slice(0, 10).map((item, index) => {
-            console.log(item);
             return (
               <tr className="tableRow">
                 <td className="tableData">{item.score}</td>

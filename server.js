@@ -49,7 +49,7 @@ app.post('/register', async (req, res) => {
   } else if (player.length > 0) {
     res.json({
       registration: false,
-      errorPasswords: 'Sorry Email Or Password Is Incorect ',
+      errorPasswords: 'Sorry Email Or Password Is Incorrect ',
     });
   } else {
     await Quizuser.create({
@@ -129,13 +129,11 @@ app.get('/login', (req, res) => {
   console.log(req.body); // front end input field to loggin
   res.json({
     message: 'logged in ',
-  }); // message display at fron end
+  }); // message display at front end
 });
 
 app.post('/login', async (req, res) => {
   const player = await Quizuser.findOne({ email: req.body.userEmail });
-  console.log(player);
-
   try {
     const compare = await bcrypt.compare(
       req.body.userPassword,
@@ -164,7 +162,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-
 ////<--------------------------------- LOGOUT  --------------------------------------------->>
 app.get('/logout', check.logout, (req, res) => {
   res.json({ message: 'please work' });
@@ -174,7 +171,6 @@ app.get('/logout', check.logout, (req, res) => {
 //<--------------------------Results----------------------------------------------->>
 
 app.post('/api/score', async (req, res) => {
-  // console.log(req.body);
   await Score.create({
     score: req.body.score,
     time: req.body.time,
@@ -188,7 +184,6 @@ app.post('/api/score', async (req, res) => {
 
 app.get('/topscores', async (req, res) => {
   const scoreDB = await Score.find().populate('user', 'name');
-  // console.log(scoreDB)
   res.json({
     scores: scoreDB,
   });
