@@ -12,9 +12,6 @@ const Register = (props) => {
 
   const formHandler = async (event) => {
     event.preventDefault();
-    console.log(name);
-    console.log(email);
-    console.log(password);
 
     const body = {
       userName: name,
@@ -30,7 +27,6 @@ const Register = (props) => {
 
     const backend = await axios.post('/register', body, config);
 
-    console.log(backend);
     setName('');
     setEmail('');
     setPassword('');

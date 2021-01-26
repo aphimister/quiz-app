@@ -9,9 +9,7 @@ import './App.css';
 import Register from './components/Register';
 import { Component } from 'react';
 import Profile from './components/Profile';
-import accountUpdate from './components/accountUpdate';
 import axios from 'axios';
-
 
 //I changed this to a class component. It is just makes more sense to my brain
 class App extends Component {
@@ -24,7 +22,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    //when the page loads for the first time it sets the state to defauls easy and general knowledge - if you just write them in the state it hard codes them
+    //when the page loads for the first time it sets the state to defaults easy and general knowledge - if you just write them in the state it hard codes them
     axios.get('/topscores').then((res) => {
       this.setState({
         data: res.data,
@@ -80,24 +78,29 @@ class App extends Component {
                 />
               )}
             />
-            <Route 
-              exact path="/profile" 
-              render={(props)=> <Profile data={this.state.data.scores}/>} />
             <Route
-              exact path="/login"
+              exact
+              path="/profile"
+              render={(props) => <Profile data={this.state.data.scores} />}
+            />
+            <Route
+              exact
+              path="/login"
               render={(props) => <Register nameHandler={this.nameHandler} />}
             />
             <Route exact path="/logout" component={Logout} />
             {/* <Route exact path="/register" component={Register} /> */}
             <Route
-              exact path="/quiz"
+              exact
+              path="/quiz"
               render={(props) => (
                 <QuizPage
                   category={this.state.category}
                   difficulty={this.state.difficulty}
                   dataHandler={this.dataHandler}
                 />
-              )}  />
+              )}
+            />
             <Route
               exact
               path="/topscores"
@@ -113,8 +116,6 @@ class App extends Component {
                 )}
 
              /> */}
-            
-          
           </Switch>
         </BrowserRouter>
         <div className="holder">
