@@ -286,10 +286,14 @@ body {
     margin: 0 10px;
   }
   .li-item-container {
-    width: 50%;
+    height: 50%;
+    width: 45%;
   }
   .li-list {
     padding: 10px;
+  }
+  .btn-login{
+    font-size: 15px;
   }
 
   body {
