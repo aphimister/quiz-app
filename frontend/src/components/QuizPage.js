@@ -3,19 +3,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const QuizPage = (props) => {
-  const [quiz, setQuiz] = useState([]); //quiz array
-  const [category, setCategory] = useState('9'); //category state for api
-  const [difficulty, setDifficulty] = useState('easy'); //difficulty state for api
-  const [message, setMessage] = useState(''); //error message
-  const [seconds, setSeconds] = useState(0); //timer
-  const [isActive, setIsActive] = useState(false); //is timer on?
-  const [display, setDisplay] = useState(0); //which display to show
-  const [user, setUser] = useState(''); //your user info
-  const [id, setId] = useState([]); //your user id
-  const [dataLoaded, setDataLoaded] = useState(false); //have we loaded user info yet?
+  const [quiz, setQuiz] = useState([]);
+  const [category, setCategory] = useState('9');
+  const [difficulty, setDifficulty] = useState('easy');
+  const [message, setMessage] = useState('');
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [display, setDisplay] = useState(0);
+  const [user, setUser] = useState('');
+  const [id, setId] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   let fetchData = async () => {
-    //fetches user info
     const response = await axios.get('/api/user');
     setUser(response.data.name);
     setId(response.data.id);
@@ -23,7 +22,6 @@ const QuizPage = (props) => {
   };
 
   useEffect(() => {
-    //auth checker
     fetchData();
   }, []);
 
@@ -31,32 +29,28 @@ const QuizPage = (props) => {
     if (user === 'Guest') {
       setDisplay(3);
     }
-  }, [dataLoaded]); //authentication useffect. If you're not logged in, naff off
+  }, [dataLoaded]);
 
   let zeroes = [];
   for (let i = 0; i < 10; i++) {
-    //just a nice array of 0s
     zeroes.push(0);
   }
 
-  const [score, setScore] = useState([...zeroes]); //score set to 0
-  const [isAnswered, setIsAnswered] = useState([...zeroes]); //tracks whether each question is answered
+  const [score, setScore] = useState([...zeroes]);
+  const [isAnswered, setIsAnswered] = useState([...zeroes]);
 
   const apiURL = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple&encode=url3986`;
 
   const apiCall = async (url) => {
-    // call to the api for the quiz
     const call = await axios.get(url);
     const unshuffled = call.data.results;
     const shuffled = unshuffled.map((q) => {
-      //decodes strings and shuffles answers
       let qArray = [q.correct_answer, ...q.incorrect_answers];
       qArray = qArray.map((q) => {
         return decodeURIComponent(q);
       });
       shuffleArray(qArray);
       q.answers = qArray;
-      q.correct_answer = decodeURIComponent(q.correct_answer);
       q.question = decodeURIComponent(q.question);
       return q;
     });
@@ -64,21 +58,19 @@ const QuizPage = (props) => {
   };
 
   const diffHandler = (event) => {
-    //difficulty option list handler
     event.preventDefault();
     let value = event.target.value;
     setDifficulty(value);
   };
 
   const quizHandler = (event) => {
-    //calls the api with the parameters when you've chosen them
     event.preventDefault();
     apiCall(apiURL);
-    setIsActive(true); //starts the timer
-    setDisplay(1); //switches screen
+    setIsActive(true);
+    setDisplay(1);
   };
 
-  // This is the category tracker / state handler when selecting the quiz
+  // This is the category tracker / state handler
   const catHandler = (event) => {
     event.preventDefault();
     let value = event.target.value;
@@ -86,12 +78,11 @@ const QuizPage = (props) => {
   };
 
   const answerHandler = (event, answer, ref) => {
-    //keeps a running total of your score and whether you've answered each question while you play
     let newScore = score;
     let answered = isAnswered;
     answered[ref] = 1;
     setIsAnswered(answered);
-    if (quiz[ref].correct_answer === answer) {
+    if (quiz[ref].correct_answer == answer) {
       newScore[ref] = 1;
     } else {
       newScore[ref] = 0;
@@ -99,12 +90,10 @@ const QuizPage = (props) => {
     setScore(newScore);
   };
   const reducer = (accumulator, item) => {
-    //simple function to sum an array in conjunction with the array.reduce method
     return accumulator + item;
   };
 
   const scoreHandler = async (event) => {
-    //handler for submitting score, checks if all qs answered, compiles marks, etc.
     let totalAnswered = isAnswered.reduce(reducer, 0);
     if (totalAnswered === 10) {
       setIsActive(false);
@@ -126,15 +115,13 @@ const QuizPage = (props) => {
       setDisplay(2);
     } else
       setMessage(
-        //throws a nice little message if you miss a question
         `Please answer all questions before submitting. You have ${
           10 - totalAnswered
-        } unanswered questions`
+        } questions unanswered`
       );
   };
 
   let displays = [
-    //clever array of different functional components
     <Selection
       diffHandler={diffHandler}
       catHandler={catHandler}
@@ -148,7 +135,6 @@ const QuizPage = (props) => {
       setSeconds={setSeconds}
       isActive={isActive}
       setIsActive={setIsActive}
-      message={message}
     />,
     <Score time={seconds} score={score.reduce(reducer, 0)} user={user} />,
     <div className="subtitle">
@@ -161,14 +147,16 @@ const QuizPage = (props) => {
   ];
 
   return (
-    // chooses from the displays array according to the state
+    // quiz display
 
-    <div>{displays[display]}</div>
+    <div>
+      {displays[display]}
+      <div className="message">{message}</div>
+    </div>
   );
 };
 
 const Selection = (props) => {
-  //display for selecting your quiz
   return (
     <div>
       <div className="subtitle">Select your quiz</div>
@@ -275,10 +263,10 @@ const Selection = (props) => {
 };
 
 const Questions = (props) => {
-  //displays all the questions
   if (props.quiz[1]) {
     const questions = props.quiz.map((q, i) => {
       return (
+        // <div>Found something{i}</div>
         <QuizCard
           question={q.question}
           correct_answer={q.correct_answer}
@@ -292,7 +280,6 @@ const Questions = (props) => {
     return (
       <div className="quizPage">
         <div className="quizContainer">{questions}</div>
-        <div className="message">{props.message}</div>
         <button
           id="submitAnswers"
           className="button"
@@ -309,8 +296,7 @@ const Questions = (props) => {
       </div>
     );
   } else {
-    //little loading display while we wait for the api call
-    return <div className="loadingMessage">.</div>;
+    return <div className="loadingMessage">Loading questions</div>;
   }
 };
 
@@ -373,11 +359,14 @@ const Answer = (props) => {
 };
 
 const Timer = (props) => {
-  //timer component
   const isActive = props.isActive;
   const setIsActive = props.setIsActive;
   const seconds = props.seconds;
   const setSeconds = props.setSeconds;
+
+  const toggle = () => {
+    setIsActive(!isActive);
+  };
 
   useEffect(() => {
     let interval = null;
@@ -405,7 +394,6 @@ const Timer = (props) => {
 };
 
 const Score = (props) => {
-  //score display at end of quiz
   return (
     <div className="gzMessage">
       Nice one! You got {props.score} correct out of 10, in {props.time}s!

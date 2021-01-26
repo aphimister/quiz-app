@@ -146,7 +146,7 @@ const Profile = (props) => {
 const UserProfile = (props) => {
   //user profile func component
   return (
-    <div>
+    <div className="table-div">
       {props.messageUpdate}
       <div className="title">{props.title}</div>
       <div className="subtitle">{props.user}</div>
@@ -248,8 +248,8 @@ const UserProfile = (props) => {
           <tr className="tableRow">
             <th className="tableHeader">Score</th>
             <th className="tableHeader">Name</th>
-            <th className="tableHeader">Category</th>
-            <th className="tableHeader">Difficulty</th>
+            <th className="tableHeader tableCat">Category</th>
+            <th className="tableHeader tableDiff">Difficulty</th>
             <th className="tableHeader">Time</th>
           </tr>
           {props.sortedArray.slice(0, 10).map((item, index) => {
@@ -258,8 +258,8 @@ const UserProfile = (props) => {
               <tr className="tableRow">
                 <td className="tableData">{item.score}</td>
                 <td className="tableData">{item.user.name}</td>
-                <td className="tableData">{categorySorter(item.category)}</td>
-                <td className="tableData">{item.difficulty}</td>
+                <td className="tableData tableCat">{categorySorter(item.category)}</td>
+                <td className="tableData tableDiff">{item.difficulty}</td>
                 <td className="tableData">{item.time} secs</td>
               </tr>
             );

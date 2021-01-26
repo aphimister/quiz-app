@@ -265,11 +265,7 @@ body {
   padding: 2px;
 }
 
-<<<<<<< HEAD
-/* @media only screen and (max-width: 600px) {
-=======
 @media only screen and (max-width: 700px) {
->>>>>>> 2feca113c6426b803330a9aeb12df331a219ceaf
   .nav {
     display: flex;
     flex-direction: row;
@@ -311,4 +307,83 @@ body {
   .timer {
     top: 100px;
   }
-} */
+
+  .subtitle {
+    width:85%;
+    font-size: 100%;
+  }
+
+  .table-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .top-score-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85%
+  }
+  .table {
+    display: flex;
+    flex-direction: column;
+    /* display: wrap; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    border: 3px yellow double;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 20px;
+    align-content: flex-start;
+   
+  }
+  
+  .table *{
+    align-content: center;
+    justify-content: space-between;
+    display: flex;
+    font-family: 'Press Start 2P', sans-serif;
+    line-height: 1.5;
+    width: 100%;
+    font-size: 90%;   
+  }
+  .tableRow {
+    align-content: center;
+    justify-content: space-between;
+    display: flex;
+  
+  }
+  .tableRow:first-of-type {
+    border-bottom: 3px yellow double;
+    border-collapse: collapse;
+    width: 99%
+  }
+
+  .tableHeader {
+    border: none;
+    line-height: 1.8;
+    width: auto;
+    font-size: 76%;
+  }
+  
+  .tableData {
+    align-self: flex-start;
+    width: 33%;
+    margin: 5px;
+    font-size: 90%;
+  }
+
+  .tableCat {
+    display: none;
+  }
+
+  .tableDiff {
+    display: none;
+  }
+
+  .selector {
+    width: 85%;
+  }
+} 

@@ -38,7 +38,7 @@ const TopScores = (props) => {
   }, [props.data]);
 
   return (
-    <div>
+    <div className="table-div">
       <div className="title-container">
         <div className="title">Top Scores</div>
       </div>
@@ -126,8 +126,8 @@ const TopScores = (props) => {
           <tr className="tableRow">
             <th className="tableHeader">Score</th>
             <th className="tableHeader">Name</th>
-            <th className="tableHeader">Category</th>
-            <th className="tableHeader">Difficulty</th>
+            <th className="tableHeader tableCat">Category</th>
+            <th className="tableHeader tableDiff">Difficulty</th>
             <th className="tableHeader">Time</th>
           </tr>
           {sortedArray.slice(0, 10).map((item, index) => {
@@ -136,8 +136,8 @@ const TopScores = (props) => {
               <tr className="tableRow">
                 <td className="tableData">{item.score}</td>
                 <td className="tableData">{item.user.name}</td>
-                <td className="tableData">{categorySorter(item.category)}</td>
-                <td className="tableData">{item.difficulty}</td>
+                <td className="tableData tableCat">{categorySorter(item.category)}</td>
+                <td className="tableData tableDiff ">{item.difficulty}</td>
                 <td className="tableData">{item.time} secs</td>
               </tr>
             );
