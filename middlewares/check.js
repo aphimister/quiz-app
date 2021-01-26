@@ -9,8 +9,6 @@ exports.isLoggedIn = async (req, res, next) => {
       req.cookies.playerCookie,
       process.env.PLAYER_SECRET
     );
-    // console.log("info from decoded in auth")
-    // console.log(decoded)
     req.userFound = await Quizuser.findById(decoded.id);
   }
 
