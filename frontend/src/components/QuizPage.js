@@ -296,7 +296,7 @@ const Questions = (props) => {
       </div>
     );
   } else {
-    return <div className="loadingMessage">Loading questions</div>;
+    return <div className="loadingMessage">.</div>;
   }
 };
 
@@ -319,7 +319,7 @@ const QuizCard = (props) => {
       </div>
     );
   } else {
-    return <div>Loading questions</div>;
+    return <div>.</div>;
   }
 };
 

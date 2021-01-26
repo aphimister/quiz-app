@@ -291,7 +291,7 @@ body {
   .li-list {
     padding: 10px;
   }
-  .btn-login{
+  .btn-login {
     font-size: 15px;
   }
 
@@ -311,11 +311,11 @@ body {
   }
 
   .subtitle {
-    width:85%;
+    width: 85%;
     font-size: 100%;
   }
 
-  .table-div{
+  .table-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -326,7 +326,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 85%
+    width: 85%;
   }
   .table {
     display: flex;
@@ -339,28 +339,26 @@ body {
     width: 100%;
     font-size: 20px;
     align-content: flex-start;
-   
   }
-  
-  .table *{
+
+  .table * {
     align-content: center;
     justify-content: space-between;
     display: flex;
     font-family: 'Press Start 2P', sans-serif;
     line-height: 1.5;
     width: 100%;
-    font-size: 90%;   
+    font-size: 90%;
   }
   .tableRow {
     align-content: center;
     justify-content: space-between;
     display: flex;
-  
   }
   .tableRow:first-of-type {
     border-bottom: 3px yellow double;
     border-collapse: collapse;
-    width: 99%
+    width: 99%;
   }
 
   .tableHeader {
@@ -369,7 +367,7 @@ body {
     width: auto;
     font-size: 76%;
   }
-  
+
   .tableData {
     align-self: flex-start;
     width: 33%;
@@ -388,4 +386,8 @@ body {
   .selector {
     width: 85%;
   }
-} 
+  .footer {
+    height: 8%;
+    font-size: smaller;
+  }
+}
